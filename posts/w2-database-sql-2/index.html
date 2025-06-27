@@ -1,0 +1,957 @@
+<!DOCTYPE html><html dir="ltr" lang="en" class="scroll-smooth" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://astro-paper.pages.dev/posts/w2-database-sql-2/"><meta name="generator" content="Astro v5.10.1"><!-- General Meta Tags --><title>Database SQL (2) - ERD, Chuẩn hóa &amp; Truy vấn SQL | AstroPaper</title><meta name="title" content="Database SQL (2) - ERD, Chuẩn hóa &#38; Truy vấn SQL | AstroPaper"><meta name="description" content="Bài giảng chi tiết về ERD, chuẩn hóa cơ sở dữ liệu và truy vấn SQL: lý thuyết, ví dụ, bảng minh họa, sơ đồ và giải thích chuyên sâu."><meta name="author" content="Sat Naing"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="Database SQL (2) - ERD, Chuẩn hóa &#38; Truy vấn SQL | AstroPaper"><meta property="og:description" content="Bài giảng chi tiết về ERD, chuẩn hóa cơ sở dữ liệu và truy vấn SQL: lý thuyết, ví dụ, bảng minh họa, sơ đồ và giải thích chuyên sâu."><meta property="og:url" content="https://astro-paper.pages.dev/posts/w2-database-sql-2/"><meta property="og:image" content="https://astro-paper.pages.dev/posts/w2-database-sql-2/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2024-06-03T10:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://astro-paper.pages.dev/posts/w2-database-sql-2/"><meta property="twitter:title" content="Database SQL (2) - ERD, Chuẩn hóa &#38; Truy vấn SQL | AstroPaper"><meta property="twitter:description" content="Bài giảng chi tiết về ERD, chuẩn hóa cơ sở dữ liệu và truy vấn SQL: lý thuyết, ví dụ, bảng minh họa, sơ đồ và giải thích chuyên sâu."><meta property="twitter:image" content="https://astro-paper.pages.dev/posts/w2-database-sql-2/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Database SQL (2) - ERD, Chuẩn hóa & Truy vấn SQL | AstroPaper","image":"https://astro-paper.pages.dev/posts/w2-database-sql-2/index.png","datePublished":"2024-06-03T10:00:00.000Z","author":[{"@type":"Person","name":"Sat Naing","url":"https://satnaing.dev/"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="AstroPaper" href="https://astro-paper.pages.dev/rss.xml"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CtSceO8m.js"></script><script src="/toggle-theme.js"></script><link rel="stylesheet" href="/_astro/about.DvdmnzPS.css">
+<style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+:where([data-astro-image]){object-fit:var(--fit);object-position:var(--pos);height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}
+</style><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: database-sql-2-erd-chu\1EA9n-hoa-truy-v\1EA5n-sql; }@layer astro { ::view-transition-old(database-sql-2-erd-chu\1EA9n-hoa-truy-v\1EA5n-sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(database-sql-2-erd-chu\1EA9n-hoa-truy-v\1EA5n-sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(database-sql-2-erd-chu\1EA9n-hoa-truy-v\1EA5n-sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(database-sql-2-erd-chu\1EA9n-hoa-truy-v\1EA5n-sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-2"] { view-transition-name: sql; }@layer astro { ::view-transition-old(sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-3"] { view-transition-name: database; }@layer astro { ::view-transition-old(database) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(database) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(database) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(database) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-4"] { view-transition-name: erd; }@layer astro { ::view-transition-old(erd) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(erd) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(erd) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(erd) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-5"] { view-transition-name: normalization; }@layer astro { ::view-transition-old(normalization) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(normalization) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(normalization) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(normalization) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body data-astro-cid-sckkx6r4>  <header> <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4">
+Skip to content
+</a> <div id="nav-container" class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"> <a href="/" class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"> AstroPaper </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&#38;>li>a]:block [&#38;>li>a]:px-4 [&#38;>li>a]:py-3 [&#38;>li>a]:text-center [&#38;>li>a]:font-medium [&#38;>li>a]:hover:text-accent sm:[&#38;>li>a]:px-2 sm:[&#38;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/posts" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/tags">
+Tags
+</a> </li> <li class="col-span-2"> <a href="/about">
+About
+</a> </li> <li class="col-span-2"> <a href="/archives" class="group inline-block hover:text-accent focus-outline flex justify-center p-3 sm:p-1" aria-label="archives" title="Archives"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only">Archives</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <a href="/search" class="group inline-block hover:text-accent focus-outline flex p-3 sm:p-1" aria-label="search" title="Search"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span class="sr-only">Search</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent" title="Toggles light & dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </div> <div class="mx-auto max-w-app px-4"> <hr class="border-border" aria-hidden="true"> </div> </header> <script type="module">function s(){const e=document.querySelector("#menu-btn"),t=document.querySelector("#menu-items"),n=document.querySelector("#menu-icon"),o=document.querySelector("#close-icon");!e||!t||!n||!o||e.addEventListener("click",()=>{const c=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",c?"false":"true"),e.setAttribute("aria-label",c?"Open Menu":"Close Menu"),t.classList.toggle("hidden"),n.classList.toggle("hidden"),o.classList.toggle("hidden")})}s();document.addEventListener("astro:after-swap",s);</script> <div class="mx-auto flex w-full max-w-app items-center justify-start px-2"><a id="back-button" href="/" class="group inline-block hover:text-accent focus-outline mt-8 mb-2 flex hover:text-foreground/75"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg><span>Go back</span></a></div><script type="module">function o(){const t=document.querySelector("#back-button"),e=sessionStorage.getItem("backUrl");e&&t&&(t.href=e)}document.addEventListener("astro:page-load",o);o();</script> <main id="main-content" class="mx-auto w-full max-w-app px-4 pb-12" data-pagefind-body> <h1 class="inline-block text-2xl font-bold text-accent sm:text-3xl" data-astro-transition-scope="astro-fam6wyqg-1"> Database SQL (2) - ERD, Chuẩn hóa &amp; Truy vấn SQL </h1> <div class="my-2 flex items-center gap-2"> <div class="flex items-center gap-x-2 opacity-80"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-[1.375rem]"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg>  <time class="text-sm sm:text-base" datetime="2024-06-03T10:00:00.000Z">3 Jun, 2024</time> </div> <span aria-hidden="true" class="max-sm:hidden">|</span> <a href="https://github.com/satnaing/astro-paper/edit/main/src/data/blog/w2-database-sql-2.md" target="_blank" rel="noopener noreferrer" class="flex justify-baseline gap-1.5 opacity-80 hover:text-accent max-sm:hidden"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span>Edit page</span></a> </div> <article id="article" class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <h1 id="làm-chủ-các-kiến-thức-cơ-bản-về-cơ-sở-dữ-liệu-erd-chuẩn-hóa-và-truy-vấn-sql">Làm chủ các Kiến Thức Cơ Bản về Cơ Sở Dữ Liệu: ERD, Chuẩn Hóa và Truy Vấn SQL</h1>
+<p>Trong thế giới dữ liệu, việc hiểu cách cấu trúc, tối ưu hóa và tương tác với thông tin là vô cùng quan trọng. Bài blog này sẽ đưa chúng ta đi sâu vào ba trụ cột cơ bản của quản lý cơ sở dữ liệu: Sơ đồ Thực thể-Mối quan hệ (ERD), Chuẩn hóa Cơ sở dữ liệu và các Truy vấn SQL thiết yếu.</p>
+<hr>
+<h2 id="1-khám-phá-cấu-trúc-cơ-sở-dữ-liệu-với-sơ-đồ-thực-thể-mối-quan-hệ-erd">1. Khám phá Cấu trúc Cơ sở dữ liệu với Sơ đồ Thực thể-Mối quan hệ (ERD)</h2>
+<p>Sơ đồ Thực thể-Mối quan hệ (ERD) là một biểu diễn trực quan về các thực thể khác nhau trong một hệ thống và cách chúng liên quan đến nhau. Đây là công cụ mạnh mẽ để thiết kế và mô hình hóa các cơ sở dữ liệu quan hệ, thể hiện cấu trúc logic của dữ liệu. ERD giúp chúng ta “hiểu” và “mô hình hóa” một bài toán, chỉ ra những thành phần nào tồn tại và chúng liên quan với nhau như thế nào.</p>
+<h3 id="ký-hiệu-chen-trong-erd"><strong>Ký hiệu Chen trong ERD</strong></h3>
+<ul>
+<li><strong>Thực thể (Entity):</strong> Hình chữ nhật, tên là danh từ số ít. Ví dụ: <code>Khách hàng</code>, <code>Đơn hàng</code>.</li>
+<li><strong>Thực thể yếu (Weak Entity):</strong> Phụ thuộc vào thực thể khác, không xác định duy nhất bằng thuộc tính của nó. Ví dụ: <code>Order Item</code> phụ thuộc vào <code>Order</code>.</li>
+<li><strong>Thực thể kết hợp (Associative Entity):</strong> Đại diện cho bảng trung gian trong quan hệ nhiều-nhiều. Ví dụ: <code>StudentCourse</code> kết nối <code>Student</code> và <code>Course</code>.</li>
+<li><strong>Thuộc tính (Attribute):</strong> Hình bầu dục, mô tả đặc điểm của thực thể. Có thể là:
+<ul>
+<li><strong>Khóa (Key Attribute):</strong> Gạch dưới, xác định duy nhất thực thể.</li>
+<li><strong>Tổng hợp (Composite):</strong> Có thể chia nhỏ, ví dụ: <code>Địa chỉ</code>.</li>
+<li><strong>Đa trị (Multivalued):</strong> Có nhiều giá trị, ví dụ: <code>Sở thích</code>.</li>
+<li><strong>Dẫn xuất (Derived):</strong> Tính toán từ thuộc tính khác, ví dụ: <code>Tuổi</code> từ <code>Ngày sinh</code>.</li>
+</ul>
+</li>
+<li><strong>Mối quan hệ (Relationship):</strong> Hình thoi, nối các thực thể. Các loại:
+<ul>
+<li>Một-một (1:1)</li>
+<li>Một-nhiều (1:N)</li>
+<li>Nhiều-nhiều (M:N)</li>
+</ul>
+</li>
+<li><strong>Ràng buộc tham gia (Participation Constraints):</strong>
+<ul>
+<li><strong>Toàn bộ (Total):</strong> Đường đôi, mọi thực thể phải tham gia.</li>
+<li><strong>Một phần (Partial):</strong> Đường đơn, không phải mọi thực thể đều tham gia.</li>
+</ul>
+</li>
+</ul>
+<h3 id="ví-dụ-erd-chen-notation"><strong>Ví dụ ERD (Chen Notation)</strong></h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">erDiagram</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  KHACHHANG ||--o{ DONHANG : dat</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  DONHANG ||--|{ DONHANG_CHITIET : gom</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  KHACHHANG {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int MaKH</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string TenKH</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Email</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  DONHANG {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int MaDH</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    date NgayDat</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int MaKH</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  DONHANG_CHITIET {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int MaDH</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int MaSP</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int SoLuong</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span></code></pre>
+<h3 id="so-sánh-erd-class-diagram-và-database-schema"><strong>So sánh ERD, Class Diagram và Database Schema</strong></h3>
+<ul>
+<li><strong>ER Diagram:</strong> Phân tích bài toán, mô hình hóa các thành phần và quan hệ.</li>
+<li><strong>Database Schema:</strong> Thiết kế dữ liệu thực tế cho CSDL quan hệ dựa trên ERD.</li>
+<li><strong>Class Diagram:</strong> Thiết kế lớp trong lập trình, tương thích với Database Schema.</li>
+<li><strong>ORM:</strong> Ánh xạ giữa lớp (code) và bảng (CSDL).</li>
+</ul>
+<h3 id="nét-đứt-và-nét-liền-trong-erd"><strong>Nét đứt và nét liền trong ERD</strong></h3>
+<ul>
+<li><strong>Nét đứt (Dashed Line):</strong> Quan hệ không xác định (weak foreign key), khóa ngoại không nằm trong khóa chính bảng con.</li>
+<li><strong>Nét liền (Solid Line):</strong> Quan hệ xác định (identifying), khóa ngoại là một phần của khóa chính bảng con.</li>
+</ul>
+<h3 id="11-sơ-đồ-erd-chen-vs-crows-foot"><strong>1.1. Sơ đồ ERD: Chen vs Crow’s Foot</strong></h3>
+<h3 id="a-sơ-đồ-erd-dạng-chen-mermaid"><strong>A. Sơ đồ ERD dạng Chen (Mermaid)</strong></h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">erDiagram</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int StudentID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Name</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int CourseID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Title</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  ENROLLMENT {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int StudentID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int CourseID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Semester</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT ||--o{ ENROLLMENT : "đăng ký"</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE ||--o{ ENROLLMENT : "có trong"</span></span></code></pre>
+<p><strong>Giải thích thành phần (Chen):</strong></p>
+<ul>
+<li><strong>Hình chữ nhật (Entity):</strong> Đại diện cho thực thể (STUDENT, COURSE, ENROLLMENT).</li>
+<li><strong>Hình thoi (Relationship):</strong> Mermaid không vẽ thoi, nhưng thể hiện quan hệ bằng đường nối và nhãn (“đăng ký”, “có trong”).</li>
+<li><strong>Hình bầu dục (Attribute):</strong> Trong Mermaid, thuộc tính là các trường bên trong entity.</li>
+<li><strong>Ký hiệu |o—o{:</strong> Thể hiện quan hệ 1-nhiều (1 student có thể đăng ký nhiều enrollment).</li>
+</ul>
+<h3 id="b-sơ-đồ-erd-dạng-crows-foot"><strong>B. Sơ đồ ERD dạng Crow’s Foot</strong></h3>
+<p><img src="https://i.imgur.com/8Q2Qw2B.png" alt="ERD Crow&#x27;s Foot"></p>
+<p><strong>Giải thích thành phần (Crow’s Foot):</strong></p>
+<ul>
+<li><strong>Hình chữ nhật:</strong> Đại diện cho entity (Student, Course, Enrollment).</li>
+<li><strong>Đường nối có chân gà (Crow’s Foot):</strong> Thể hiện quan hệ nhiều (many). Ví dụ: Một Student có thể có nhiều Enrollment (1-n), một Course cũng có thể có nhiều Enrollment.</li>
+<li><strong>Đường thẳng đơn:</strong> Thể hiện quan hệ một (one).</li>
+<li><strong>Hình tròn ở đầu đường:</strong> Thể hiện optional (có thể có hoặc không).</li>
+<li><strong>Gạch dọc:</strong> Thể hiện bắt buộc (must have).</li>
+<li><strong>Bảng trung gian (Enrollment):</strong> Dùng để biểu diễn quan hệ nhiều-nhiều giữa Student và Course.</li>
+</ul>
+<h3 id="so-sánh-nhanh"><strong>So sánh nhanh</strong></h3>
+<ul>
+<li><strong>Chen:</strong> Dễ đọc, phù hợp lý thuyết, nhấn mạnh quan hệ.</li>
+<li><strong>Crow’s Foot:</strong> Phổ biến thực tế, trực quan về số lượng (1, nhiều, bắt buộc, tùy chọn).</li>
+</ul>
+<hr>
+<h2 id="2-chuẩn-hóa-cơ-sở-dữ-liệu-định-nghĩa-ví-dụ-và-sơ-đồ-từng-bước">2. Chuẩn hóa Cơ sở dữ liệu: Định nghĩa, ví dụ và sơ đồ từng bước</h2>
+<h3 id="định-nghĩa-từng-dạng-chuẩn-hóa">Định nghĩa từng dạng chuẩn hóa</h3>
+<p><strong>1NF (First Normal Form):</strong></p>
+<ul>
+<li>Mỗi ô trong bảng chỉ chứa một giá trị duy nhất (nguyên tử), không có thuộc tính đa trị hay lồng bảng.</li>
+</ul>
+<p><strong>2NF (Second Normal Form):</strong></p>
+<ul>
+<li>Bảng ở 1NF và mọi thuộc tính không khóa đều phụ thuộc hoàn toàn vào toàn bộ khóa chính (loại bỏ phụ thuộc một phần).</li>
+</ul>
+<p><strong>3NF (Third Normal Form):</strong></p>
+<ul>
+<li>Bảng ở 2NF và không có phụ thuộc bắc cầu (transitive dependency) giữa các thuộc tính không khóa.</li>
+</ul>
+<p><strong>BCNF (Boyce-Codd Normal Form):</strong></p>
+<ul>
+<li>Bảng ở 3NF và với mọi phụ thuộc hàm X → Y, X là siêu khóa.</li>
+</ul>
+<p><strong>4NF (Fourth Normal Form):</strong></p>
+<ul>
+<li>Bảng ở BCNF và không có phụ thuộc đa trị không tầm thường mà vế trái không phải là siêu khóa.</li>
+</ul>
+<p><strong>5NF (Fifth Normal Form):</strong></p>
+<ul>
+<li>Bảng ở 4NF và mọi phụ thuộc kết nối (join dependency) đều là hệ quả của các khóa.</li>
+</ul>
+<hr>
+<h3 id="ví-dụ-chuẩn-hóa-từng-bước-có-bảng-và-sơ-đồ">Ví dụ chuẩn hóa từng bước (có bảng và sơ đồ)</h3>
+<h4 id="bảng-chưa-chuẩn-hóa-unnormalized-table"><strong>Bảng chưa chuẩn hóa (Unnormalized Table):</strong></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>StudentID</th><th>Name</th><th>Courses</th><th>Instructor</th></tr></thead><tbody><tr><td>1</td><td>An</td><td>Math, Physics</td><td>Mr. A</td></tr><tr><td>2</td><td>Bình</td><td>Math</td><td>Mr. B</td></tr></tbody></table>
+<h4 id="1nf-tách-giá-trị-đa-trị-thành-từng-dòng"><strong>1NF: Tách giá trị đa trị thành từng dòng</strong></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>StudentID</th><th>Name</th><th>Course</th><th>Instructor</th></tr></thead><tbody><tr><td>1</td><td>An</td><td>Math</td><td>Mr. A</td></tr><tr><td>1</td><td>An</td><td>Physics</td><td>Mr. A</td></tr><tr><td>2</td><td>Bình</td><td>Math</td><td>Mr. B</td></tr></tbody></table>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">erDiagram</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int StudentID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Name</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Course</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Instructor</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT ||--o{ COURSE : enrolls</span></span></code></pre>
+<h4 id="2nf-loại-bỏ-phụ-thuộc-một-phần"><strong>2NF: Loại bỏ phụ thuộc một phần</strong></h4>
+<ul>
+<li>Nếu khóa chính là (StudentID, Course), Instructor chỉ phụ thuộc vào Course.</li>
+<li>Tách Instructor ra bảng riêng:</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Course</th><th>Instructor</th></tr></thead><tbody><tr><td>Math</td><td>Mr. A</td></tr><tr><td>Physics</td><td>Mr. A</td></tr></tbody></table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>StudentID</th><th>Name</th><th>Course</th></tr></thead><tbody><tr><td>1</td><td>An</td><td>Math</td></tr><tr><td>1</td><td>An</td><td>Physics</td></tr><tr><td>2</td><td>Bình</td><td>Math</td></tr></tbody></table>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">erDiagram</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int StudentID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Name</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Course</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Instructor</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT ||--o{ ENROLLMENT : enrolls</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  ENROLLMENT {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int StudentID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Course</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE ||--o{ ENROLLMENT : offered</span></span></code></pre>
+<h4 id="3nf-loại-bỏ-phụ-thuộc-bắc-cầu"><strong>3NF: Loại bỏ phụ thuộc bắc cầu</strong></h4>
+<ul>
+<li>Nếu có thêm ZipCode và City, City phụ thuộc vào ZipCode, ZipCode phụ thuộc vào StudentID.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>StudentID</th><th>Name</th><th>ZipCode</th><th>City</th></tr></thead><tbody><tr><td>1</td><td>An</td><td>70000</td><td>HCM</td></tr><tr><td>2</td><td>Bình</td><td>10000</td><td>Hanoi</td></tr></tbody></table>
+<ul>
+<li>Tách City ra bảng riêng:
+| ZipCode | City   |
+|---------|--------|
+| 70000   | HCM    |
+| 10000   | Hanoi  |</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>StudentID</th><th>Name</th><th>ZipCode</th></tr></thead><tbody><tr><td>1</td><td>An</td><td>70000</td></tr><tr><td>2</td><td>Bình</td><td>10000</td></tr></tbody></table>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">erDiagram</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int StudentID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string Name</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int ZipCode</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  ZIPCODE {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int ZipCode</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string City</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT ||--o{ ZIPCODE : lives_in</span></span></code></pre>
+<h4 id="bcnf-loại-bỏ-mọi-phụ-thuộc-mà-vế-trái-không-phải-siêu-khóa"><strong>BCNF: Loại bỏ mọi phụ thuộc mà vế trái không phải siêu khóa</strong></h4>
+<ul>
+<li>Ví dụ: GiangVienID → TenGiangVien nhưng GiangVienID không phải siêu khóa.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>SinhVienID</th><th>MonHoc</th><th>GiangVienID</th><th>TenGiangVien</th></tr></thead><tbody><tr><td>1</td><td>Toán</td><td>101</td><td>A</td></tr><tr><td>2</td><td>Lý</td><td>102</td><td>B</td></tr></tbody></table>
+<ul>
+<li>Tách TenGiangVien ra bảng riêng:
+| GiangVienID | TenGiangVien |
+|-------------|--------------|
+| 101         | A            |
+| 102         | B            |</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>SinhVienID</th><th>MonHoc</th><th>GiangVienID</th></tr></thead><tbody><tr><td>1</td><td>Toán</td><td>101</td></tr><tr><td>2</td><td>Lý</td><td>102</td></tr></tbody></table>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">erDiagram</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  TEACHER {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int GiangVienID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string TenGiangVien</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string MonHoc</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int GiangVienID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    int SinhVienID</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT ||--o{ COURSE : enrolls</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE ||--o{ TEACHER : taught_by</span></span></code></pre>
+<h4 id="4nf-loại-bỏ-phụ-thuộc-đa-trị"><strong>4NF: Loại bỏ phụ thuộc đa trị</strong></h4>
+<ul>
+<li>Ví dụ: Một sinh viên có thể học nhiều môn và có nhiều sở thích độc lập.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>SinhVien</th><th>MonHoc</th><th>SoThich</th></tr></thead><tbody><tr><td>An</td><td>Toán</td><td>Đọc</td></tr><tr><td>An</td><td>Toán</td><td>Bóng đá</td></tr><tr><td>An</td><td>Lý</td><td>Đọc</td></tr><tr><td>An</td><td>Lý</td><td>Bóng đá</td></tr></tbody></table>
+<ul>
+<li>Tách thành hai bảng:
+| SinhVien | MonHoc |
+|----------|--------|
+| An       | Toán   |
+| An       | Lý     |</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>SinhVien</th><th>SoThich</th></tr></thead><tbody><tr><td>An</td><td>Đọc</td></tr><tr><td>An</td><td>Bóng đá</td></tr></tbody></table>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">erDiagram</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string SinhVien</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string MonHoc</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  HOBBY {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string SoThich</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT ||--o{ COURSE : learns</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT ||--o{ HOBBY : has</span></span></code></pre>
+<h4 id="5nf-loại-bỏ-dư-thừa-khi-tái-tạo-bảng-từ-các-phép-chiếu"><strong>5NF: Loại bỏ dư thừa khi tái tạo bảng từ các phép chiếu</strong></h4>
+<ul>
+<li>Ví dụ: Một bảng lưu thông tin về SinhVien, MonHoc, GiangVien, mỗi quan hệ độc lập.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>SinhVien</th><th>MonHoc</th><th>GiangVien</th></tr></thead><tbody><tr><td>An</td><td>Toán</td><td>A</td></tr><tr><td>An</td><td>Lý</td><td>B</td></tr><tr><td>Bình</td><td>Toán</td><td>A</td></tr></tbody></table>
+<ul>
+<li>Tách thành các bảng nhỏ hơn:
+| SinhVien | MonHoc |
+|----------|--------|
+| An       | Toán   |
+| An       | Lý     |
+| Bình     | Toán   |</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>SinhVien</th><th>GiangVien</th></tr></thead><tbody><tr><td>An</td><td>A</td></tr><tr><td>An</td><td>B</td></tr><tr><td>Bình</td><td>A</td></tr></tbody></table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>MonHoc</th><th>GiangVien</th></tr></thead><tbody><tr><td>Toán</td><td>A</td></tr><tr><td>Lý</td><td>B</td></tr></tbody></table>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">erDiagram</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string SinhVien</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string MonHoc</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  TEACHER {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    string GiangVien</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT ||--o{ COURSE : learns</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  STUDENT ||--o{ TEACHER : assigned</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  COURSE ||--o{ TEACHER : taught_by</span></span></code></pre>
+<hr>
+<h2 id="3-tương-tác-với-dữ-liệu-bằng-truy-vấn-sql">3. Tương tác với Dữ liệu bằng Truy vấn SQL</h2>
+<p>Sau khi thiết kế và chuẩn hóa, SQL là cách bạn truy vấn và thao tác dữ liệu.</p>
+<h3 id="các-phép-join-cơ-bản"><strong>Các phép JOIN cơ bản:</strong></h3>
+<ul>
+<li><strong>INNER JOIN:</strong> Lấy bản ghi khớp ở cả hai bảng.</li>
+<li><strong>SELF JOIN:</strong> Join một bảng với chính nó (dùng bí danh).</li>
+<li><strong>JOIN nhiều bảng:</strong> Kết hợp dữ liệu từ nhiều bảng.</li>
+<li><strong>COMPOUND JOIN CONDITION:</strong> Join với nhiều cột khóa chính.</li>
+</ul>
+<h3 id="ví-dụ-sql-join"><strong>Ví dụ SQL JOIN:</strong></h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- INNER JOIN</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">name</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">email</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> orders o</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">INNER JOIN</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers c </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ON</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">customer_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- SELF JOIN</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> e1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">name</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> AS</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> employee, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">e2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">name</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> AS</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> manager</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> employees e1</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">LEFT JOIN</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> employees e2 </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ON</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> e1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">reports_to</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> e2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">employee_id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- JOIN nhiều bảng</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">order_date</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">name</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">s</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">status_name</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> orders o</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">JOIN</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers c </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ON</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">customer_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">id</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">JOIN</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> order_statuses s </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ON</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">status_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> s</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- COMPOUND JOIN</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> oi.</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, o.</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> order_items oi</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">JOIN</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> orders o </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ON</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> oi</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">order_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> AND</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> oi</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">product_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">product_id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span></code></pre>
+<hr>
+<h2 id="kết-luận"><strong>Kết luận</strong></h2>
+<p>Hiểu biết về ERD, chuẩn hóa và các truy vấn SQL tạo nên nền tảng vững chắc cho việc quản lý cơ sở dữ liệu hiệu quả, cho phép bạn xây dựng các hệ thống dữ liệu mạnh mẽ, hiệu quả và đáng tin cậy.</p> </article> <hr class="my-8 border-dashed"> <a href="https://github.com/satnaing/astro-paper/edit/main/src/data/blog/w2-database-sql-2.md" target="_blank" rel="noopener noreferrer" class="flex justify-baseline gap-1.5 opacity-80 hover:text-accent sm:hidden"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span>Edit page</span></a> <ul class="mt-4 mb-8 sm:my-8"> <li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/sql/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>sql</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/database/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-3"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>database</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/erd/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-4"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>erd</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/normalization/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-5"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>normalization</span> </a> </li> </ul> <div id="btt-btn-container" class="fixed end-4 bottom-8 z-50 md:sticky md:end-auto md:float-end md:me-1 translate-y-14 opacity-0 transition duration-500"> <button data-button="back-to-top" class="group relative bg-background px-2 py-1 size-14 rounded-full shadow-xl md:h-8 md:w-fit md:rounded-md md:shadow-none md:focus-visible:rounded-none md:bg-background/35 md:bg-clip-padding md:backdrop-blur-lg"> <span id="progress-indicator" class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block rotate-90 md:hidden"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span class="sr-only text-sm group-hover:text-accent md:not-sr-only"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M16 9l-4 -4" /><path d="M8 9l4 -4" /></svg>
+Back To Top
+</span> </button> </div> <script data-astro-rerun>
+  /** Scrolls the document to the top when
+   * the "Back to Top" button is clicked. */
+  function backToTop() {
+    const rootElement = document.documentElement;
+    const btnContainer = document.querySelector("#btt-btn-container");
+    const backToTopBtn = document.querySelector("[data-button='back-to-top']");
+    const progressIndicator = document.querySelector("#progress-indicator");
+
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
+      return;
+
+    // Attach click event handler for back-to-top button
+    backToTopBtn.addEventListener("click", () => {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
+
+    // Handle button visibility according to scroll position
+    let lastVisible = null;
+    function handleScroll() {
+      const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+      const scrollTop = rootElement.scrollTop;
+      const scrollPercent = Math.floor((scrollTop / scrollTotal) * 100);
+
+      progressIndicator.style.setProperty(
+        "background-image",
+        `conic-gradient(var(--accent), var(--accent) ${scrollPercent}%, transparent ${scrollPercent}%)`
+      );
+
+      const isVisible = scrollTop / scrollTotal > 0.3;
+
+      if (isVisible !== lastVisible) {
+        btnContainer.classList.toggle("opacity-100", isVisible);
+        btnContainer.classList.toggle("translate-y-0", isVisible);
+        btnContainer.classList.toggle("opacity-0", !isVisible);
+        btnContainer.classList.toggle("translate-y-14", !isVisible);
+        lastVisible = isVisible;
+      }
+    }
+
+    let ticking = false;
+    document.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+  backToTop();
+</script> <div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start"><span class="italic">Share this post on:</span><div class="text-center"><a href="https://wa.me/?text=https://astro-paper.pages.dev/posts/w2-database-sql-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via WhatsApp"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg><span class="sr-only">Share this post via WhatsApp</span></a><a href="https://www.facebook.com/sharer.php?u=https://astro-paper.pages.dev/posts/w2-database-sql-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg><span class="sr-only">Share this post on Facebook</span></a><a href="https://x.com/intent/post?url=https://astro-paper.pages.dev/posts/w2-database-sql-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on X"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg><span class="sr-only">Share this post on X</span></a><a href="https://t.me/share/url?url=https://astro-paper.pages.dev/posts/w2-database-sql-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via Telegram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg><span class="sr-only">Share this post via Telegram</span></a><a href="https://pinterest.com/pin/create/button/?url=https://astro-paper.pages.dev/posts/w2-database-sql-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Pinterest"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg><span class="sr-only">Share this post on Pinterest</span></a><a href="mailto:?subject=See%20this%20post&#38;body=https://astro-paper.pages.dev/posts/w2-database-sql-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via email"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg><span class="sr-only">Share this post via email</span></a></div></div> <hr class="my-6 border-dashed"> <!-- Previous/Next Post Buttons --> <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2"> <a href="/posts/astro-paper-v5" class="flex w-full gap-1 hover:opacity-75"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <div> <span>Previous Post</span> <div class="text-sm text-accent/85">AstroPaper 5.0</div> </div> </a> <a href="/posts/w2-list-advanced" class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"> <div> <span>Next Post</span> <div class="text-sm text-accent/85">List nâng cao &amp; Cấu trúc dữ liệu Python</div> </div> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg> </a> </div> </main> <footer class="w-full mt-auto"> <div class="mx-auto max-w-app px-0"> <hr class="border-border" aria-hidden="true"> </div> <div class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/satnaing/astro-paper" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on GitHub"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">AstroPaper on GitHub</span> </a><a href="https://x.com/username" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on X"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">AstroPaper on X</span> </a><a href="https://www.linkedin.com/in/username/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on LinkedIn"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">AstroPaper on LinkedIn</span> </a><a href="mailto:yourmail@gmail.com" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="Send an email to AstroPaper"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only">Send an email to AstroPaper</span> </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>Copyright &#169; 2025</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>All rights reserved.</span> </div> </div> </footer>  </body></html> <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Create the main container div
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    // Create the progress bar div
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    // Append the progress bar to the progress container
+    progressContainer.appendChild(progressBar);
+
+    // Append the progress container to the document body or any other desired parent element
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const copyButton = document.createElement("button");
+      copyButton.className =
+        "copy-code absolute end-3 top-3 rounded bg-muted/80 px-2 py-1 text-xs leading-4 text-foreground font-medium";
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

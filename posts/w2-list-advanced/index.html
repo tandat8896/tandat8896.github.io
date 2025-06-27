@@ -1,0 +1,586 @@
+<!DOCTYPE html><html dir="ltr" lang="en" class="scroll-smooth" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://astro-paper.pages.dev/posts/w2-list-advanced/"><meta name="generator" content="Astro v5.10.1"><!-- General Meta Tags --><title>List nâng cao &amp; Cấu trúc dữ liệu Python | AstroPaper</title><meta name="title" content="List nâng cao &#38; Cấu trúc dữ liệu Python | AstroPaper"><meta name="description" content="Bài viết nâng cao về List và các cấu trúc dữ liệu trong Python: lý thuyết, ví dụ, thuật toán, ứng dụng thực tế."><meta name="author" content="Sat Naing"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="List nâng cao &#38; Cấu trúc dữ liệu Python | AstroPaper"><meta property="og:description" content="Bài viết nâng cao về List và các cấu trúc dữ liệu trong Python: lý thuyết, ví dụ, thuật toán, ứng dụng thực tế."><meta property="og:url" content="https://astro-paper.pages.dev/posts/w2-list-advanced/"><meta property="og:image" content="https://astro-paper.pages.dev/posts/w2-list-advanced/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2024-06-02T10:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://astro-paper.pages.dev/posts/w2-list-advanced/"><meta property="twitter:title" content="List nâng cao &#38; Cấu trúc dữ liệu Python | AstroPaper"><meta property="twitter:description" content="Bài viết nâng cao về List và các cấu trúc dữ liệu trong Python: lý thuyết, ví dụ, thuật toán, ứng dụng thực tế."><meta property="twitter:image" content="https://astro-paper.pages.dev/posts/w2-list-advanced/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"List nâng cao & Cấu trúc dữ liệu Python | AstroPaper","image":"https://astro-paper.pages.dev/posts/w2-list-advanced/index.png","datePublished":"2024-06-02T10:00:00.000Z","author":[{"@type":"Person","name":"Sat Naing","url":"https://satnaing.dev/"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="AstroPaper" href="https://astro-paper.pages.dev/rss.xml"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CtSceO8m.js"></script><script src="/toggle-theme.js"></script><link rel="stylesheet" href="/_astro/about.DvdmnzPS.css">
+<style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+:where([data-astro-image]){object-fit:var(--fit);object-position:var(--pos);height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}
+</style><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: list-nang-cao-c\1EA5u-truc-d\1EEF-li\1EC7u-python; }@layer astro { ::view-transition-old(list-nang-cao-c\1EA5u-truc-d\1EEF-li\1EC7u-python) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(list-nang-cao-c\1EA5u-truc-d\1EEF-li\1EC7u-python) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(list-nang-cao-c\1EA5u-truc-d\1EEF-li\1EC7u-python) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(list-nang-cao-c\1EA5u-truc-d\1EEF-li\1EC7u-python) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-2"] { view-transition-name: python; }@layer astro { ::view-transition-old(python) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(python) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(python) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(python) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-3"] { view-transition-name: list; }@layer astro { ::view-transition-old(list) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(list) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(list) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(list) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-4"] { view-transition-name: data-structure; }@layer astro { ::view-transition-old(data-structure) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(data-structure) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(data-structure) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(data-structure) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-5"] { view-transition-name: advanced; }@layer astro { ::view-transition-old(advanced) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(advanced) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(advanced) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(advanced) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body data-astro-cid-sckkx6r4>  <header> <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4">
+Skip to content
+</a> <div id="nav-container" class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"> <a href="/" class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"> AstroPaper </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&#38;>li>a]:block [&#38;>li>a]:px-4 [&#38;>li>a]:py-3 [&#38;>li>a]:text-center [&#38;>li>a]:font-medium [&#38;>li>a]:hover:text-accent sm:[&#38;>li>a]:px-2 sm:[&#38;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/posts" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/tags">
+Tags
+</a> </li> <li class="col-span-2"> <a href="/about">
+About
+</a> </li> <li class="col-span-2"> <a href="/archives" class="group inline-block hover:text-accent focus-outline flex justify-center p-3 sm:p-1" aria-label="archives" title="Archives"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only">Archives</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <a href="/search" class="group inline-block hover:text-accent focus-outline flex p-3 sm:p-1" aria-label="search" title="Search"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span class="sr-only">Search</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent" title="Toggles light & dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </div> <div class="mx-auto max-w-app px-4"> <hr class="border-border" aria-hidden="true"> </div> </header> <script type="module">function s(){const e=document.querySelector("#menu-btn"),t=document.querySelector("#menu-items"),n=document.querySelector("#menu-icon"),o=document.querySelector("#close-icon");!e||!t||!n||!o||e.addEventListener("click",()=>{const c=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",c?"false":"true"),e.setAttribute("aria-label",c?"Open Menu":"Close Menu"),t.classList.toggle("hidden"),n.classList.toggle("hidden"),o.classList.toggle("hidden")})}s();document.addEventListener("astro:after-swap",s);</script> <div class="mx-auto flex w-full max-w-app items-center justify-start px-2"><a id="back-button" href="/" class="group inline-block hover:text-accent focus-outline mt-8 mb-2 flex hover:text-foreground/75"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg><span>Go back</span></a></div><script type="module">function o(){const t=document.querySelector("#back-button"),e=sessionStorage.getItem("backUrl");e&&t&&(t.href=e)}document.addEventListener("astro:page-load",o);o();</script> <main id="main-content" class="mx-auto w-full max-w-app px-4 pb-12" data-pagefind-body> <h1 class="inline-block text-2xl font-bold text-accent sm:text-3xl" data-astro-transition-scope="astro-fam6wyqg-1"> List nâng cao &amp; Cấu trúc dữ liệu Python </h1> <div class="my-2 flex items-center gap-2"> <div class="flex items-center gap-x-2 opacity-80"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-[1.375rem]"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg>  <time class="text-sm sm:text-base" datetime="2024-06-02T10:00:00.000Z">2 Jun, 2024</time> </div> <span aria-hidden="true" class="max-sm:hidden">|</span> <a href="https://github.com/satnaing/astro-paper/edit/main/src/data/blog/w2-list-advanced.md" target="_blank" rel="noopener noreferrer" class="flex justify-baseline gap-1.5 opacity-80 hover:text-accent max-sm:hidden"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span>Edit page</span></a> </div> <article id="article" class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <h1 id="hiểu-về-cấu-trúc-dữ-liệu-khám-phá-sâu-hơn-về-list-trong-python">Hiểu về Cấu trúc dữ liệu: Khám phá sâu hơn về List trong Python</h1>
+<p>Cấu trúc dữ liệu là một khái niệm nền tảng trong khoa học máy tính và lập trình. Chúng là những công cụ thiết yếu để tổ chức và quản lý dữ liệu một cách hiệu quả, giúp việc truy cập và sửa đổi thông tin trong hệ thống máy tính trở nên dễ dàng hơn. Trong Python, chúng ta tương tác với nhiều cấu trúc dữ liệu khác nhau hàng ngày, dù có thể không nhận ra.</p>
+<h2 id="cấu-trúc-dữ-liệu-là-gì">Cấu trúc dữ liệu là gì?</h2>
+<p>Về bản chất, cấu trúc dữ liệu là một định dạng chuyên biệt để tổ chức và lưu trữ dữ liệu. Hãy hình dung nó như một bản thiết kế cho cách dữ liệu được sắp xếp trong bộ nhớ máy tính, được thiết kế để cho phép truy cập và cập nhật hiệu quả. Cách dữ liệu được cấu trúc ảnh hưởng trực tiếp đến tốc độ và hiệu quả bạn có thể làm việc với nó.</p>
+<p>Python cung cấp nhiều cấu trúc dữ liệu tích hợp sẵn (built-in), đã được tối ưu hóa cho các trường hợp sử dụng phổ biến. Chúng bao gồm:</p>
+<ul>
+<li><strong>List (Danh sách)</strong></li>
+<li><strong>Dictionary (Từ điển)</strong></li>
+<li><strong>Tuple (Bộ)</strong></li>
+<li><strong>Set (Tập hợp)</strong></li>
+</ul>
+<p>Ngoài ra, còn có các cấu trúc dữ liệu do người dùng tự định nghĩa (user-defined) như Stack, Queue, Tree, Linked List và Graph, được xây dựng dựa trên các khái niệm cơ bản này. Trọng tâm của chúng ta hôm nay sẽ là kiểu dữ liệu List rất linh hoạt.</p>
+<hr>
+<h2 id="list-trong-python-bộ-chứa-dữ-liệu-quen-thuộc-hàng-ngày-của-bạn">List trong Python: Bộ chứa dữ liệu quen thuộc hàng ngày của bạn</h2>
+<p>Một list trong Python là một bộ chứa có thể chứa các phần tử. Nó cực kỳ linh hoạt, cho phép bạn lưu trữ các tập hợp các mục có thể thuộc các kiểu dữ liệu khác nhau (mặc dù thường chúng chứa các kiểu tương tự để nhất quán).</p>
+<h3 id="1-đánh-chỉ-mục-indexing-và-cắt-lát-slicing">1. Đánh chỉ mục (Indexing) và Cắt lát (Slicing)</h3>
+<p>List là các tập hợp có thứ tự, nghĩa là mỗi phần tử có một vị trí cụ thể, được xác định bằng một chỉ mục (index).</p>
+<ul>
+<li><strong>Đánh chỉ mục tiến (Forward Indexing):</strong> Bắt đầu từ 0 cho phần tử đầu tiên, 1 cho phần tử thứ hai, v.v.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 7</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 9</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 6</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # 4</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # 7</span></span></code></pre>
+</li>
+<li><strong>Đánh chỉ mục lùi (Backward Indexing):</strong> Cho phép truy cập từ cuối danh sách.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # 6</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # 9</span></span></code></pre>
+</li>
+</ul>
+<p><strong>Cắt lát (Slicing)</strong> cho phép bạn trích xuất một phần (hoặc “lát”) của một list. Cú pháp là <code>list[start:end:step]</code>:</p>
+<ul>
+<li><strong>start:</strong> Chỉ mục bắt đầu (bao gồm). Giá trị mặc định là 0.</li>
+<li><strong>end:</strong> Chỉ mục kết thúc (không bao gồm). Lát cắt dừng trước chỉ mục này.</li>
+<li><strong>step:</strong> Bước nhảy giữa các phần tử. Giá trị mặc định là 1.</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 7</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 9</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 6</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 8</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # [9, 2]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">     # [4, 7, 9]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">:</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">     # [2, 6, 8]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">::</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # [4, 9, 6]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">::</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">   # [8, 6, 2, 9, 7, 4]  # Đảo ngược list</span></span></code></pre>
+<hr>
+<h3 id="2-sửa-đổi-list-phương-thức---methods">2. Sửa đổi List (Phương thức - Methods)</h3>
+<p>List là kiểu dữ liệu có thể thay đổi (mutable), nghĩa là nội dung của chúng có thể được thay đổi sau khi tạo. Python cung cấp một số phương thức tích hợp sẵn để sửa đổi list trực tiếp. Các phương thức này thường thay đổi list tại chỗ (in-place) và trả về None.</p>
+<ul>
+<li><strong>append(value):</strong> Thêm value vào cuối list.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">append</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [1, 2, 3, 4]</span></span></code></pre>
+</li>
+<li><strong>insert(index, value):</strong> Thêm value tại một index cụ thể.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">insert</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 10</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [10, 1, 2, 3, 4]</span></span></code></pre>
+</li>
+<li><strong>extend(another_list):</strong> Nối tất cả các phần tử từ another_list vào cuối list hiện tại.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">extend</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">5</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">6</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [10, 1, 2, 3, 4, 5, 6]</span></span></code></pre>
+</li>
+<li><strong>Cập nhật một phần tử:</strong>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 99</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [10, 1, 99, 3, 4, 5, 6]</span></span></code></pre>
+</li>
+</ul>
+<hr>
+<h3 id="3-các-toán-tử-của-list--và">3. Các toán tử của List (+ và *)</h3>
+<p>List trong Python cũng hỗ trợ toán tử + để nối (concatenation) và * để lặp lại (repetition).</p>
+<ul>
+<li><strong>+ (Nối):</strong> Ghép hai list để tạo một list mới.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data1 </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data2 </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 5</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 6</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> data1 </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">+</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> data2</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [1, 2, 3, 4, 5, 6]</span></span></code></pre>
+</li>
+<li><strong>* (Lặp lại):</strong> Lặp lại các phần tử của list một số lần cụ thể, tạo ra một list mới.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data_m </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">*</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data_m</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [0, 1, 0, 1, 0, 1]</span></span></code></pre>
+</li>
+</ul>
+<p><strong>Lưu ý quan trọng về nested list:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># Sai lầm phổ biến:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">result </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [[</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">*</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">*</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">result</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 99</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">result</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [[99, -1, -1], [99, -1, -1]]</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># Đúng:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">result </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [[</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">*</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> _ </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">in</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> range</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">result</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 99</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">result</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [[99, -1, -1], [-1, -1, -1]]</span></span></code></pre>
+<hr>
+<h3 id="4-sắp-xếp-list">4. Sắp xếp List</h3>
+<ul>
+<li><strong>sort():</strong> Sắp xếp list tại chỗ (in-place).
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">5</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 9</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">sort</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">()</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [1, 2, 5, 9]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">sort</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#D7DBE0">reverse</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#FF5874">True</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [9, 5, 2, 1]</span></span></code></pre>
+</li>
+<li><strong>sorted():</strong> Trả về một list mới đã sắp xếp, không thay đổi list gốc.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 4</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">sorted_data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> sorted</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">sorted_data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [1, 3, 4]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">         # [3, 1, 4]</span></span></code></pre>
+</li>
+</ul>
+<hr>
+<h3 id="5-xóa-phần-tử">5. Xóa phần tử</h3>
+<ul>
+<li><strong>pop(index):</strong> Xóa và trả về phần tử tại index được chỉ định. Nếu không có chỉ mục nào được cung cấp, nó sẽ xóa và trả về phần tử cuối cùng.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 4</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">x </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">pop</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">x</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">     # 3</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [1, 2, 4]</span></span></code></pre>
+</li>
+<li><strong>remove(value):</strong> Xóa lần xuất hiện đầu tiên của value được chỉ định.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">remove</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [1, 4]</span></span></code></pre>
+</li>
+<li><strong>clear():</strong> Xóa tất cả các phần tử khỏi list.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">clear</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">()</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # []</span></span></code></pre>
+</li>
+<li><strong>del:</strong> Xóa các phần tử bằng chỉ mục hoặc cắt lát.
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">del</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [1, 4, 5]</span></span></code></pre>
+</li>
+</ul>
+<hr>
+<h3 id="6-các-phương-thức-list-hữu-ích-khác">6. Các phương thức List hữu ích khác</h3>
+<ul>
+<li><strong>index(value):</strong> Trả về chỉ mục của lần xuất hiện đầu tiên của value.</li>
+<li><strong>reverse():</strong> Đảo ngược thứ tự các phần tử trong list tại chỗ.</li>
+<li><strong>count(value):</strong> Trả về số lần value xuất hiện trong list.</li>
+<li><strong>copy():</strong> Trả về một bản sao nông (shallow copy) của list.</li>
+</ul>
+<p><strong>Lưu ý về shallow copy và deepcopy:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> copy</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">lst </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 4</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">shallow </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> lst</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">copy</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">()</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">deep </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> copy</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">deepcopy</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">lst</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">lst</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 99</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">shallow</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [[99, 2], [3, 4]]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">deep</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">     # [[1, 2], [3, 4]]</span></span></code></pre>
+<hr>
+<h3 id="7-các-hàm-tích-hợp-sẵn-built-in-functions-cho-list">7. Các hàm tích hợp sẵn (Built-in Functions) cho List</h3>
+<p>Python cũng cung cấp các hàm tích hợp sẵn toàn cục hoạt động trên list:</p>
+<ul>
+<li><strong>len(list):</strong> Trả về số phần tử trong list.</li>
+<li><strong>min(list):</strong> Trả về giá trị nhỏ nhất trong list.</li>
+<li><strong>max(list):</strong> Trả về giá trị lớn nhất trong list.</li>
+<li><strong>sorted(iterable, reverse=False):</strong> Trả về một list đã sắp xếp mới.</li>
+<li><strong>sum(iterable):</strong> Tính tổng tất cả các phần tử số trong list.</li>
+<li>*<em>zip(<em>iterables):</em></em> Ghép nối các phần tử từ nhiều đối tượng lặp lại.</li>
+<li><strong>reversed(sequence):</strong> Trả về một iterator đảo ngược.</li>
+<li><strong>enumerate(iterable):</strong> Trả về một iterator tạo ra các cặp (index, value).</li>
+</ul>
+<p><strong>Ví dụ:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">6</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 7</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 9</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">len</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">      # 5</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">min</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">      # 1</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">max</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">      # 9</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">sum</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">      # 24</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#C5E478">list</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">reversed</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [1, 9, 7, 1, 6]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">sorted</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [1, 1, 6, 7, 9]</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> idx</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> val </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">in</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> enumerate</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">):</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">    print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">idx</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF"> val</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">names </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Alice</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Bob</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Charlie</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">scores </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">85</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 90</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 78</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> name</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> score </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">in</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> zip</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">names</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF"> scores</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">):</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">    print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">f</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">"</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">{</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">name</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">}</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">: </span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">{</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">score</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">}</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span></code></pre>
+<hr>
+<h3 id="8-đối-tượng-có-thể-thay-đổi-mutable-vs-không-thể-thay-đổi-immutable">8. Đối tượng có thể thay đổi (Mutable) vs. không thể thay đổi (Immutable)</h3>
+<ul>
+<li><strong>Mutable:</strong> list, dict, set (có thể thay đổi sau khi tạo).</li>
+<li><strong>Immutable:</strong> int, str, tuple (không thể thay đổi sau khi tạo).</li>
+</ul>
+<p><strong>Kiểm tra hai biến có trỏ đến cùng một đối tượng:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">a </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">b </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> a</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">id</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">a</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> ==</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> id</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">b</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # True</span></span></code></pre>
+<hr>
+<h3 id="9-các-thuật-toán-trên-list">9. Các thuật toán trên List</h3>
+<ul>
+<li><strong>Tìm kiếm tuyến tính (Linear Searching):</strong>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 7</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 9</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 6</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> linear_search</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">lst</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> target</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> i</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> val </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">in</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> enumerate</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">lst</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">):</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">        if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> val </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">==</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> target</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">            return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> i</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> -</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">linear_search</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 9</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # 2</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">linear_search</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 8</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # -1</span></span></code></pre>
+</li>
+<li><strong>Sắp xếp bằng remove() và append():</strong>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 7</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 9</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 6</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">result </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> []</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">while</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    m </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> min</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">remove</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">m</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    result</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">append</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">m</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">result</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [2, 4, 6, 7, 9]</span></span></code></pre>
+</li>
+</ul>
+<hr>
+<h3 id="10-ứng-dụng-thực-tế-case-studies">10. Ứng dụng thực tế (Case Studies)</h3>
+<ul>
+<li><strong>Mảng tích phân (Integral Arrays):</strong>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">integral </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> num </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">in</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> data</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    integral</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">append</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">integral</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> +</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF"> num</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">integral</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [0, 1, 3, 6, 10, 15]</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># Tính tổng đoạn [i, j]: integral[j+1] - integral[i]</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">integral</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> -</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF"> integral</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # Tổng từ data[1] đến data[3]: 9</span></span></code></pre>
+</li>
+<li><strong>Phân tích bình luận khách hàng:</strong>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">comments </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">hay</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">tốt</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">hay</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">bình thường</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">hay</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">from</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> collections </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Counter</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">freq </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> Counter</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">comments</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">freq.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">most_common</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # [('hay', 3)]</span></span></code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="kết-luận">Kết luận</h2>
+<p>List là một cấu trúc dữ liệu mạnh mẽ và linh hoạt trong Python, cung cấp các cách hiệu quả để lưu trữ, tổ chức và thao tác với các tập hợp dữ liệu. Hiểu rõ các phương thức của chúng, các hàm tích hợp sẵn và khái niệm quan trọng về khả năng thay đổi sẽ nâng cao đáng kể kỹ năng lập trình Python của bạn. Bằng cách nắm vững list, bạn xây dựng một nền tảng vững chắc để giải quyết các cấu trúc dữ liệu và thuật toán phức tạp hơn trong tương lai.</p> </article> <hr class="my-8 border-dashed"> <a href="https://github.com/satnaing/astro-paper/edit/main/src/data/blog/w2-list-advanced.md" target="_blank" rel="noopener noreferrer" class="flex justify-baseline gap-1.5 opacity-80 hover:text-accent sm:hidden"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span>Edit page</span></a> <ul class="mt-4 mb-8 sm:my-8"> <li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/python/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>python</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/list/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-3"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>list</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/data-structure/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-4"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>data-structure</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/advanced/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-5"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>advanced</span> </a> </li> </ul> <div id="btt-btn-container" class="fixed end-4 bottom-8 z-50 md:sticky md:end-auto md:float-end md:me-1 translate-y-14 opacity-0 transition duration-500"> <button data-button="back-to-top" class="group relative bg-background px-2 py-1 size-14 rounded-full shadow-xl md:h-8 md:w-fit md:rounded-md md:shadow-none md:focus-visible:rounded-none md:bg-background/35 md:bg-clip-padding md:backdrop-blur-lg"> <span id="progress-indicator" class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block rotate-90 md:hidden"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span class="sr-only text-sm group-hover:text-accent md:not-sr-only"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M16 9l-4 -4" /><path d="M8 9l4 -4" /></svg>
+Back To Top
+</span> </button> </div> <script data-astro-rerun>
+  /** Scrolls the document to the top when
+   * the "Back to Top" button is clicked. */
+  function backToTop() {
+    const rootElement = document.documentElement;
+    const btnContainer = document.querySelector("#btt-btn-container");
+    const backToTopBtn = document.querySelector("[data-button='back-to-top']");
+    const progressIndicator = document.querySelector("#progress-indicator");
+
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
+      return;
+
+    // Attach click event handler for back-to-top button
+    backToTopBtn.addEventListener("click", () => {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
+
+    // Handle button visibility according to scroll position
+    let lastVisible = null;
+    function handleScroll() {
+      const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+      const scrollTop = rootElement.scrollTop;
+      const scrollPercent = Math.floor((scrollTop / scrollTotal) * 100);
+
+      progressIndicator.style.setProperty(
+        "background-image",
+        `conic-gradient(var(--accent), var(--accent) ${scrollPercent}%, transparent ${scrollPercent}%)`
+      );
+
+      const isVisible = scrollTop / scrollTotal > 0.3;
+
+      if (isVisible !== lastVisible) {
+        btnContainer.classList.toggle("opacity-100", isVisible);
+        btnContainer.classList.toggle("translate-y-0", isVisible);
+        btnContainer.classList.toggle("opacity-0", !isVisible);
+        btnContainer.classList.toggle("translate-y-14", !isVisible);
+        lastVisible = isVisible;
+      }
+    }
+
+    let ticking = false;
+    document.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+  backToTop();
+</script> <div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start"><span class="italic">Share this post on:</span><div class="text-center"><a href="https://wa.me/?text=https://astro-paper.pages.dev/posts/w2-list-advanced/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via WhatsApp"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg><span class="sr-only">Share this post via WhatsApp</span></a><a href="https://www.facebook.com/sharer.php?u=https://astro-paper.pages.dev/posts/w2-list-advanced/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg><span class="sr-only">Share this post on Facebook</span></a><a href="https://x.com/intent/post?url=https://astro-paper.pages.dev/posts/w2-list-advanced/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on X"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg><span class="sr-only">Share this post on X</span></a><a href="https://t.me/share/url?url=https://astro-paper.pages.dev/posts/w2-list-advanced/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via Telegram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg><span class="sr-only">Share this post via Telegram</span></a><a href="https://pinterest.com/pin/create/button/?url=https://astro-paper.pages.dev/posts/w2-list-advanced/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Pinterest"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg><span class="sr-only">Share this post on Pinterest</span></a><a href="mailto:?subject=See%20this%20post&#38;body=https://astro-paper.pages.dev/posts/w2-list-advanced/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via email"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg><span class="sr-only">Share this post via email</span></a></div></div> <hr class="my-6 border-dashed"> <!-- Previous/Next Post Buttons --> <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2"> <a href="/posts/w2-database-sql-2" class="flex w-full gap-1 hover:opacity-75"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <div> <span>Previous Post</span> <div class="text-sm text-accent/85">Database SQL (2) - ERD, Chuẩn hóa &amp; Truy vấn SQL</div> </div> </a> <a href="/posts/w2-list" class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"> <div> <span>Next Post</span> <div class="text-sm text-accent/85">Khám phá Python List: Cấu trúc dữ liệu linh hoạt và mạnh mẽ</div> </div> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg> </a> </div> </main> <footer class="w-full mt-auto"> <div class="mx-auto max-w-app px-0"> <hr class="border-border" aria-hidden="true"> </div> <div class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/satnaing/astro-paper" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on GitHub"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">AstroPaper on GitHub</span> </a><a href="https://x.com/username" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on X"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">AstroPaper on X</span> </a><a href="https://www.linkedin.com/in/username/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on LinkedIn"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">AstroPaper on LinkedIn</span> </a><a href="mailto:yourmail@gmail.com" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="Send an email to AstroPaper"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only">Send an email to AstroPaper</span> </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>Copyright &#169; 2025</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>All rights reserved.</span> </div> </div> </footer>  </body></html> <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Create the main container div
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    // Create the progress bar div
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    // Append the progress bar to the progress container
+    progressContainer.appendChild(progressBar);
+
+    // Append the progress container to the document body or any other desired parent element
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const copyButton = document.createElement("button");
+      copyButton.className =
+        "copy-code absolute end-3 top-3 rounded bg-muted/80 px-2 py-1 text-xs leading-4 text-foreground font-medium";
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
