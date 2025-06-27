@@ -1,0 +1,301 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const modules = [
+  {
+    id: 1,
+    title: "Module 1 - Fundamental Math and Programming",
+    status: "in-progress",
+    weeks: [
+      {
+        week: "W1",
+        lessons: [
+          { title: "Skills for AIO2025", link: "/lessons/w1-skills-aio2025" },
+          { title: "Basic Python (Branching~Rule based Chatbot)", link: "/lessons/w1-basic-python-branching" },
+          { title: "Database SQL (1)", link: "/lessons/w1-database-sql-1" },
+          { title: "Basic Python (String and Loops~Text preprocessing)", link: "/lessons/w1-basic-python-strings" },
+          { title: "Coding Methodology", link: "/lessons/w1-coding-methodology" },
+          { title: "TA Exercise (activation functions)", link: "/lessons/w1-ta-exercise-activation" }
+        ]
+      },
+      {
+        week: "W2",
+        lessons: [
+          { title: "List", link: "/posts/w2-list" },
+          { title: "Data Structure (list~IoU, Top K Searching)", link: "/posts/w2-list-advanced" },
+          { title: "Database SQL (2)", link: "/posts/w2-database-sql-2" },
+          { title: "Data Structure (Non maximum supression and Histogram)", link: "/lessons/w2-data-structure-nms" },
+          { title: "Git&Github for Version Control", link: "/lessons/w2-git-github" },
+          { title: "TA Exercise (Word Suggestion)", link: "/lessons/w2-ta-exercise-word" }
+        ]
+      },
+      {
+        week: "W3",
+        lessons: [
+          { title: "Online Office Hours", link: "/lessons/w3-office-hours" },
+          { title: "Classes and Objects", link: "/lessons/w3-classes-objects" },
+          { title: "Data Structure (Graph and Tree)", link: "/lessons/w3-data-structure-graph" },
+          { title: "Database SQL (3)", link: "/lessons/w3-database-sql-3" },
+          { title: "OOP with Python (Custom PyTorch Class)", link: "/lessons/w3-oop-pytorch" },
+          { title: "TA Exercise (OOP)", link: "/lessons/w3-ta-exercise-oop" }
+        ]
+      },
+      {
+        week: "W4",
+        lessons: [
+          { title: "Project 1.1: Basic Web and Streamlit for Simple Deployment", link: "/lessons/w4-project-1-1" },
+          { title: "Unix&Docker", link: "/lessons/w4-unix-docker" },
+          { title: "Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân", link: "/lessons/w4-project-1-2" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: "Module 2 - Advanced Math and Programming",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 3,
+    title: "Module 3 - Basic Machine Learning",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 4,
+    title: "Module 4 - Advanced Machine Learning",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 5,
+    title: "Module 5 - Steps into Deep Learning (1)",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 6,
+    title: "Module 6 - Steps into Deep Learning (2)",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 7,
+    title: "Module 7 - Deep Learning (1)",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 8,
+    title: "Module 8 - Deep Learning (2)",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 9,
+    title: "Module 9 - Deep Learning Applications for Images",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 10,
+    title: "Module 10 - Deep Learning Applications for Text",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 11,
+    title: "Module 11 - Generative Models & GANs",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  },
+  {
+    id: 12,
+    title: "Module 12 - LLMs & RL & 3D CV",
+    status: "not-started",
+    description: "Chi tiết sẽ được thêm sau"
+  }
+];
+
+const getStatusColor = (status: string) => {
+  switch(status) {
+    case 'completed': return '#10b981';
+    case 'in-progress': return '#f59e0b';
+    case 'not-started': return '#6b7280';
+    default: return '#6b7280';
+  }
+};
+
+const getStatusText = (status: string) => {
+  switch(status) {
+    case 'completed': return '✅ Hoàn thành';
+    case 'in-progress': return '🔄 Đang học';
+    case 'not-started': return '⏳ Chưa bắt đầu';
+    default: return '⏳ Chưa bắt đầu';
+  }
+};
+---
+
+<Layout 
+  meta={{
+    title: "Learning Path - AI & Machine Learning",
+    description: "Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản đến nâng cao",
+    articleDate: new Date(),
+    ogImage: undefined
+  }}
+>
+
+  <div class="w-full px-16 py-12">
+    <!-- Header -->
+    <div class="text-center mb-12 w-full">
+      <h1 class="text-4xl font-bold text-white mb-4">
+        🚀 Learning Path
+      </h1>
+      <p class="text-xl text-gray-300 w-full">
+        Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản đến nâng cao
+      </p>
+    </div>
+
+    <!-- Progress Overview -->
+    <div class="bg-gray-800 rounded-lg p-8 mb-8 w-full">
+      <h2 class="text-2xl font-semibold text-white mb-4">📊 Tổng quan tiến độ</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">
+        <div class="text-center w-full">
+          <div class="text-3xl font-bold text-blue-400">12</div>
+          <div class="text-gray-400">Modules</div>
+        </div>
+        <div class="text-center w-full">
+          <div class="text-3xl font-bold text-yellow-400">1/12</div>
+          <div class="text-gray-400">Module đang học</div>
+        </div>
+        <div class="text-center w-full">
+          <div class="text-3xl font-bold text-green-400">21</div>
+          <div class="text-gray-400">Bài học</div>
+        </div>
+        <div class="text-center w-full">
+          <div class="text-3xl font-bold text-purple-400">4</div>
+          <div class="text-gray-400">Tuần</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modules -->
+    <div class="space-y-6 w-full">
+      {modules.map((mod) => (
+        <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-gray-600 transition-colors w-full">
+          <div class="p-8 w-full">
+            <div class="flex items-start justify-between mb-4 w-full">
+              <div class="flex-1 w-full">
+                <div class="flex items-center gap-3 mb-2 w-full">
+                  <span class="text-2xl font-bold text-gray-400">#{mod.id}</span>
+                  <h3 class="text-xl font-semibold text-white">{mod.title}</h3>
+                </div>
+                
+                <div class="flex items-center gap-4 text-sm text-gray-400 mb-4 w-full">
+                  <span class="flex items-center gap-1" style={`color: ${getStatusColor(mod.status)}`}>
+                    {getStatusText(mod.status)}
+                  </span>
+                  {mod.weeks && (
+                    <span class="flex items-center gap-1">
+                      📅 {mod.weeks.length} tuần
+                    </span>
+                  )}
+                  {mod.weeks && (
+                    <span class="flex items-center gap-1">
+                      📚 {mod.weeks.reduce((total, week) => total + week.lessons.length, 0)} bài học
+                    </span>
+                  )}
+                </div>
+
+                <!-- Module 1 with expandable weeks -->
+                {mod.id === 1 && mod.weeks && (
+                  <div class="space-y-4 w-full">
+                    {mod.weeks.map((week) => (
+                      <details class="bg-gray-700 rounded-lg overflow-hidden w-full">
+                        <summary class="p-4 cursor-pointer hover:bg-gray-600 transition-colors w-full">
+                          <div class="flex items-center justify-between w-full">
+                            <h4 class="text-lg font-semibold text-white">{week.week}</h4>
+                            <span class="text-sm text-gray-400">{week.lessons.length} bài học</span>
+                          </div>
+                        </summary>
+                        <div class="p-4 pt-0 w-full">
+                          <div class="grid gap-2 w-full">
+                            {week.lessons.map((lesson) => (
+                              <a 
+                                href={lesson.link}
+                                class="block p-3 bg-gray-600 rounded-md hover:bg-gray-500 transition-colors text-white text-sm w-full"
+                              >
+                                <div class="flex items-center gap-2 w-full">
+                                  <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
+                                  {lesson.title}
+                                </div>
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                )}
+
+                <!-- Other modules -->
+                {mod.id !== 1 && (
+                  <p class="text-gray-300 mb-4 w-full">{mod.description}</p>
+                )}
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-3 w-full">
+              {mod.status === 'not-started' && (
+                <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors">
+                  Bắt đầu học
+                </button>
+              )}
+              {mod.status === 'in-progress' && (
+                <button class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-md text-sm font-medium transition-colors">
+                  Tiếp tục học
+                </button>
+              )}
+              {mod.status === 'completed' && (
+                <button class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium transition-colors">
+                  Xem lại
+                </button>
+              )}
+              <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md text-sm font-medium transition-colors">
+                Chi tiết
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-12 text-center w-full">
+      <div class="bg-gray-800 rounded-lg p-6 w-full">
+        <h3 class="text-xl font-semibold text-white mb-3">💡 Lời khuyên học tập</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300 w-full">
+          <div class="text-left w-full">
+            <p class="font-medium text-white mb-2">🎯 Mục tiêu:</p>
+            <ul class="space-y-1">
+              <li>• Học đều đặn 2-3 giờ/ngày</li>
+              <li>• Thực hành code thường xuyên</li>
+              <li>• Làm project để áp dụng kiến thức</li>
+            </ul>
+          </div>
+          <div class="text-left w-full">
+            <p class="font-medium text-white mb-2">📈 Tiến độ:</p>
+            <ul class="space-y-1">
+              <li>• Hoàn thành từng module trước khi chuyển sang module tiếp theo</li>
+              <li>• Ôn tập kiến thức cũ định kỳ</li>
+              <li>• Tham gia cộng đồng để học hỏi</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</Layout>
