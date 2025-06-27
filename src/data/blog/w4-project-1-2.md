@@ -1,7 +1,7 @@
 ---
 title: "Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân"
 description: "Hướng dẫn chi tiết xây dựng và triển khai chatbot hỏi đáp tài liệu PDF cho một chủ đề cá nhân, sử dụng pipeline RAG, LLM nhỏ, chunking, embedding, QLoRA, LangChain, UI, ví dụ code thực tế."
-pubDatetime: 2024-06-08T10:00:00Z
+pubDatetime: 2025-06-28T10:00:00Z
 tags:
   - rag
   - llm

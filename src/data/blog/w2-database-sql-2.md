@@ -1,7 +1,7 @@
 ---
 title: "Database SQL (2) - ERD, Chuẩn hóa & Truy vấn SQL"
 description: "Bài giảng chi tiết về ERD, chuẩn hóa cơ sở dữ liệu và truy vấn SQL: lý thuyết, ví dụ, bảng minh họa, sơ đồ và giải thích chuyên sâu."
-pubDatetime: 2024-06-03T10:00:00Z
+pubDatetime: 2025-06-28T10:00:00Z
 tags:
   - sql
   - database

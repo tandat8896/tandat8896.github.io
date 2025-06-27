@@ -1,6 +1,6 @@
 ---
 title: "Learning Path - AI & Machine Learning"
-pubDatetime: 2024-06-01
+pubDatetime: 2025-06-28
 description: "Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản đến nâng cao"
 tags: ["learning-path", "ai", "machine-learning"]
 ---

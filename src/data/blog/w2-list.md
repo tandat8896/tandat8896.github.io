@@ -1,7 +1,7 @@
 ---
 title: "Khám phá Python List: Cấu trúc dữ liệu linh hoạt và mạnh mẽ"
 description: "Bài viết chuyên sâu về List trong Python: lý thuyết, ví dụ thực tế, các phương thức, hàm tích hợp và ứng dụng thực tiễn."
-pubDatetime: 2024-06-01T10:00:00Z
+pubDatetime: 2025-06-28T10:00:00Z
 tags:
   - python
   - list

@@ -1,7 +1,7 @@
 ---
 title: "List nâng cao & Cấu trúc dữ liệu Python"
 description: "Bài viết nâng cao về List và các cấu trúc dữ liệu trong Python: lý thuyết, ví dụ, thuật toán, ứng dụng thực tế."
-pubDatetime: 2024-06-02T10:00:00Z
+pubDatetime: 2025-06-28T10:00:00Z
 tags:
   - python
   - list
