@@ -10,6 +10,7 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
+import githubPages from "@astrojs/github-pages";
 
 // https://astro.build/config
 export default defineConfig({
@@ -56,4 +57,6 @@ export default defineConfig({
   experimental: {
     preserveScriptOrder: true,
   },
+  output: "static",
+  adapter: githubPages(),
 });
