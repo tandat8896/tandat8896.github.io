@@ -43,7 +43,7 @@ Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản �
 ### Tuần 4
 - Project 1.1: Basic Web and Streamlit for Simple Deployment
 - Unix&Docker
-- Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân
+- Project 1.2: [Tạo và triển khai một chatbot cho một chủ đề cá nhân](/posts/w4-project-1-2)
 
 ## Module 2 - Advanced Math and Programming (⏳ Chưa bắt đầu)
 Chi tiết sẽ được thêm sau
