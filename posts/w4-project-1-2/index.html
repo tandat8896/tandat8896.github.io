@@ -1,0 +1,932 @@
+<!DOCTYPE html><html dir="ltr" lang="en" class="scroll-smooth" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://astro-paper.pages.dev/posts/w4-project-1-2/"><meta name="generator" content="Astro v5.10.1"><!-- General Meta Tags --><title>Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân | AstroPaper</title><meta name="title" content="Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân | AstroPaper"><meta name="description" content="Hướng dẫn chi tiết xây dựng và triển khai chatbot hỏi đáp tài liệu PDF cho một chủ đề cá nhân, sử dụng pipeline RAG, LLM nhỏ, chunking, embedding, QLoRA, LangChain, UI, ví dụ code thực tế."><meta name="author" content="Sat Naing"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân | AstroPaper"><meta property="og:description" content="Hướng dẫn chi tiết xây dựng và triển khai chatbot hỏi đáp tài liệu PDF cho một chủ đề cá nhân, sử dụng pipeline RAG, LLM nhỏ, chunking, embedding, QLoRA, LangChain, UI, ví dụ code thực tế."><meta property="og:url" content="https://astro-paper.pages.dev/posts/w4-project-1-2/"><meta property="og:image" content="https://astro-paper.pages.dev/posts/w4-project-1-2/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2024-06-08T10:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://astro-paper.pages.dev/posts/w4-project-1-2/"><meta property="twitter:title" content="Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân | AstroPaper"><meta property="twitter:description" content="Hướng dẫn chi tiết xây dựng và triển khai chatbot hỏi đáp tài liệu PDF cho một chủ đề cá nhân, sử dụng pipeline RAG, LLM nhỏ, chunking, embedding, QLoRA, LangChain, UI, ví dụ code thực tế."><meta property="twitter:image" content="https://astro-paper.pages.dev/posts/w4-project-1-2/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân | AstroPaper","image":"https://astro-paper.pages.dev/posts/w4-project-1-2/index.png","datePublished":"2024-06-08T10:00:00.000Z","author":[{"@type":"Person","name":"Sat Naing","url":"https://satnaing.dev/"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="AstroPaper" href="https://astro-paper.pages.dev/rss.xml"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CtSceO8m.js"></script><script src="/toggle-theme.js"></script><link rel="stylesheet" href="/_astro/about.DvdmnzPS.css">
+<style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+:where([data-astro-image]){object-fit:var(--fit);object-position:var(--pos);height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}
+</style><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: project-1-2-t\1EA1o-va-tri\1EC3n-khai-m\1ED9t-chatbot-cho-m\1ED9t-ch\1EE7-d\1EC1-ca-nhan; }@layer astro { ::view-transition-old(project-1-2-t\1EA1o-va-tri\1EC3n-khai-m\1ED9t-chatbot-cho-m\1ED9t-ch\1EE7-d\1EC1-ca-nhan) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(project-1-2-t\1EA1o-va-tri\1EC3n-khai-m\1ED9t-chatbot-cho-m\1ED9t-ch\1EE7-d\1EC1-ca-nhan) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(project-1-2-t\1EA1o-va-tri\1EC3n-khai-m\1ED9t-chatbot-cho-m\1ED9t-ch\1EE7-d\1EC1-ca-nhan) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(project-1-2-t\1EA1o-va-tri\1EC3n-khai-m\1ED9t-chatbot-cho-m\1ED9t-ch\1EE7-d\1EC1-ca-nhan) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-2"] { view-transition-name: rag; }@layer astro { ::view-transition-old(rag) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(rag) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(rag) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(rag) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-3"] { view-transition-name: llm; }@layer astro { ::view-transition-old(llm) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(llm) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(llm) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(llm) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-4"] { view-transition-name: pdf; }@layer astro { ::view-transition-old(pdf) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(pdf) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(pdf) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(pdf) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-5"] { view-transition-name: week-4; }@layer astro { ::view-transition-old(week-4) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(week-4) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(week-4) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(week-4) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body data-astro-cid-sckkx6r4>  <header> <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4">
+Skip to content
+</a> <div id="nav-container" class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"> <a href="/" class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"> AstroPaper </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&#38;>li>a]:block [&#38;>li>a]:px-4 [&#38;>li>a]:py-3 [&#38;>li>a]:text-center [&#38;>li>a]:font-medium [&#38;>li>a]:hover:text-accent sm:[&#38;>li>a]:px-2 sm:[&#38;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/posts" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/tags">
+Tags
+</a> </li> <li class="col-span-2"> <a href="/about">
+About
+</a> </li> <li class="col-span-2"> <a href="/archives" class="group inline-block hover:text-accent focus-outline flex justify-center p-3 sm:p-1" aria-label="archives" title="Archives"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only">Archives</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <a href="/search" class="group inline-block hover:text-accent focus-outline flex p-3 sm:p-1" aria-label="search" title="Search"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span class="sr-only">Search</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent" title="Toggles light & dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </div> <div class="mx-auto max-w-app px-4"> <hr class="border-border" aria-hidden="true"> </div> </header> <script type="module">function s(){const e=document.querySelector("#menu-btn"),t=document.querySelector("#menu-items"),n=document.querySelector("#menu-icon"),o=document.querySelector("#close-icon");!e||!t||!n||!o||e.addEventListener("click",()=>{const c=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",c?"false":"true"),e.setAttribute("aria-label",c?"Open Menu":"Close Menu"),t.classList.toggle("hidden"),n.classList.toggle("hidden"),o.classList.toggle("hidden")})}s();document.addEventListener("astro:after-swap",s);</script> <div class="mx-auto flex w-full max-w-app items-center justify-start px-2"><a id="back-button" href="/" class="group inline-block hover:text-accent focus-outline mt-8 mb-2 flex hover:text-foreground/75"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg><span>Go back</span></a></div><script type="module">function o(){const t=document.querySelector("#back-button"),e=sessionStorage.getItem("backUrl");e&&t&&(t.href=e)}document.addEventListener("astro:page-load",o);o();</script> <main id="main-content" class="mx-auto w-full max-w-app px-4 pb-12" data-pagefind-body> <h1 class="inline-block text-2xl font-bold text-accent sm:text-3xl" data-astro-transition-scope="astro-fam6wyqg-1"> Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân </h1> <div class="my-2 flex items-center gap-2"> <div class="flex items-center gap-x-2 opacity-80"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-[1.375rem]"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg>  <time class="text-sm sm:text-base" datetime="2024-06-08T10:00:00.000Z">8 Jun, 2024</time> </div> <span aria-hidden="true" class="max-sm:hidden">|</span> <a href="https://github.com/satnaing/astro-paper/edit/main/src/data/blog/w4-project-1-2.md" target="_blank" rel="noopener noreferrer" class="flex justify-baseline gap-1.5 opacity-80 hover:text-accent max-sm:hidden"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span>Edit page</span></a> </div> <article id="article" class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <h1 id="project-12-tạo-và-triển-khai-một-chatbot-cho-một-chủ-đề-cá-nhân">Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân</h1>
+<h2 id="mục-tiêu-của-project">Mục tiêu của project</h2>
+<p>Mục tiêu của project này là mình muốn xây dựng một hệ thống thử nghiệm để kiểm tra, đánh giá khả năng của chatbot RAG (Retrieval-Augmented Generation) trong việc trả lời câu hỏi dựa trên tài liệu PDF. Mình muốn kiểm thử các yếu tố như độ chính xác câu trả lời, khả năng truy xuất context phù hợp, tốc độ phản hồi, và tiềm năng mở rộng với các mô hình lớn hơn hoặc dữ liệu đa dạng hơn. Trong project này, mình chủ yếu triển khai dựa trên kiến thức kiểu “blackbox” – tức là mình sử dụng mô hình ngôn ngữ lớn (LLM) như một công cụ, không đi sâu vào cấu trúc bên trong hay quá trình huấn luyện của LLM, mà tập trung vào cách ứng dụng, tích hợp và kiểm thử LLM trong pipeline RAG. Đây là quá trình mình thử nghiệm, học hỏi nên rất mong nhận được sự thông cảm và góp ý từ mọi người. Cảm ơn mọi người nhiều.</p>
+<hr>
+<h2 id="lưu-ý-về-phần-cứng-và-lựa-chọn-mô-hình-trong-project">Lưu ý về phần cứng và lựa chọn mô hình trong project</h2>
+<p>Trong quá trình xây dựng project này, do hạn chế về phần cứng (GPU và CPU yếu), chỉ sử dụng các mô hình ngôn ngữ nhỏ, có sẵn trong codebase. Không thực hiện fine-tune hoặc triển khai các LLM lớn như Llama-2, Qwen-7B, v.v. Điều này giúp đảm bảo hệ thống có thể chạy được trên máy tính cá nhân cấu hình thấp, phù hợp cho mục đích học tập, thử nghiệm hoặc demo nhanh.</p>
+<p><strong>Lưu ý:</strong> Nếu muốn thử nghiệm với các mô hình lớn hơn, fine-tune hoặc sử dụng QLoRA, có thể triển khai project trên Google Colab để tận dụng GPU miễn phí hoặc trả phí. Colab hỗ trợ cài đặt các thư viện cần thiết, tải mô hình lớn và chạy inference/fine-tune hiệu quả hơn so với máy cá nhân cấu hình thấp.</p>
+<ul>
+<li>
+<p><strong>Lý do lựa chọn:</strong></p>
+<ul>
+<li>Phần cứng phổ thông không đủ RAM/GPU để chạy hoặc fine-tune các LLM lớn.</li>
+<li>Ưu tiên tốc độ phản hồi và khả năng triển khai thực tế trên máy cá nhân.</li>
+<li>Dễ dàng cài đặt, không yêu cầu môi trường phức tạp.</li>
+</ul>
+</li>
+<li>
+<p><strong>Ảnh hưởng:</strong></p>
+<ul>
+<li>Chất lượng trả lời có thể không tốt bằng các LLM lớn hoặc đã fine-tune chuyên sâu.</li>
+<li>Một số tính năng reasoning nâng cao, multi-step agent, hoặc trả lời phức tạp có thể bị hạn chế.</li>
+</ul>
+</li>
+<li>
+<p><strong>Giá trị thực tiễn:</strong></p>
+<ul>
+<li>Dù dùng model nhỏ, hệ thống vẫn minh bạch, kiểm chứng được nguồn context.</li>
+<li>Phù hợp cho các bài toán QA tài liệu vừa và nhỏ, hoặc làm nền tảng để mở rộng khi có phần cứng mạnh hơn.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="giới-thiệu-về-langchain">Giới thiệu về LangChain</h2>
+<p>LangChain là một framework mã nguồn mở giúp xây dựng các ứng dụng sử dụng mô hình ngôn ngữ lớn (LLM) một cách linh hoạt và hiệu quả. LangChain cung cấp các thành phần sẵn có để kết nối LLM với các nguồn dữ liệu (retriever), xây dựng pipeline hỏi đáp (QA), reasoning agent, tích hợp tool, và quản lý workflow phức tạp.</p>
+<h3 id="vai-trò-của-langchain-trong-hệ-thống-rag">Vai trò của LangChain trong hệ thống RAG</h3>
+<ul>
+<li>Cho phép kết nối LLM với kho tri thức (vectorstore, database, API, file…)</li>
+<li>Hỗ trợ xây dựng các pipeline truy xuất - sinh (retrieval-augmented generation) nhanh chóng</li>
+<li>Dễ dàng tích hợp các agent reasoning, tool, memory, callback để mở rộng tính năng</li>
+<li>Quản lý workflow, debug, log reasoning từng bước</li>
+</ul>
+<p>LangChain được sử dụng rộng rãi trong các project RAG hiện đại nhờ khả năng mở rộng, cộng đồng lớn, và hỗ trợ nhiều backend LLM khác nhau (OpenAI, HuggingFace, v.v.).</p>
+<hr>
+<h2 id="qlora-lý-thuyết-vai-trò-quantization-và-thực-tế-tích-hợp">QLoRA: Lý thuyết, vai trò, QUANTIZATION và thực tế tích hợp</h2>
+<h3 id="lý-thuyết-qlora">Lý thuyết QLoRA</h3>
+<p><strong>QLoRA (Quantized Low-Rank Adapter)</strong> là một kỹ thuật fine-tune mô hình ngôn ngữ lớn (LLM) với chi phí bộ nhớ thấp nhờ lượng tử hóa (quantization) và chèn các adapter nhỏ (LoRA) vào các layer của LLM. QLoRA giúp:</p>
+<ul>
+<li>Fine-tune LLM trên dữ liệu riêng mà không cần GPU lớn.</li>
+<li>Giữ nguyên trọng số gốc của LLM, chỉ cập nhật các tham số nhỏ của adapter.</li>
+<li>Dễ dàng chuyển đổi giữa nhiều adapter cho các domain khác nhau.</li>
+</ul>
+<h3 id="nhấn-mạnh-quantization-là-gì-và-vì-sao-quan-trọng">Nhấn mạnh: Quantization là gì và vì sao quan trọng?</h3>
+<p><strong>Quantization (Lượng tử hóa)</strong> là quá trình chuyển các trọng số của mô hình từ dạng số thực 16-bit/32-bit (float16/float32) sang dạng số nguyên có độ dài bit thấp hơn (thường là 8-bit hoặc 4-bit). Đây là bước cốt lõi giúp QLoRA tiết kiệm bộ nhớ và tăng tốc độ xử lý.</p>
+<ul>
+<li>
+<p><strong>Tại sao cần quantization?</strong></p>
+<ul>
+<li>Mô hình LLM gốc rất lớn (hàng chục GB), khó fine-tune trên GPU phổ thông.</li>
+<li>Quantization giảm kích thước mô hình (ví dụ: 4-bit giảm ~4-8 lần so với float32), cho phép fine-tune trên máy tính cá nhân hoặc cloud rẻ tiền.</li>
+<li>Giảm chi phí lưu trữ và truyền tải mô hình.</li>
+</ul>
+</li>
+<li>
+<p><strong>Ảnh hưởng đến chất lượng:</strong></p>
+<ul>
+<li>Nếu quantization quá thấp (ví dụ 2-bit), mô hình có thể mất nhiều thông tin, giảm chất lượng.</li>
+<li>4-bit quantization (như trong QLoRA) thường giữ được chất lượng gần như nguyên bản, nhưng tiết kiệm rất nhiều tài nguyên.</li>
+</ul>
+</li>
+<li>
+<p><strong>Các mức độ phổ biến:</strong></p>
+<ul>
+<li>8-bit: Dễ triển khai, chất lượng gần như không đổi.</li>
+<li>4-bit: Cân bằng tốt giữa tiết kiệm bộ nhớ và chất lượng, là lựa chọn mặc định của QLoRA.</li>
+</ul>
+</li>
+<li>
+<p><strong>Lưu ý thực tế:</strong></p>
+<ul>
+<li>Một số GPU/CPU cũ không hỗ trợ tốt 4-bit quantization.</li>
+<li>Khi inference, có thể dùng quantized model để tiết kiệm RAM, nhưng nếu cần chất lượng tối đa thì nên dùng bản full-precision.</li>
+</ul>
+</li>
+</ul>
+<h3 id="vai-trò-trong-project-rag">Vai trò trong project RAG</h3>
+<ul>
+<li>Khi sử dụng LLM đã fine-tune bằng QLoRA trên tài liệu PDF hoặc domain riêng, chất lượng trả lời sẽ sát thực tế hơn, giảm “bịa” thông tin.</li>
+<li>QLoRA giúp cá nhân hóa LLM cho từng loại tài liệu, doanh nghiệp mà không tốn nhiều tài nguyên.</li>
+<li>Nhờ quantization, có thể triển khai LLM lớn cho RAG trên máy tính phổ thông hoặc cloud giá rẻ.</li>
+</ul>
+<h3 id="tích-hợp-qlora-vào-pipeline">Tích hợp QLoRA vào pipeline</h3>
+<ul>
+<li>Nếu sử dụng mô hình LLM đã fine-tune bằng QLoRA, chỉ cần load adapter vào LLM trước khi gọi <code>generate</code> trong <code>qa_pipeline.py</code>.</li>
+<li>Ví dụ (giả lập):</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">from</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> transformers </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> AutoModelForCausalLM</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> AutoTokenizer</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">from</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> peft </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> PeftModel</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">base_model </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> AutoModelForCausalLM</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">from_pretrained</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">base-llm</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#D7DBE0"> load_in_4bit</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#FF5874">True</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # Nhấn mạnh load_in_4bit</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">qlora_adapter </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> PeftModel</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">from_pretrained</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">base_model</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">qlora-adapter-path</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">tokenizer </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> AutoTokenizer</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">from_pretrained</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">base-llm</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># Khi gọi LLM.generate, adapter QLoRA sẽ tự động được sử dụng</span></span></code></pre>
+<h3 id="lưu-ý-thực-tế-khi-dùng-qlora-và-quantization">Lưu ý thực tế khi dùng QLoRA và quantization</h3>
+<ul>
+<li>Cần chọn base model phù hợp với task (QA, summarization, v.v.).</li>
+<li>Dữ liệu fine-tune phải chất lượng, sát với use-case thực tế.</li>
+<li>Nếu adapter QLoRA không phù hợp, LLM vẫn có thể “bịa” hoặc trả lời kém.</li>
+<li>Nên kiểm thử kỹ sau khi fine-tune để đảm bảo tính trung thực.</li>
+<li>Khi gặp lỗi về RAM/GPU, kiểm tra lại tham số quantization và phần cứng hỗ trợ.</li>
+</ul>
+<hr>
+<h2 id="chunking-trong-rag-lý-thuyết-thực-tế-và-ví-dụ">Chunking trong RAG: Lý thuyết, thực tế và ví dụ</h2>
+<h3 id="lý-thuyết-chunking-trong-rag">Lý thuyết chunking trong RAG</h3>
+<p>Chunking là quá trình chia nhỏ tài liệu thành các đoạn (chunk) để tăng hiệu quả truy xuất, giảm độ dài context truyền vào LLM, và giữ được ngữ nghĩa/thông tin quan trọng.</p>
+<h3 id="các-kiểu-chunking-phổ-biến-và-ví-dụ">Các kiểu chunking phổ biến và ví dụ</h3>
+<ol>
+<li>
+<p><strong>Chunking theo ký tự (character-based)</strong></p>
+<ul>
+<li>Chia text thành các đoạn có số ký tự cố định.</li>
+<li>Ví dụ: Với chunk_size=40, overlap=10
+<ul>
+<li>Input: “Attention is all you need. The Transformer model uses self-attention for sequence modeling.”</li>
+<li>Output:
+<ul>
+<li>Chunk 1: “Attention is all you need. The Transformer mo”</li>
+<li>Chunk 2: “former model uses self-attention for sequenc”</li>
+<li>Chunk 3: “ion for sequence modeling.”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ưu điểm: Đơn giản, dễ cài đặt. Nhược điểm: Dễ cắt rời ngữ nghĩa, câu bị chia đôi.</li>
+</ul>
+</li>
+<li>
+<p><strong>Chunking theo câu (sentence-based)</strong></p>
+<ul>
+<li>Chia text thành các đoạn gồm N câu.</li>
+<li>Ví dụ: Mỗi chunk gồm 2 câu.
+<ul>
+<li>Input: “Attention is all you need. The Transformer model uses self-attention. This allows each word to attend to all other words.”</li>
+<li>Output:
+<ul>
+<li>Chunk 1: “Attention is all you need. The Transformer model uses self-attention.”</li>
+<li>Chunk 2: “This allows each word to attend to all other words.”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ưu điểm: Giữ ngữ nghĩa tốt hơn. Nhược điểm: Cần thư viện tách câu.</li>
+</ul>
+</li>
+<li>
+<p><strong>Chunking theo đoạn văn (paragraph-based)</strong></p>
+<ul>
+<li>Mỗi chunk là một đoạn văn bản (ngăn cách bởi xuống dòng).</li>
+<li>Ví dụ:
+<ul>
+<li>Input: “Attention is all you need.\nThe Transformer model uses self-attention.”</li>
+<li>Output:
+<ul>
+<li>Chunk 1: “Attention is all you need.”</li>
+<li>Chunk 2: “The Transformer model uses self-attention.”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ưu điểm: Phù hợp tài liệu có cấu trúc rõ ràng. Nhược điểm: Không tối ưu nếu đoạn quá dài/ngắn.</li>
+</ul>
+</li>
+<li>
+<p><strong>Semantic chunking</strong></p>
+<ul>
+<li>Chia theo ý nghĩa, chủ đề (dùng model phân đoạn semantic).</li>
+<li>Ví dụ: Nếu đoạn nói về “self-attention” sẽ thành 1 chunk riêng.</li>
+<li>Ưu điểm: Giữ ngữ nghĩa tốt nhất. Nhược điểm: Phức tạp, tốn tài nguyên.</li>
+</ul>
+</li>
+</ol>
+<h3 id="ảnh-hưởng-của-chunk_size-và-overlap">Ảnh hưởng của chunk_size và overlap</h3>
+<ul>
+<li>chunk_size nhỏ: Tăng số chunk, truy xuất chính xác hơn nhưng context có thể thiếu ngữ cảnh rộng.</li>
+<li>chunk_size lớn: Giữ được nhiều ngữ cảnh, nhưng dễ bị loãng khi truy xuất.</li>
+<li>overlap lớn: Giảm nguy cơ mất thông tin ở ranh giới, nhưng tăng số chunk, tốn bộ nhớ.</li>
+</ul>
+<h3 id="gợi-ý-cải-thiện">Gợi ý cải thiện</h3>
+<ul>
+<li>Có thể dùng chunking theo câu hoặc đoạn văn để giữ ngữ nghĩa tốt hơn nếu tài liệu phù hợp.</li>
+<li>Tùy chỉnh chunk_size, overlap phù hợp từng loại tài liệu.</li>
+<li>Áp dụng semantic chunking nếu cần chất lượng context cao.</li>
+</ul>
+<hr>
+<h2 id="embedding-đo-tương-đồng-và-các-ý-tưởng-mở-rộng-trong-chunking">Embedding, đo tương đồng và các ý tưởng mở rộng trong chunking</h2>
+<h3 id="embedding-và-đo-tương-đồng-cosine-similarity">Embedding và đo tương đồng (Cosine Similarity)</h3>
+<ul>
+<li>Mỗi đoạn (chunk) sau khi chia sẽ được truyền qua embedding model để lấy vector đặc trưng.</li>
+<li>Khi có câu hỏi, hệ thống cũng lấy embedding cho câu hỏi.</li>
+<li>Độ tương đồng giữa câu hỏi và từng chunk được tính bằng <strong>cosine similarity</strong> (đã có hàm <code>cosine_sim</code> trong code).</li>
+<li>Các chunk có similarity cao nhất sẽ được chọn làm context trả lời.</li>
+</ul>
+<h3 id="ý-tưởng-cắt-ngưỡng-theo-percentile-breakpoint-threshold">Ý tưởng cắt ngưỡng theo percentile (breakpoint threshold)</h3>
+<ul>
+<li>Có thể loại bỏ các chunk có similarity thấp bằng cách lấy ngưỡng theo phân vị (percentile), ví dụ: chỉ giữ các chunk có similarity nằm trong top 95% (cắt 5% thấp nhất).</li>
+<li>Cách làm: Tính phân phối similarity, lấy điểm tại 95% làm threshold, loại bỏ các chunk thấp hơn ngưỡng này.</li>
+<li><strong>Hiện tại:</strong> Chưa có sẵn trong code, có thể bổ sung nếu muốn tăng chất lượng context.</li>
+</ul>
+<h3 id="min-chunk-size-semantic-chunking">Min chunk size, semantic chunking</h3>
+<ul>
+<li>Chunk size mặc định là 500 ký tự, có thể tăng lên 600-700 nếu dùng semantic chunking để giữ ngữ nghĩa tốt hơn.</li>
+<li>Đã hỗ trợ chia chunk theo semantic, sentence, paragraph, sliding window…</li>
+</ul>
+<h3 id="add_start_index-đánh-chỉ-mục-chunk">add_start_index (đánh chỉ mục chunk)</h3>
+<ul>
+<li>Khi chia chunk, có thể thêm chỉ mục (start_index) vào metadata để biết vị trí từng đoạn trong tài liệu gốc.</li>
+<li>Điều này giúp truy vết, highlight, hoặc sắp xếp lại context khi cần.</li>
+<li><strong>Hiện tại:</strong> Chưa có sẵn, có thể bổ sung vào quá trình chunking nếu cần.</li>
+</ul>
+<hr>
+<h2 id="2-chunking-và-similarity-cắt-đoạn-và-truy-xuất-context">2. Chunking và Similarity: Cắt đoạn và truy xuất context</h2>
+<h3 id="lý-thuyết">Lý thuyết</h3>
+<p>Trong hệ thống RAG, trước khi truy xuất context, tài liệu cần được chia nhỏ thành các đoạn (chunk) để tăng hiệu quả tìm kiếm. Sau đó, khi có câu hỏi, hệ thống sẽ đo similarity (độ tương đồng) giữa embedding của câu hỏi và embedding của từng đoạn để chọn ra context phù hợp nhất.</p>
+<h3 id="triển-khai-thực-tế-trong-project">Triển khai thực tế trong project</h3>
+<ul>
+<li>
+<p><strong>Chunking:</strong>
+Văn bản PDF được cắt thành các đoạn có độ dài cố định bằng hàm <code>chunk_text</code>. Không có xử lý đặc biệt để chia theo câu, đoạn văn, hay semantic.</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> chunk_text</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">text</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> chunk_size</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">500</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> overlap</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">50</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    chunks </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> []</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> i </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">in</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> range</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> len</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">text</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF"> chunk_size </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF"> overlap</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">):</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        chunks</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">append</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">text</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">i:i</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">+</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">chunk_size</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">])</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> chunks</span></span></code></pre>
+<blockquote>
+<p>Việc cắt này chỉ đơn giản là lấy liên tiếp các ký tự, không đảm bảo ngữ nghĩa hoặc ranh giới câu.</p>
+</blockquote>
+<p><strong>Ví dụ thực tế:</strong></p>
+<ul>
+<li><strong>Input:</strong> Một đoạn text PDF: “Attention is all you need. The Transformer model uses self-attention.”</li>
+<li><strong>chunk_size=20, overlap=5</strong></li>
+<li><strong>Output:</strong>
+<ul>
+<li>Chunk 1: “Attention is all you ”</li>
+<li>Chunk 2: “is all you need. The T”</li>
+<li>Chunk 3: “need. The Transformer ”</li>
+<li>Chunk 4: “The Transformer model ”</li>
+<li>Chunk 5: “model uses self-atten”</li>
+<li>Chunk 6: “uses self-attention.”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Similarity:</strong>
+Khi người dùng đặt câu hỏi, hệ thống sẽ:</p>
+<ol>
+<li>Chuyển câu hỏi thành embedding vector.</li>
+<li>Đo similarity (thường là L2 distance hoặc cosine similarity) giữa embedding của câu hỏi và embedding của từng đoạn text đã cắt.</li>
+<li>Lấy ra các đoạn có similarity cao nhất làm context cho LLM.</li>
+</ol>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> retrieve</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> query</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> top_k</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    query_emb </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3"> self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">model</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">encode</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">[</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">query</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    D</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> I </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3"> self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">index</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">search</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">np.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">array</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">query_emb</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF"> top_k</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3">self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">texts</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">i</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> i </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">in</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> I</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span></code></pre>
+<blockquote>
+<p>Việc đo similarity này hoàn toàn dựa trên vector hóa bằng model embedding, không có bước lọc ngữ nghĩa hoặc kiểm tra lại context.</p>
+</blockquote>
+<p><strong>Ví dụ thực tế:</strong></p>
+<ul>
+<li><strong>Câu hỏi:</strong> “Transformer dùng attention như thế nào?”</li>
+<li><strong>Các chunk:</strong> (như ví dụ trên)</li>
+<li><strong>Embedding similarity:</strong>
+<ul>
+<li>Chunk 4: 0.92 (cao nhất)</li>
+<li>Chunk 5: 0.89</li>
+<li>Chunk 3: 0.85</li>
+</ul>
+</li>
+<li><strong>Context trả về:</strong> [Chunk 4, Chunk 5, Chunk 3]</li>
+</ul>
+</li>
+<li>
+<p><strong>Đánh giá thực tế:</strong></p>
+<ul>
+<li>Đơn giản, dễ triển khai, phù hợp cho project nhỏ hoặc thử nghiệm.</li>
+<li>Việc cắt đoạn cố định có thể làm mất ngữ nghĩa, hoặc context bị chia cắt không hợp lý.</li>
+<li>Nếu câu hỏi liên quan đến thông tin nằm ở ranh giới hai đoạn, có thể không truy xuất đủ context.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3-file_loaderpy--đọc-và-chia-nhỏ-pdf">3. file_loader.py- Đọc và chia nhỏ PDF</h2>
+<p><strong>Lý thuyết:</strong><br>
+Cần chia nhỏ tài liệu thành các đoạn (chunk) hợp lý để truy xuất hiệu quả, tránh mất thông tin ở ranh giới.</p>
+<p><strong>Triển khai thực tế:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">from</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> PyPDF2 </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> PdfReader</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> load_pdf</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">file_path</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    reader </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> PdfReader</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">file_path</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    text </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> ""</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> page </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">in</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> reader</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">pages</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        text </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">+=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> page</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">extract_text</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">()</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> text</span></span></code></pre>
+<ul>
+<li><strong>Tham số:</strong>
+<ul>
+<li><code>chunk_size</code>, <code>overlap</code> giúp kiểm soát độ chi tiết và liền mạch của context.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Ví dụ thực tế:</strong></p>
+<ul>
+<li><strong>Input:</strong> File PDF gồm 2 trang, mỗi trang chứa 1 đoạn text.</li>
+<li><strong>Output:</strong>
+<ul>
+<li>Text sau khi đọc: “Attention is all you need.\nThe Transformer model uses self-attention.”</li>
+</ul>
+</li>
+</ul>
+<p><strong>Điểm mạnh:</strong></p>
+<ul>
+<li>Đọc được toàn bộ nội dung PDF.</li>
+<li>Có tham số <code>chunk_size</code> và <code>overlap</code> để điều chỉnh.</li>
+</ul>
+<p><strong>Điểm hạn chế:</strong></p>
+<ul>
+<li>Hàm <code>extract_text()</code> của PyPDF2 đôi khi trả về None hoặc thiếu text (với PDF scan hoặc nhiều cột).</li>
+<li>Chưa xử lý loại bỏ ký tự thừa, xuống dòng, hoặc các trường hợp text bị dính liền.</li>
+<li>Chưa kiểm tra trường hợp file PDF không có text.</li>
+</ul>
+<p><strong>Gợi ý cải thiện:</strong></p>
+<ul>
+<li>Thêm bước làm sạch text (<code>clean_text</code>).</li>
+<li>Kiểm tra và bỏ qua các page không có text.</li>
+<li>Có thể dùng các thư viện OCR nếu PDF là scan.</li>
+</ul>
+<hr>
+<h2 id="4-knowledge_basepy--tạo-và-truy-vấn-vectorstore">4. knowledge_base.py- Tạo và truy vấn vectorstore</h2>
+<p><strong>Lý thuyết:</strong><br>
+Mỗi chunk được chuyển thành vector embedding, lưu vào vectorstore (FAISS). Khi có câu hỏi, cũng chuyển thành vector và tìm các chunk gần nhất.</p>
+<p><strong>Triển khai thực tế:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">from</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> sentence_transformers </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> SentenceTransformer</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> faiss</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> numpy </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">as</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> np</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> KnowledgeBase</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">    def</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> __init__</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> embedding_model</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">BAAI/bge-small-en</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3">        self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">model </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> SentenceTransformer</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">embedding_model</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3">        self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">index </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> faiss</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">IndexFlatL2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">768</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3">        self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">texts </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> []</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">    def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> add_chunks</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> chunks</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        embeddings </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3"> self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">model</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">encode</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">chunks</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3">        self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">index</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">add</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">np.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">array</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">embeddings</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3">        self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">texts</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">extend</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">chunks</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">    def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> retrieve</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> query</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> top_k</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        query_emb </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3"> self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">model</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">encode</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">[</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">query</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">]</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        D</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> I </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3"> self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">index</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">search</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">np.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">array</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">query_emb</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF"> top_k</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">        return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD"> [</span><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3">self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">texts</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">i</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> i </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">in</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> I</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">]</span></span></code></pre>
+<ul>
+<li><strong>Tham số:</strong>
+<ul>
+<li><code>embedding_model</code> quyết định cách so khớp ngữ nghĩa.</li>
+<li><code>top_k</code> kiểm soát số lượng context trả về (nhiều quá có thể loãng, ít quá có thể thiếu).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Ví dụ thực tế:</strong></p>
+<ul>
+<li><strong>Input:</strong>
+<ul>
+<li>Các chunk: [“Attention is all you ”, “is all you need. The T”, …]</li>
+<li>Câu hỏi: “Transformer dùng attention như thế nào?”</li>
+</ul>
+</li>
+<li><strong>Output:</strong>
+<ul>
+<li>Embedding của từng chunk và câu hỏi được lưu vào FAISS.</li>
+<li>Truy vấn trả về các chunk có similarity cao nhất.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Điểm mạnh:</strong></p>
+<ul>
+<li>Sử dụng FAISS cho truy vấn nhanh.</li>
+<li>Dễ thay đổi model embedding.</li>
+</ul>
+<p><strong>Điểm hạn chế:</strong></p>
+<ul>
+<li>Cố định dimension 768, nếu đổi model khác có thể lỗi.</li>
+<li>Không lưu metadata (ví dụ: số trang, vị trí chunk), nên không biết context nằm ở đâu trong tài liệu.</li>
+<li>Chưa kiểm tra trường hợp số chunk ít hơn <code>top_k</code>.</li>
+<li>Chưa chuẩn hóa embedding (nên dùng cosine similarity thay vì L2 cho nhiều model).</li>
+</ul>
+<p><strong>Gợi ý cải thiện:</strong></p>
+<ul>
+<li>Lưu thêm metadata cho mỗi chunk.</li>
+<li>Kiểm tra dimension của embedding.</li>
+<li>Cho phép chọn loại similarity (cosine/L2).</li>
+<li>Bắt lỗi khi số chunk &#x3C; top_k.</li>
+</ul>
+<hr>
+<h2 id="5-qa_pipelinepy--pipeline-hỏi-đáp">5. qa_pipeline.py – Pipeline hỏi đáp</h2>
+<p><strong>Lý thuyết:</strong> LLM chỉ nên trả lời dựa trên context đã truy xuất, không tự ý “bịa” thông tin ngoài context.</p>
+<p><strong>Triển khai thực tế:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> QAPipeline</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">    def</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> __init__</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> knowledge_base</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> llm</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3">        self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">kb </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> knowledge_base</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3">        self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">llm </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> llm</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">    def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> answer</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> question</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> top_k</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA"> debug</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#FF5874">False</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        context </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3"> self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">kb</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">retrieve</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">question</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#D7DBE0"> top_k</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">top_k</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        prompt </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> f</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">"Context: </span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">{</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">context</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#F78C6C">\n</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Question: </span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">{</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">question</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#F78C6C">\n</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Answer:"</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        answer </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#8EACE3"> self</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">llm</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">generate</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">prompt</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">        if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> debug</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">            return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> answer</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> context</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">        return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> answer</span></span></code></pre>
+<ul>
+<li><strong>Tham số:</strong>
+<ul>
+<li><code>top_k</code> (số context), <code>debug</code> (trả về context để kiểm chứng).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Ví dụ thực tế:</strong></p>
+<ul>
+<li><strong>Input:</strong>
+<ul>
+<li>Câu hỏi: “Transformer dùng attention như thế nào?”</li>
+<li>Context: [“The Transformer model uses self-attention.”, …]</li>
+</ul>
+</li>
+<li><strong>Prompt truyền vào LLM:</strong>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Context: ['The Transformer model uses self-attention.', ...]</span></span>
+<span class="line"><span>Question: Transformer dùng attention như thế nào?</span></span>
+<span class="line"><span>Answer:</span></span></code></pre>
+</li>
+<li><strong>Output:</strong>
+<ul>
+<li>“Transformer sử dụng cơ chế self-attention để mỗi từ trong câu có thể tập trung vào các từ khác, giúp mô hình hiểu ngữ cảnh tốt hơn.”</li>
+</ul>
+</li>
+</ul>
+<p><strong>Điểm mạnh:</strong></p>
+<ul>
+<li>Luôn truyền context vào prompt.</li>
+<li>Có chế độ debug để kiểm tra context.</li>
+</ul>
+<p><strong>Điểm hạn chế:</strong></p>
+<ul>
+<li>Prompt chưa kiểm soát chặt chẽ việc LLM chỉ trả lời dựa trên context (LLM vẫn có thể “bịa” nếu prompt không đủ rõ).</li>
+<li>Chưa có cơ chế kiểm tra LLM có dùng đúng context không.</li>
+<li>Nếu context quá dài, prompt có thể vượt quá giới hạn token của LLM.</li>
+</ul>
+<p><strong>Gợi ý cải thiện:</strong></p>
+<ul>
+<li>Thêm hướng dẫn rõ ràng trong prompt: “Chỉ trả lời dựa trên context, nếu không có thì trả lời ‘Không tìm thấy thông tin’.”</li>
+<li>Cắt bớt context nếu quá dài.</li>
+<li>Có thể log lại prompt và answer để kiểm tra chất lượng.</li>
+</ul>
+<hr>
+<h2 id="6-uipy--giao-diện-streamlit">6. ui.py- Giao diện Streamlit</h2>
+<p><strong>Lý thuyết:</strong> Người dùng cần kiểm tra được nguồn gốc thông tin, điều chỉnh tham số để kiểm soát chất lượng câu trả lời.</p>
+<p><strong>Triển khai thực tế:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> streamlit </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">as</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> st</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> main_ui</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">pipeline</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    st</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">title</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">PDF RAG QA</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    uploaded_file </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> st</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">file_uploader</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Upload PDF</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#D7DBE0"> type</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">pdf</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    question </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> st</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">text_input</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Ask a question:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    top_k </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> st</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">sidebar</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">slider</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Top K</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 10</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    debug </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> st</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">sidebar</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">checkbox</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Show debug info</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> uploaded_file </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">and</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> question</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        text </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> load_pdf</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">uploaded_file</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        chunks </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> chunk_text</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">text</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        kb </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> KnowledgeBase</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">()</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        kb</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">add_chunks</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">chunks</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        qa </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> QAPipeline</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">kb</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#D7DBE0"> llm</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">YourLLM</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">())</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        answer</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> context </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> qa</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">answer</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">question</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#D7DBE0"> top_k</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">top_k</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#D7DBE0"> debug</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">debug</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        st</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">write</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">**Answer:**</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF"> answer</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">        if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> debug</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">            with</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> st</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">expander</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Context</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">):</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">                st</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">write</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">context</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span></code></pre>
+<ul>
+<li>Có thể điều chỉnh <code>top_k</code> để kiểm soát lượng context.</li>
+</ul>
+<p><strong>Ví dụ thực tế:</strong></p>
+<ul>
+<li><strong>Input:</strong>
+<ul>
+<li>File PDF: “Attention is all you need. The Transformer model uses self-attention.”</li>
+<li>Câu hỏi: “Transformer dùng attention như thế nào?”</li>
+</ul>
+</li>
+<li><strong>Output trên UI:</strong>
+<ul>
+<li><strong>Answer:</strong> “Transformer sử dụng cơ chế self-attention để mỗi từ trong câu có thể tập trung vào các từ khác, giúp mô hình hiểu ngữ cảnh tốt hơn.”</li>
+<li><strong>Context (debug):</strong> [“The Transformer model uses self-attention.”, …]</li>
+</ul>
+</li>
+</ul>
+<p><strong>Điểm mạnh:</strong></p>
+<ul>
+<li>Cho phép điều chỉnh <code>top_k</code>, bật/tắt debug.</li>
+<li>Hiển thị context để kiểm chứng.</li>
+</ul>
+<p><strong>Điểm hạn chế:</strong></p>
+<ul>
+<li>Mỗi lần hỏi lại phải nạp lại toàn bộ file, không lưu knowledge base giữa các lần hỏi (tốn thời gian).</li>
+<li>Không hiển thị vị trí context trong tài liệu.</li>
+<li>Không có thông báo lỗi nếu file PDF không hợp lệ.</li>
+</ul>
+<p><strong>Gợi ý cải thiện:</strong></p>
+<ul>
+<li>Lưu knowledge base vào session hoặc cache.</li>
+<li>Hiển thị thêm metadata (số trang, vị trí chunk).</li>
+<li>Bắt lỗi khi file PDF không đọc được.</li>
+</ul>
+<hr>
+<h2 id="7-utilspy---các-hàm-tiện-ích">7. utils.py - Các hàm tiện ích</h2>
+<p><strong>Lý thuyết:</strong> Tiền xử lý giúp đảm bảo dữ liệu đầu vào sạch, không bị nhiễu, tăng độ chính xác khi truy xuất.</p>
+<p><strong>Triển khai thực tế:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> clean_text</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">text</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> text</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">replace</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#F78C6C">\n</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">).</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">strip</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">()</span></span></code></pre>
+<p><strong>Ví dụ thực tế:</strong></p>
+<ul>
+<li><strong>Input:</strong> “Attention is all you need.\nThe Transformer model uses self-attention.”</li>
+<li><strong>Output:</strong> “Attention is all you need. The Transformer model uses self-attention.”</li>
+</ul>
+<p><strong>Điểm mạnh:</strong></p>
+<ul>
+<li>Đơn giản, dễ dùng.</li>
+</ul>
+<p><strong>Điểm hạn chế:</strong></p>
+<ul>
+<li>Chưa xử lý các ký tự đặc biệt, nhiều khoảng trắng, hoặc các lỗi OCR.</li>
+</ul>
+<p><strong>Gợi ý cải thiện:</strong></p>
+<ul>
+<li>Thêm loại bỏ ký tự đặc biệt, chuẩn hóa unicode, tách câu.</li>
+</ul>
+<hr>
+<h2 id="8-workflowpy----điều-phối-tổng-thể">8. workflow.py -  Điều phối tổng thể</h2>
+<p><strong>Lý thuyết:</strong> Đảm bảo mọi bước đều dựa trên dữ liệu thực tế, không có “shortcut” nào bỏ qua truy xuất context.</p>
+<p><strong>Triển khai thực tế:</strong></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> run_workflow</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">()</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">    main_ui</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#D7DBE0">pipeline</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">QAPipeline</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span></code></pre>
+<p><strong>Ví dụ thực tế:</strong></p>
+<ul>
+<li><strong>Input:</strong> Người dùng upload file PDF, nhập câu hỏi, nhấn gửi.</li>
+<li><strong>Output:</strong> UI hiển thị answer và context như các ví dụ trên.</li>
+</ul>
+<p><strong>Điểm mạnh:</strong></p>
+<ul>
+<li>Đơn giản, dễ mở rộng.</li>
+</ul>
+<p><strong>Điểm hạn chế:</strong></p>
+<ul>
+<li>Chưa có kiểm soát lỗi tổng thể, chưa hỗ trợ nhiều workflow khác nhau.</li>
+</ul>
+<hr>
+<h2 id="vai-trò-của-stroutputparser-trong-pipeline-rag">Vai trò của StrOutputParser trong pipeline RAG</h2>
+<p>Trong pipeline RAG, sau khi context và câu hỏi được kết hợp thành prompt và gửi qua LLM, kết quả trả về từ LLM thường ở dạng thô (raw output). Để đảm bảo kết quả này luôn ở dạng string chuẩn, dễ xử lý và hiển thị cho người dùng, ta sử dụng <strong>StrOutputParser</strong>.</p>
+<p><strong>StrOutputParser</strong> chính là phần kết nối quan trọng giữa LLM và ứng dụng:</p>
+<ul>
+<li>Nhận output thô từ LLM, chuyển đổi (parse) thành dạng string chuẩn.</li>
+<li>Đảm bảo output luôn đúng định dạng, giúp ứng dụng (ví dụ: Streamlit UI) dễ dàng hiển thị kết quả.</li>
+<li>Nếu không có bước này, output từ LLM có thể ở dạng phức tạp (object, dict, v.v.), gây lỗi hoặc khó hiển thị.</li>
+</ul>
+<p><strong>Tóm lại:</strong> StrOutputParser là cầu nối giữa LLM và phần hiển thị kết quả, giúp pipeline mạch lạc, dễ debug và mở rộng. Nếu muốn custom logic phân tích output, chỉ cần thay thế hoặc mở rộng chỗ này trong code.</p> </article> <hr class="my-8 border-dashed"> <a href="https://github.com/satnaing/astro-paper/edit/main/src/data/blog/w4-project-1-2.md" target="_blank" rel="noopener noreferrer" class="flex justify-baseline gap-1.5 opacity-80 hover:text-accent sm:hidden"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span>Edit page</span></a> <ul class="mt-4 mb-8 sm:my-8"> <li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/rag/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>rag</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/llm/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-3"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>llm</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/pdf/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-4"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>pdf</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/week-4/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-5"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>week4</span> </a> </li> </ul> <div id="btt-btn-container" class="fixed end-4 bottom-8 z-50 md:sticky md:end-auto md:float-end md:me-1 translate-y-14 opacity-0 transition duration-500"> <button data-button="back-to-top" class="group relative bg-background px-2 py-1 size-14 rounded-full shadow-xl md:h-8 md:w-fit md:rounded-md md:shadow-none md:focus-visible:rounded-none md:bg-background/35 md:bg-clip-padding md:backdrop-blur-lg"> <span id="progress-indicator" class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block rotate-90 md:hidden"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span class="sr-only text-sm group-hover:text-accent md:not-sr-only"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M16 9l-4 -4" /><path d="M8 9l4 -4" /></svg>
+Back To Top
+</span> </button> </div> <script data-astro-rerun>
+  /** Scrolls the document to the top when
+   * the "Back to Top" button is clicked. */
+  function backToTop() {
+    const rootElement = document.documentElement;
+    const btnContainer = document.querySelector("#btt-btn-container");
+    const backToTopBtn = document.querySelector("[data-button='back-to-top']");
+    const progressIndicator = document.querySelector("#progress-indicator");
+
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
+      return;
+
+    // Attach click event handler for back-to-top button
+    backToTopBtn.addEventListener("click", () => {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
+
+    // Handle button visibility according to scroll position
+    let lastVisible = null;
+    function handleScroll() {
+      const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+      const scrollTop = rootElement.scrollTop;
+      const scrollPercent = Math.floor((scrollTop / scrollTotal) * 100);
+
+      progressIndicator.style.setProperty(
+        "background-image",
+        `conic-gradient(var(--accent), var(--accent) ${scrollPercent}%, transparent ${scrollPercent}%)`
+      );
+
+      const isVisible = scrollTop / scrollTotal > 0.3;
+
+      if (isVisible !== lastVisible) {
+        btnContainer.classList.toggle("opacity-100", isVisible);
+        btnContainer.classList.toggle("translate-y-0", isVisible);
+        btnContainer.classList.toggle("opacity-0", !isVisible);
+        btnContainer.classList.toggle("translate-y-14", !isVisible);
+        lastVisible = isVisible;
+      }
+    }
+
+    let ticking = false;
+    document.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+  backToTop();
+</script> <div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start"><span class="italic">Share this post on:</span><div class="text-center"><a href="https://wa.me/?text=https://astro-paper.pages.dev/posts/w4-project-1-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via WhatsApp"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg><span class="sr-only">Share this post via WhatsApp</span></a><a href="https://www.facebook.com/sharer.php?u=https://astro-paper.pages.dev/posts/w4-project-1-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg><span class="sr-only">Share this post on Facebook</span></a><a href="https://x.com/intent/post?url=https://astro-paper.pages.dev/posts/w4-project-1-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on X"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg><span class="sr-only">Share this post on X</span></a><a href="https://t.me/share/url?url=https://astro-paper.pages.dev/posts/w4-project-1-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via Telegram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg><span class="sr-only">Share this post via Telegram</span></a><a href="https://pinterest.com/pin/create/button/?url=https://astro-paper.pages.dev/posts/w4-project-1-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Pinterest"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg><span class="sr-only">Share this post on Pinterest</span></a><a href="mailto:?subject=See%20this%20post&#38;body=https://astro-paper.pages.dev/posts/w4-project-1-2/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via email"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg><span class="sr-only">Share this post via email</span></a></div></div> <hr class="my-6 border-dashed"> <!-- Previous/Next Post Buttons --> <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2"> <a href="/posts/astro-paper-v5" class="flex w-full gap-1 hover:opacity-75"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <div> <span>Previous Post</span> <div class="text-sm text-accent/85">AstroPaper 5.0</div> </div> </a> <a href="/posts/w2-database-sql-2" class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"> <div> <span>Next Post</span> <div class="text-sm text-accent/85">Database SQL (2) - ERD, Chuẩn hóa &amp; Truy vấn SQL</div> </div> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg> </a> </div> </main> <footer class="w-full mt-auto"> <div class="mx-auto max-w-app px-0"> <hr class="border-border" aria-hidden="true"> </div> <div class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/satnaing/astro-paper" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on GitHub"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">AstroPaper on GitHub</span> </a><a href="https://x.com/username" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on X"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">AstroPaper on X</span> </a><a href="https://www.linkedin.com/in/username/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on LinkedIn"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">AstroPaper on LinkedIn</span> </a><a href="mailto:yourmail@gmail.com" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="Send an email to AstroPaper"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only">Send an email to AstroPaper</span> </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>Copyright &#169; 2025</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>All rights reserved.</span> </div> </div> </footer>  </body></html> <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Create the main container div
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    // Create the progress bar div
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    // Append the progress bar to the progress container
+    progressContainer.appendChild(progressBar);
+
+    // Append the progress container to the document body or any other desired parent element
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const copyButton = document.createElement("button");
+      copyButton.className =
+        "copy-code absolute end-3 top-3 rounded bg-muted/80 px-2 py-1 text-xs leading-4 text-foreground font-medium";
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
