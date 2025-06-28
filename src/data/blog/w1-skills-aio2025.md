@@ -26,7 +26,7 @@ Việc tìm kiếm và lọc tài liệu là bước đầu tiên và quan trọ
   - **arXiv.org**: Là một kho lưu trữ bản in sẵn (preprint repository) cho vật lý, toán học, khoa học máy tính, sinh học định lượng, tài chính định lượng và thống kê. Điểm đặc biệt của arXiv là các bài báo chưa được kiểm duyệt nhưng được đẩy lên sớm nhất có thể, giúp bạn cập nhật nhanh chóng các nghiên cứu mới nhất.
   - **bioRxiv**: Tương tự như arXiv, nhưng chuyên về khoa học đời sống, là một kho lưu trữ trực tuyến miễn phí cho các bản in sẵn chưa được xuất bản.
 - **PapersWithCode** (paperswithcode.com): Nền tảng này rất hữu ích vì nó liên kết trực tiếp code với các bài báo khoa học, giúp bạn dễ dàng tìm thấy dataset và triển khai ý tưởng.
-- **AIO Question and Answer** (https://www.facebook.com/groups/aio.competition): Đừng ngần ngại tìm kiếm sự giúp đỡ từ cộng đồng này. Đây là một nhóm hỏi đáp hữu ích cho AIO.
+-
 
 Khi tìm tài liệu, hãy nghĩ đến việc tìm các bài khảo sát (survey) trong một khoảng thời gian nhất định, đặc biệt đối với các thuật toán Machine Learning, để có cái nhìn tổng quan nhanh chóng.
 
