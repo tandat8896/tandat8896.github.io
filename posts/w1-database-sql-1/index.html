@@ -1,0 +1,607 @@
+<!DOCTYPE html><html dir="ltr" lang="en" class="scroll-smooth" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://astro-paper.pages.dev/posts/w1-database-sql-1/"><meta name="generator" content="Astro v5.10.0"><!-- General Meta Tags --><title>Khám Phá SQL Trong Phân Tích Dữ Liệu: Hướng Dẫn Toàn Diện Từ Cơ Bản Đến Nâng Cao | AstroPaper</title><meta name="title" content="Khám Phá SQL Trong Phân Tích Dữ Liệu: Hướng Dẫn Toàn Diện Từ Cơ Bản Đến Nâng Cao | AstroPaper"><meta name="description" content="Bài viết chuyên sâu về SQL: lý thuyết cơ sở dữ liệu quan hệ, cài đặt MySQL, tạo database, các câu lệnh truy vấn cơ bản và nâng cao, cùng với ví dụ thực tế và tối ưu hóa hiệu suất."><meta name="author" content="Sat Naing"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="Khám Phá SQL Trong Phân Tích Dữ Liệu: Hướng Dẫn Toàn Diện Từ Cơ Bản Đến Nâng Cao | AstroPaper"><meta property="og:description" content="Bài viết chuyên sâu về SQL: lý thuyết cơ sở dữ liệu quan hệ, cài đặt MySQL, tạo database, các câu lệnh truy vấn cơ bản và nâng cao, cùng với ví dụ thực tế và tối ưu hóa hiệu suất."><meta property="og:url" content="https://astro-paper.pages.dev/posts/w1-database-sql-1/"><meta property="og:image" content="https://astro-paper.pages.dev/posts/w1-database-sql-1/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2025-06-28T10:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://astro-paper.pages.dev/posts/w1-database-sql-1/"><meta property="twitter:title" content="Khám Phá SQL Trong Phân Tích Dữ Liệu: Hướng Dẫn Toàn Diện Từ Cơ Bản Đến Nâng Cao | AstroPaper"><meta property="twitter:description" content="Bài viết chuyên sâu về SQL: lý thuyết cơ sở dữ liệu quan hệ, cài đặt MySQL, tạo database, các câu lệnh truy vấn cơ bản và nâng cao, cùng với ví dụ thực tế và tối ưu hóa hiệu suất."><meta property="twitter:image" content="https://astro-paper.pages.dev/posts/w1-database-sql-1/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Khám Phá SQL Trong Phân Tích Dữ Liệu: Hướng Dẫn Toàn Diện Từ Cơ Bản Đến Nâng Cao | AstroPaper","image":"https://astro-paper.pages.dev/posts/w1-database-sql-1/index.png","datePublished":"2025-06-28T10:00:00.000Z","author":[{"@type":"Person","name":"Sat Naing","url":"https://satnaing.dev/"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="AstroPaper" href="https://astro-paper.pages.dev/rss.xml"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CtSceO8m.js"></script><script src="/toggle-theme.js"></script><link rel="stylesheet" href="/_astro/about.BWRwAn1Z.css">
+<style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+:where([data-astro-image]){object-fit:var(--fit);object-position:var(--pos);height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}
+</style><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: kham-pha-sql-trong-phan-tich-d\1EEF-li\1EC7u-h\1B0\1EDBng-d\1EABn-toan-di\1EC7n-t\1EEB-c\1A1-b\1EA3n-d\1EBFn-nang-cao; }@layer astro { ::view-transition-old(kham-pha-sql-trong-phan-tich-d\1EEF-li\1EC7u-h\1B0\1EDBng-d\1EABn-toan-di\1EC7n-t\1EEB-c\1A1-b\1EA3n-d\1EBFn-nang-cao) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(kham-pha-sql-trong-phan-tich-d\1EEF-li\1EC7u-h\1B0\1EDBng-d\1EABn-toan-di\1EC7n-t\1EEB-c\1A1-b\1EA3n-d\1EBFn-nang-cao) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(kham-pha-sql-trong-phan-tich-d\1EEF-li\1EC7u-h\1B0\1EDBng-d\1EABn-toan-di\1EC7n-t\1EEB-c\1A1-b\1EA3n-d\1EBFn-nang-cao) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(kham-pha-sql-trong-phan-tich-d\1EEF-li\1EC7u-h\1B0\1EDBng-d\1EABn-toan-di\1EC7n-t\1EEB-c\1A1-b\1EA3n-d\1EBFn-nang-cao) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-2"] { view-transition-name: sql; }@layer astro { ::view-transition-old(sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(sql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-3"] { view-transition-name: database; }@layer astro { ::view-transition-old(database) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(database) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(database) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(database) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-4"] { view-transition-name: mysql; }@layer astro { ::view-transition-old(mysql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(mysql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(mysql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(mysql) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-5"] { view-transition-name: data-analysis; }@layer astro { ::view-transition-old(data-analysis) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(data-analysis) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(data-analysis) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(data-analysis) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-6"] { view-transition-name: week-1; }@layer astro { ::view-transition-old(week-1) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(week-1) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(week-1) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(week-1) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-6"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-6"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-6"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-6"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-6"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-6"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-6"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-6"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body data-astro-cid-sckkx6r4>  <header> <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4">
+Skip to content
+</a> <div id="nav-container" class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"> <a href="/" class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"> AstroPaper </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&#38;>li>a]:block [&#38;>li>a]:px-4 [&#38;>li>a]:py-3 [&#38;>li>a]:text-center [&#38;>li>a]:font-medium [&#38;>li>a]:hover:text-accent sm:[&#38;>li>a]:px-2 sm:[&#38;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/posts" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/tags">
+Tags
+</a> </li> <li class="col-span-2"> <a href="/about">
+About
+</a> </li> <li class="col-span-2"> <a href="/archives" class="group inline-block hover:text-accent focus-outline flex justify-center p-3 sm:p-1" aria-label="archives" title="Archives"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only">Archives</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <a href="/search" class="group inline-block hover:text-accent focus-outline flex p-3 sm:p-1" aria-label="search" title="Search"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span class="sr-only">Search</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent" title="Toggles light & dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </div> <div class="mx-auto max-w-app px-4"> <hr class="border-border" aria-hidden="true"> </div> </header> <script type="module">function s(){const e=document.querySelector("#menu-btn"),t=document.querySelector("#menu-items"),n=document.querySelector("#menu-icon"),o=document.querySelector("#close-icon");!e||!t||!n||!o||e.addEventListener("click",()=>{const c=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",c?"false":"true"),e.setAttribute("aria-label",c?"Open Menu":"Close Menu"),t.classList.toggle("hidden"),n.classList.toggle("hidden"),o.classList.toggle("hidden")})}s();document.addEventListener("astro:after-swap",s);</script> <div class="mx-auto flex w-full max-w-app items-center justify-start px-2"><a id="back-button" href="/" class="group inline-block hover:text-accent focus-outline mt-8 mb-2 flex hover:text-foreground/75"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg><span>Go back</span></a></div><script type="module">function o(){const t=document.querySelector("#back-button"),e=sessionStorage.getItem("backUrl");e&&t&&(t.href=e)}document.addEventListener("astro:page-load",o);o();</script> <main id="main-content" class="mx-auto w-full max-w-app px-4 pb-12" data-pagefind-body> <h1 class="inline-block text-2xl font-bold text-accent sm:text-3xl" data-astro-transition-scope="astro-fam6wyqg-1"> Khám Phá SQL Trong Phân Tích Dữ Liệu: Hướng Dẫn Toàn Diện Từ Cơ Bản Đến Nâng Cao </h1> <div class="my-2 flex items-center gap-2"> <div class="flex items-center gap-x-2 opacity-80"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-[1.375rem]"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg>  <time class="text-sm sm:text-base" datetime="2025-06-28T10:00:00.000Z">28 Jun, 2025</time> </div> <span aria-hidden="true" class="max-sm:hidden">|</span> <a href="https://github.com/satnaing/astro-paper/edit/main/src/data/blog/w1-database-sql-1.md" target="_blank" rel="noopener noreferrer" class="flex justify-baseline gap-1.5 opacity-80 hover:text-accent max-sm:hidden"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span>Edit page</span></a> </div> <article id="article" class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <h1 id="khám-phá-sql-trong-phân-tích-dữ-liệu-hướng-dẫn-toàn-diện-từ-cơ-bản-đến-nâng-cao">Khám Phá SQL Trong Phân Tích Dữ Liệu: Hướng Dẫn Toàn Diện Từ Cơ Bản Đến Nâng Cao</h1>
+<p>Chào mừng bạn đến với thế giới của SQL – công cụ không thể thiếu trong phân tích và quản lý dữ liệu. Nếu bạn đang tìm hiểu cách làm việc với dữ liệu lớn, bài viết này sẽ là kim chỉ nam giúp bạn hiểu rõ SQL là gì, cách cài đặt MySQL, tạo cơ sở dữ liệu và khai thác sức mạnh của SQL để phân tích dữ liệu hiệu quả.</p>
+<h2 id="1-vì-sao-dữ-liệu-quan-trọng-database-motivation">1. Vì Sao Dữ Liệu Quan Trọng? (Database Motivation)</h2>
+<p>Hãy tưởng tượng một hệ thống mua sắm trực tuyến với hàng trăm nghìn khách hàng. Làm thế nào để quản lý thông tin khách hàng, sản phẩm, và các đơn đặt hàng một cách hiệu quả? Nếu không có một hệ thống tổ chức tốt, việc theo dõi dữ liệu sẽ trở nên cực kỳ phức tạp và dễ gây ra sai sót, ví dụ như khó khăn khi cập nhật địa chỉ của một khách hàng.</p>
+<p>Đây chính là lúc <strong>Cơ sở dữ liệu (Database)</strong> phát huy vai trò của mình. Cơ sở dữ liệu là một tập hợp các thông tin/dữ liệu được lưu trữ và tổ chức theo một định dạng nhất định, cho phép truy cập, quản lý và truy xuất dữ liệu một cách dễ dàng. Nó giúp chúng ta tránh việc lưu trữ dữ liệu trùng lặp và đảm bảo tính toàn vẹn của thông tin.</p>
+<h2 id="2-hệ-cơ-sở-dữ-liệu-quan-hệ-relational-databases">2. Hệ Cơ Sở Dữ Liệu Quan Hệ (Relational Databases)</h2>
+<p>Trong thế giới cơ sở dữ liệu, <strong>hệ cơ sở dữ liệu quan hệ (Relational Databases)</strong> là một mô hình phổ biến. Nó tổ chức dữ liệu thành các bảng (tables) có liên quan với nhau. Ví dụ, trong một hệ thống mua sắm trực tuyến, bạn có thể có các bảng riêng biệt cho Khách hàng (Customers), Sản phẩm (Products), Đơn hàng (Orders) và Chi tiết đơn hàng (Order Details). Mỗi bảng này được coi như một “file” trong một “thư mục” lớn hơn gọi là <strong>Schema</strong> – cách bạn tổ chức dữ liệu.</p>
+<p>Mối quan hệ giữa các bảng được thiết lập thông qua <strong>Khóa chính (Primary Key)</strong> và <strong>Khóa ngoại (Foreign Key)</strong>. Khóa chính là một hoặc nhiều cột dùng để xác định duy nhất mỗi hàng trong một bảng, trong khi khóa ngoại là một cột (hoặc nhiều cột) tham chiếu đến khóa chính của bảng khác, tạo ra mối liên kết giữa chúng. Điều này giúp duy trì sự liên kết và tính nhất quán của dữ liệu. Bạn cũng có thể sử dụng <strong>khóa chính tổng hợp (composite primary key)</strong> bằng cách kết hợp hai khóa ngoại để tạo ra một khóa chính duy nhất, ví dụ trong bảng Enrollment (sinh viên_id, khóa học_id).</p>
+<h3 id="ví-dụ-thực-tế-cấu-trúc-database-store">Ví dụ Thực Tế: Cấu Trúc Database Store</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Tạo database store</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">CREATE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> DATABASE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> `</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">store</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">`;</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">USE</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">store</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Bảng customers với primary key</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">CREATE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> TABLE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> `</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">customers</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">` (</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">customer_id</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> int</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">11</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> AUTO_INCREMENT,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">first_name</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> varchar</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">50</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">last_name</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> varchar</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">50</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">birth_date</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> date</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> DEFAULT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">phone</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> varchar</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">50</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">DEFAULT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">address</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> varchar</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">50</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">city</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> varchar</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">50</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">state</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> char</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">points</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> int</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">11</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> DEFAULT</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">0</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">  PRIMARY KEY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">customer_id</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) ENGINE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">InnoDB;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Bảng orders với foreign key tham chiếu đến customers</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">CREATE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> TABLE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> `</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">orders</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">` (</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">order_id</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> int</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">11</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> AUTO_INCREMENT,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">customer_id</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> int</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">11</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">order_date</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> date</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> NOT NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">status</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> tinyint</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">NOT NULL</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> DEFAULT</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">1</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">comments</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> varchar</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2000</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">DEFAULT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">shipped_date</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> date</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> DEFAULT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">shipper_id</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> smallint</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">6</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">DEFAULT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">  PRIMARY KEY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">order_id</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">  FOREIGN KEY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">customer_id</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">REFERENCES</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">customers</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">customer_id</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">`</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) ENGINE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">InnoDB;</span></span></code></pre>
+<h2 id="3-hệ-thống-quản-lý-cơ-sở-dữ-liệu-dbms">3. Hệ Thống Quản Lý Cơ Sở Dữ Liệu (DBMS)</h2>
+<p>Để tương tác với cơ sở dữ liệu, chúng ta cần một phần mềm hoặc ứng dụng gọi là <strong>Hệ thống quản lý cơ sở dữ liệu (Database Management System - DBMS)</strong>. DBMS cho phép người dùng đưa ra các lệnh (instructions) và nhận về kết quả (result) từ cơ sở dữ liệu. <strong>MySQL</strong> là một trong những DBMS phổ biến nhất cho các cơ sở dữ liệu quan hệ.</p>
+<p>Ngoài ra, bạn cũng có thể gặp các cơ sở dữ liệu <strong>phi quan hệ (Non-Relational)</strong> hoặc <strong>NoSQL</strong>, thường được dùng để lưu trữ dữ liệu dạng chat hoặc trong các ứng dụng có nhiều người dùng đồng thời, và thường không có cấu trúc bảng cố định như Relational Databases.</p>
+<h2 id="4-cài-đặt-mysql-bắt-đầu-hành-trình">4. Cài Đặt MySQL: Bắt Đầu Hành Trình</h2>
+<p>Để bắt đầu làm việc với SQL, việc đầu tiên là cài đặt MySQL. Bạn sẽ cần cài đặt hai thành phần chính: <strong>MySQL Community Server</strong> (máy chủ) và <strong>MySQL Workbench</strong> (giao diện đồ họa để làm việc với máy chủ).</p>
+<h3 id="các-bước-cài-đặt-mysql-trên-mac">Các bước cài đặt MySQL trên Mac:</h3>
+<ul>
+<li><strong>Bước 1-4</strong>: Truy cập mysql.com, vào tab DOWNLOADS, cuộn xuống và tải MySQL Community Server.</li>
+<li><strong>Bước 5-6</strong>: Mở file đã tải. Nếu macOS ngăn mở, bạn cần vào System Settings > Privacy &#x26; Security để cho phép. Sau đó, làm theo hướng dẫn và tạo mật khẩu cho người dùng “root”.</li>
+<li><strong>Bước 7-10</strong>: Quay lại trang DOWNLOADS, tìm và tải MySQL Workbench. Mở file, kéo vào thư mục Applications và khởi chạy ứng dụng.</li>
+</ul>
+<h3 id="các-bước-cài-đặt-mysql-trên-windows">Các bước cài đặt MySQL trên Windows:</h3>
+<ul>
+<li><strong>Bước 1-5</strong>: Truy cập mysql.com, vào tab DOWNLOADS, cuộn xuống và tải MySQL Community Server (phiên bản khuyên dùng).</li>
+<li><strong>Bước 5 (tiếp theo)</strong>: Mở file đã tải, làm theo hướng dẫn và tạo mật khẩu cho người dùng “root”.</li>
+<li><strong>Bước 6</strong>: Tiếp tục nhấp Next/Execute với các cài đặt mặc định. Sau đó, nhập mật khẩu root đã tạo trước đó để hoàn tất cài đặt.</li>
+</ul>
+<p>Khi đã cài đặt xong MySQL Workbench, bạn sẽ thấy kết nối mặc định. Nếu không, hãy nhấp vào nút (+) để tạo kết nối mới, nhập mật khẩu root của bạn và kết nối.</p>
+<h2 id="5-tạo-cơ-sở-dữ-liệu-và-bảng-create-databases">5. Tạo Cơ Sở Dữ Liệu và Bảng (Create Databases)</h2>
+<p>Sau khi cài đặt MySQL, bạn có thể bắt đầu tổ chức dữ liệu. Quá trình này bao gồm các bước chính:</p>
+<ol>
+<li><strong>Thiết kế Schema cơ sở dữ liệu (Design the Database Schema)</strong>: Xác định cấu trúc dữ liệu, các bảng và mối quan hệ giữa chúng.</li>
+<li><strong>Tạo Bảng (Create Table)</strong>: Định nghĩa các bảng và cột trong bảng.</li>
+<li><strong>Chèn Dữ liệu (Insert Data)</strong>: Thêm dữ liệu vào các bảng.</li>
+<li><strong>Truy xuất Dữ liệu (Retrieve Data)</strong>: Lấy dữ liệu từ các bảng.</li>
+<li><strong>Cập nhật hoặc Xóa Dữ liệu (Update or Delete Data)</strong>: Thay đổi hoặc loại bỏ dữ liệu.</li>
+</ol>
+<h3 id="ví-dụ-tạo-database-shoppingdb">Ví dụ Tạo Database ShoppingDB:</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Tạo database mới</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">CREATE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> DATABASE</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> ShoppingDB</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">USE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ShoppingDB;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Tạo bảng Customers</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">CREATE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> TABLE</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> Customers</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    CustomerID </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">INT</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> PRIMARY KEY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    FirstName </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">VARCHAR</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">50</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    LastName </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">VARCHAR</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">50</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    Email </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">VARCHAR</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">100</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    Phone </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">VARCHAR</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">15</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Tạo bảng Products</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">CREATE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> TABLE</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> Products</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    ProductID </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">INT</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> PRIMARY KEY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    ProductName </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">VARCHAR</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">100</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    Price </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">DECIMAL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">10</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    Stock </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">INT</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Tạo bảng Orders với foreign key</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">CREATE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> TABLE</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> Orders</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    OrderID </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">INT</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> PRIMARY KEY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    CustomerID </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">INT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    OrderDate </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">DATE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    FOREIGN KEY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (CustomerID) </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">REFERENCES</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Customers(CustomerID)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chèn dữ liệu mẫu</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">INSERT INTO</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Customers (CustomerID, FirstName, LastName, Email, Phone)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">VALUES</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">John</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Doe</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">john.doe@example.com</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">555-1234</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Jane</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Smith</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">jane.smith@example.com</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">555-5678</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Alice</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">Johnson</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">alice.johnson@example.com</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">555-8765</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Xem dữ liệu</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Customers;</span></span></code></pre>
+<h2 id="6-các-engine-trong-mysql-mysql-engines">6. Các Engine Trong MySQL (MySQL Engines)</h2>
+<p>Đây là một điểm quan trọng thường bị bỏ qua! Trong MySQL, <strong>engine</strong> (bộ máy lưu trữ) là thành phần quyết định cách dữ liệu được lưu trữ, quản lý và xử lý trong từng bảng. Mỗi bảng có thể sử dụng một engine riêng, với các đặc điểm khác nhau:</p>
+<ul>
+<li><strong>InnoDB</strong>: Engine hiện đại, hỗ trợ giao dịch (transaction), khóa ngoại (foreign key) và tự khôi phục dữ liệu khi có lỗi. Đây là engine an toàn và được khuyến nghị sử dụng.</li>
+<li><strong>MyISAM</strong>: Engine cũ hơn, tốc độ đọc dữ liệu nhanh nhưng không hỗ trợ giao dịch và khóa ngoại. Dữ liệu sẽ không bị mất khi MySQL khởi động lại.</li>
+<li><strong>MEMORY</strong>: Lưu trữ dữ liệu trong RAM, cung cấp tốc độ rất nhanh nhưng dữ liệu sẽ mất khi MySQL khởi động lại.</li>
+<li><strong>CSV</strong>: Lưu trữ dữ liệu dưới dạng file CSV, thường dùng để xuất/nhập dữ liệu.</li>
+</ul>
+<h2 id="7-sql-queries-sức-mạnh-phân-tích-dữ-liệu">7. SQL Queries: Sức Mạnh Phân Tích Dữ Liệu</h2>
+<p>SQL (Structured Query Language) là một công cụ mạnh mẽ để truy vấn và thao tác dữ liệu một cách hiệu quả. Dưới đây là các lệnh SQL cơ bản và nâng cao để phân tích dữ liệu:</p>
+<h3 id="select-dùng-để-chọn-dữ-liệu">SELECT: Dùng để chọn dữ liệu</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn tất cả dữ liệu từ một bảng</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> store</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">customers</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn các cột cụ thể</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> first_name, last_name, points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn với giá trị đã sửa đổi và đổi tên cột (alias) bằng AS</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> points, points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 10</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> AS</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> new_points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn các giá trị duy nhất (distinct) của một cột</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT DISTINCT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> state</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers;</span></span></code></pre>
+<h3 id="where-dùng-để-lọc-dữ-liệu-với-điều-kiện">WHERE: Dùng để lọc dữ liệu với điều kiện</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn khách hàng có điểm lớn hơn 3000</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">WHERE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">></span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3000</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Sử dụng các toán tử so sánh</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">WHERE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">>=</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2000</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> AND</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> state</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">FL</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Kết hợp nhiều điều kiện với AND, OR, NOT</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> order_items </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">WHERE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> order_id </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 6</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> AND</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> unit_price </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> quantity </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">&#x3C;</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 30</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span></code></pre>
+<h3 id="in---between-dùng-để-kiểm-tra-giá-trị-trong-một-tập-hợp-hoặc-trong-một-khoảng">IN - BETWEEN: Dùng để kiểm tra giá trị trong một tập hợp hoặc trong một khoảng</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn khách hàng từ các bang VA, GA, FL</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">WHERE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> state</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> IN</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">VA</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">GA</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">FL</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn khách hàng có điểm từ 300 đến 2000 (bao gồm cả 300 và 2000)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">WHERE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">BETWEEN</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 300</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> AND</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2000</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span></code></pre>
+<h3 id="is-null---order-by---limit-dùng-để-xử-lý-giá-trị-null-sắp-xếp-và-giới-hạn-kết-quả">IS NULL - ORDER BY - LIMIT: Dùng để xử lý giá trị null, sắp xếp và giới hạn kết quả</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn khách hàng không có số điện thoại</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">WHERE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> phone </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">IS</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> NULL</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Sắp xếp khách hàng theo điểm giảm dần (DESC), mặc định là tăng dần (ASC)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ORDER BY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">DESC</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Lấy 3 khách hàng có điểm cao nhất</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ORDER BY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">DESC</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> LIMIT</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Bỏ qua 3 hàng đầu tiên và trả về 4 hàng tiếp theo</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ORDER BY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">DESC</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> LIMIT</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span></code></pre>
+<h3 id="like---regexp-dùng-để-tìm-kiếm-theo-mẫu">LIKE - REGEXP: Dùng để tìm kiếm theo mẫu</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn khách hàng có họ bắt đầu bằng 'B'</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">WHERE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> last_name </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">LIKE</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">B%</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Chọn khách hàng có họ dài 6 ký tự và kết thúc bằng 'y'</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">WHERE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> last_name </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">LIKE</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">_____y</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Sử dụng biểu thức chính quy (regular expression)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">WHERE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> first_name REGEXP </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">ELKA|AMBUR</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span></code></pre>
+<h2 id="8-tối-ưu-hóa-truy-vấn-vai-trò-của-index-chỉ-mục">8. Tối Ưu Hóa Truy Vấn: Vai Trò của Index (Chỉ Mục)</h2>
+<p>Để các truy vấn SELECT WHERE được thực thi nhanh chóng, cơ sở dữ liệu sử dụng <strong>Index (chỉ mục)</strong>. Index giống như mục lục của một cuốn sách, giúp cơ sở dữ liệu tìm kiếm dữ liệu nhanh hơn mà không cần quét toàn bộ bảng.</p>
+<ul>
+<li><strong>Các chỉ mục thường dựa trên cấu trúc B-Tree (Balanced Tree)</strong>, giúp thao tác tìm kiếm, chèn, xóa đều rất hiệu quả với dữ liệu lớn.</li>
+<li><strong>Clustered Index</strong>: Dữ liệu thực sự được sắp xếp vật lý trên đĩa theo thứ tự của index này. Mỗi bảng chỉ có thể có một Clustered Index.</li>
+<li><strong>Non-clustered Index</strong>: Chứa key và con trỏ (pointer) đến vị trí dữ liệu thực tế. Có thể có nhiều Non-clustered Index trên một bảng.</li>
+</ul>
+<h3 id="ví-dụ-tạo-index">Ví dụ Tạo Index:</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Tạo index trên cột points để tối ưu truy vấn</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">CREATE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> INDEX</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> idx_customers_points</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> ON</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers(points);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Tạo composite index trên nhiều cột</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">CREATE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> INDEX</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> idx_customers_state_points</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> ON</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">state</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, points);</span></span></code></pre>
+<h2 id="9-ví-dụ-thực-tế-phân-tích-dữ-liệu-store">9. Ví Dụ Thực Tế: Phân Tích Dữ Liệu Store</h2>
+<p>Hãy xem một số ví dụ thực tế về phân tích dữ liệu từ database store:</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Tìm top 5 khách hàng có điểm cao nhất</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> first_name, last_name, points </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ORDER BY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> points </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">DESC</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">LIMIT</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Thống kê số lượng khách hàng theo từng bang</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> state</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">COUNT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">as</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customer_count </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">GROUP BY</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> state</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ORDER BY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customer_count </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">DESC</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">-- Tìm các đơn hàng có giá trị cao nhất</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">order_id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">first_name</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">last_name</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">       SUM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">oi</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">quantity</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> oi</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">unit_price</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">as</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> total_value</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">FROM</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> orders o</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">JOIN</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> customers c </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ON</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">customer_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">customer_id</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">JOIN</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> order_items oi </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ON</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">order_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> oi</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">order_id</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">GROUP BY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> o</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">order_id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">first_name</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">c</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">last_name</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">ORDER BY</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> total_value </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">DESC</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">LIMIT</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 10</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span></code></pre>
+<h2 id="kết-luận">Kết Luận</h2>
+<p>SQL là một công cụ vô cùng mạnh mẽ và linh hoạt trong lĩnh vực phân tích dữ liệu. Từ việc cài đặt MySQL đến việc thành thạo các câu lệnh truy vấn như SELECT, WHERE, JOIN, GROUP BY và các kỹ thuật tối ưu như Index, bạn sẽ có khả năng khai thác tối đa giá trị từ dữ liệu của mình.</p>
+<p>Những kiến thức cơ bản này sẽ là nền tảng vững chắc để bạn tiếp tục học các kỹ thuật SQL nâng cao như JOIN, subqueries, stored procedures, và triggers. Hãy tiếp tục thực hành và khám phá để trở thành một chuyên gia phân tích dữ liệu!</p>
+<h3 id="tài-liệu-tham-khảo">Tài Liệu Tham Khảo</h3>
+<ul>
+<li><a href="https://dev.mysql.com/doc/">MySQL Documentation</a></li>
+<li><a href="https://www.w3schools.com/sql/">SQL Tutorial</a></li>
+<li><a href="https://www.mysql.com/why-mysql/white-papers/">Database Design Best Practices</a></li>
+</ul>
+<hr>
+<p><em>Bài viết này là phần đầu tiên trong series về SQL và Database Management. Hãy theo dõi các bài viết tiếp theo để tìm hiểu về JOIN, subqueries, và các kỹ thuật SQL nâng cao khác!</em></p> </article> <hr class="my-8 border-dashed"> <a href="https://github.com/satnaing/astro-paper/edit/main/src/data/blog/w1-database-sql-1.md" target="_blank" rel="noopener noreferrer" class="flex justify-baseline gap-1.5 opacity-80 hover:text-accent sm:hidden"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span>Edit page</span></a> <ul class="mt-4 mb-8 sm:my-8"> <li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/sql/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>sql</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/database/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-3"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>database</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/mysql/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-4"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>mysql</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/data-analysis/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-5"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>data-analysis</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/week-1/" class="relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline text-sm" data-astro-transition-scope="astro-36ssibgs-6"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -me-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>week1</span> </a> </li> </ul> <div id="btt-btn-container" class="fixed end-4 bottom-8 z-50 md:sticky md:end-auto md:float-end md:me-1 translate-y-14 opacity-0 transition duration-500"> <button data-button="back-to-top" class="group relative bg-background px-2 py-1 size-14 rounded-full shadow-xl md:h-8 md:w-fit md:rounded-md md:shadow-none md:focus-visible:rounded-none md:bg-background/35 md:bg-clip-padding md:backdrop-blur-lg"> <span id="progress-indicator" class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block rotate-90 md:hidden"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span class="sr-only text-sm group-hover:text-accent md:not-sr-only"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M16 9l-4 -4" /><path d="M8 9l4 -4" /></svg>
+Back To Top
+</span> </button> </div> <script data-astro-rerun>
+  /** Scrolls the document to the top when
+   * the "Back to Top" button is clicked. */
+  function backToTop() {
+    const rootElement = document.documentElement;
+    const btnContainer = document.querySelector("#btt-btn-container");
+    const backToTopBtn = document.querySelector("[data-button='back-to-top']");
+    const progressIndicator = document.querySelector("#progress-indicator");
+
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
+      return;
+
+    // Attach click event handler for back-to-top button
+    backToTopBtn.addEventListener("click", () => {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
+
+    // Handle button visibility according to scroll position
+    let lastVisible = null;
+    function handleScroll() {
+      const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+      const scrollTop = rootElement.scrollTop;
+      const scrollPercent = Math.floor((scrollTop / scrollTotal) * 100);
+
+      progressIndicator.style.setProperty(
+        "background-image",
+        `conic-gradient(var(--accent), var(--accent) ${scrollPercent}%, transparent ${scrollPercent}%)`
+      );
+
+      const isVisible = scrollTop / scrollTotal > 0.3;
+
+      if (isVisible !== lastVisible) {
+        btnContainer.classList.toggle("opacity-100", isVisible);
+        btnContainer.classList.toggle("translate-y-0", isVisible);
+        btnContainer.classList.toggle("opacity-0", !isVisible);
+        btnContainer.classList.toggle("translate-y-14", !isVisible);
+        lastVisible = isVisible;
+      }
+    }
+
+    let ticking = false;
+    document.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+  backToTop();
+</script> <div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start"><span class="italic">Share this post on:</span><div class="text-center"><a href="https://wa.me/?text=https://astro-paper.pages.dev/posts/w1-database-sql-1/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via WhatsApp"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg><span class="sr-only">Share this post via WhatsApp</span></a><a href="https://www.facebook.com/sharer.php?u=https://astro-paper.pages.dev/posts/w1-database-sql-1/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg><span class="sr-only">Share this post on Facebook</span></a><a href="https://x.com/intent/post?url=https://astro-paper.pages.dev/posts/w1-database-sql-1/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on X"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg><span class="sr-only">Share this post on X</span></a><a href="https://t.me/share/url?url=https://astro-paper.pages.dev/posts/w1-database-sql-1/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via Telegram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg><span class="sr-only">Share this post via Telegram</span></a><a href="https://pinterest.com/pin/create/button/?url=https://astro-paper.pages.dev/posts/w1-database-sql-1/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Pinterest"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg><span class="sr-only">Share this post on Pinterest</span></a><a href="mailto:?subject=See%20this%20post&#38;body=https://astro-paper.pages.dev/posts/w1-database-sql-1/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via email"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg><span class="sr-only">Share this post via email</span></a></div></div> <hr class="my-6 border-dashed"> <!-- Previous/Next Post Buttons --> <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">  <a href="/posts/learning-path" class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"> <div> <span>Next Post</span> <div class="text-sm text-accent/85">Learning Path - AI &amp; Machine Learning</div> </div> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg> </a> </div> </main> <footer class="w-full mt-auto"> <div class="mx-auto max-w-app px-0"> <hr class="border-border" aria-hidden="true"> </div> <div class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/satnaing/astro-paper" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on GitHub"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">AstroPaper on GitHub</span> </a><a href="https://x.com/username" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on X"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">AstroPaper on X</span> </a><a href="https://www.linkedin.com/in/username/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="AstroPaper on LinkedIn"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">AstroPaper on LinkedIn</span> </a><a href="mailto:yourmail@gmail.com" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="Send an email to AstroPaper"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only">Send an email to AstroPaper</span> </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>Copyright &#169; 2025</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>All rights reserved.</span> </div> </div> </footer>  </body></html> <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Create the main container div
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    // Create the progress bar div
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    // Append the progress bar to the progress container
+    progressContainer.appendChild(progressBar);
+
+    // Append the progress container to the document body or any other desired parent element
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const copyButton = document.createElement("button");
+      copyButton.className =
+        "copy-code absolute end-3 top-3 rounded bg-muted/80 px-2 py-1 text-xs leading-4 text-foreground font-medium";
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
