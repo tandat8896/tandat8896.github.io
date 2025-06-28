@@ -17,33 +17,33 @@ Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản �
 
 ## Module 1 - Fundamental Math and Programming (🔄 Đang học)
 ### Tuần 1
-- Skills for AIO2025
-- Basic Python (Branching~Rule based Chatbot)
-- Database SQL (1)
-- Basic Python (String and Loops~Text preprocessing)
-- Coding Methodology
-- TA Exercise (activation functions)
+- [Skills for AIO2025](/posts/w1-skills-aio2025)
+- [Basic Python (Branching~Rule based Chatbot)](/posts/w1-basic-python-branching)
+- [Database SQL (1)](/posts/w1-database-sql-1)
+- [Basic Python (String and Loops~Text preprocessing)](/posts/w1-basic-python-strings)
+- [Coding Methodology](/posts/w1-coding-methodology)
+- [TA Exercise (activation functions)](/posts/w1-ta-exercise-activation)
 
 ### Tuần 2
-- List ([w2-list](./w2-list))
-- Data Structure (list~IoU, Top K Searching) ([w2-list-advanced](./w2-list-advanced))
-- Database SQL (2) ([w2-database-sql-2](./w2-database-sql-2))
-- Data Structure (Non maximum supression and Histogram)
-- Git&Github for Version Control
-- TA Exercise (Word Suggestion)
+- [List](/posts/w2-list)
+- [Data Structure (list~IoU, Top K Searching)](/posts/w2-list-advanced)
+- [Database SQL (2)](/posts/w2-database-sql-2)
+- [Data Structure (Non maximum supression and Histogram)](/posts/w2-datastructure)
+- [Git&Github for Version Control](/posts/w2-git-github)
+- [TA Exercise (Word Suggestion)](/posts/w2-exercise)
 
 ### Tuần 3
-- Online Office Hours
-- Classes and Objects
-- Data Structure (Graph and Tree)
-- Database SQL (3)
-- OOP with Python (Custom PyTorch Class)
-- TA Exercise (OOP)
+- [Online Office Hours](/posts/w3-office-hours)
+- [Classes and Objects](/posts/w3-classes-objects)
+- [Data Structure (Graph and Tree)](/posts/w3-data-structure-graph)
+- [Database SQL (3)](/posts/w3-database-sql-3)
+- [OOP with Python (Custom PyTorch Class)](/posts/w3-oop-pytorch)
+- [TA Exercise (OOP)](/posts/w3-ta-exercise-oop)
 
 ### Tuần 4
-- Project 1.1: Basic Web and Streamlit for Simple Deployment
-- Unix&Docker
-- Project 1.2: [Tạo và triển khai một chatbot cho một chủ đề cá nhân](/posts/w4-project-1-2)
+- [Project 1.1: Basic Web and Streamlit for Simple Deployment](/posts/w4-project-1-1)
+- [Unix&Docker](/posts/w4-unix-docker)
+- [Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân](/posts/w4-project-1-2)
 
 ## Module 2 - Advanced Math and Programming (⏳ Chưa bắt đầu)
 Chi tiết sẽ được thêm sau
