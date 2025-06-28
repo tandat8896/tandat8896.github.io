@@ -20,7 +20,7 @@ Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản �
 - [Skills for AIO2025](/posts/w1-skills-aio2025)
 - [Basic Python (Branching~Rule based Chatbot)](/posts/w1-basic-python-branching)
 - [Database SQL (1)](/posts/w1-database-sql-1)
-- [Basic Python (String and Loops~Text preprocessing)](/posts/w1-basic-python-strings)
+- [Basic Python (String and Loops~Text preprocessing)](/posts/w1-basic-python-loops)
 - [Coding Methodology](/posts/w1-coding-methodology)
 - [TA Exercise (activation functions)](/posts/w1-ta-exercise-activation)
 
