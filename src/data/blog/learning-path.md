@@ -33,7 +33,6 @@ Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản �
 - [TA Exercise (Word Suggestion)](/posts/w2-exercise)
 
 ### Tuần 3
-- [Online Office Hours](/posts/w3-office-hours)
 - [Classes and Objects](/posts/w3-classes-objects)
 - [Data Structure (Graph and Tree)](/posts/w3-data-structure-graph)
 - [Database SQL (3)](/posts/w3-database-sql-3)
@@ -42,7 +41,7 @@ Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản �
 
 ### Tuần 4
 - [Project 1.1: Basic Web and Streamlit for Simple Deployment](/posts/w4-project-1-1)
-- [Unix&Docker](/posts/w4-unix-docker)
+- [Unix&Linux](/posts/w4-unix-linux)
 - [Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân](/posts/w4-project-1-2)
 
 ## Module 2 - Advanced Math and Programming (⏳ Chưa bắt đầu)
