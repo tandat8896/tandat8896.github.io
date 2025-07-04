@@ -12,7 +12,6 @@ draft: false
 
 # Git và GitHub: Cỗ Máy Thời Gian Cho Code Của Bạn
 
-*Bài viết dựa trên tài liệu từ Giảng viên Nguyễn Thái Hà (Ph.D) và Supporter Nguyễn Đăng Nhã cho AIO2025*
 
 ---
 

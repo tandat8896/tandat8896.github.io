@@ -5,6 +5,8 @@ description: "Learning path - Quá trình học tập của mình tại AIO 2025
 tags: ["learning-path", "ai", "machine-learning"]
 ---
 
+> **Cập nhật liên kết: 1h sáng 5/7/2025**
+
 # 🚀 Learning Path
 
 Learning path - Quá trình học tập của mình tại AIO 2025
@@ -49,7 +51,7 @@ Learning path - Quá trình học tập của mình tại AIO 2025
 - [Numpy array cơ bản](/posts/m2-w1-numpyarray)
 - [Numpy array 2d 3d data representation](/posts/m2-w2-numpy)
 - [Database-NoSQL](/posts/m2-w1-nosql-mongodb)
-- [Linear Algebra Applications](/posts/m2-w1-linear-algrebra)
+- [Linear Algebra Applications](/posts/m2-w2-linearalgebra)
 - [Logical thinking and problem solving in AI](/posts/m2-w1-logicalthinking)
 - [TA Exercise](/posts/m2-w2-exercise)
 
