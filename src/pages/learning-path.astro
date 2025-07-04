@@ -5,10 +5,10 @@ const modules = [
   {
     id: 1,
     title: "Module 1 - Fundamental Math and Programming",
-    status: "in-progress",
+    status: "completed",
     weeks: [
       {
-        week: "W1",
+        week: "Week 1",
         lessons: [
           { title: "Skills for AIO2025", link: "/posts/w1-skills-aio2025" },
           { title: "Basic Python (Branching~Rule based Chatbot)", link: "/posts/w1-basic-python-branching" },
@@ -19,7 +19,7 @@ const modules = [
         ]
       },
       {
-        week: "W2",
+        week: "Week 2",
         lessons: [
           { title: "List", link: "/posts/w2-list" },
           { title: "Data Structure (list~IoU, Top K Searching)", link: "/posts/w2-list-advanced" },
@@ -30,7 +30,7 @@ const modules = [
         ]
       },
       {
-        week: "W3",
+        week: "Week 3",
         lessons: [
           { title: "Classes and Objects", link: "/posts/w3-classes-objects" },
           { title: "Data Structure (Graph and Tree)", link: "/posts/w3-data-structure-graph" },
@@ -40,7 +40,7 @@ const modules = [
         ]
       },
       {
-        week: "W4",
+        week: "Week 4",
         lessons: [
           { title: "Project 1.1: Basic Web and Streamlit for Simple Deployment", link: "/posts/w4-project-1-1" },
           { title: "Unix&Linux", link: "/posts/w4-unix-linux" },
@@ -52,8 +52,20 @@ const modules = [
   {
     id: 2,
     title: "Module 2 - Advanced Math and Programming",
-    status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    status: "in-progress",
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Numpy array cơ bản", link: "/posts/m2-w1-numpyarray" },
+          { title: "Numpy array 2d 3d data representation", link: "/posts/m2-w2-numpy" },
+          { title: "Database-NoSQL", link: "/posts/m2-w1-nosql-mongodb" },
+          { title: "Linear Algebra Applications", link: "/posts/m2-w1-linear-algrebra" },
+          { title: "Logical thinking and problem solving in AI", link: "/posts/m2-w1-logicalthinking" },
+          { title: "TA Exercise", link: "/posts/m2-w2-exercise" }
+        ]
+      }
+    ]
   },
   {
     id: 3,
@@ -152,7 +164,7 @@ const getStatusText = (status: string) => {
         🚀 Learning Path
       </h1>
       <p class="text-xl text-gray-300 w-full">
-        Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản đến nâng cao
+        Learning path - Quá trình học tập của mình tại AIO 2025
       </p>
     </div>
 
@@ -161,19 +173,19 @@ const getStatusText = (status: string) => {
       <h2 class="text-2xl font-semibold text-white mb-4">📊 Tổng quan tiến độ</h2>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">
         <div class="text-center w-full">
-          <div class="text-3xl font-bold text-blue-400">12</div>
+          <div class="text-3xl font-bold text-blue-400">{modules.length}</div>
           <div class="text-gray-400">Modules</div>
         </div>
         <div class="text-center w-full">
-          <div class="text-3xl font-bold text-yellow-400">1/12</div>
+          <div class="text-3xl font-bold text-yellow-400">{modules.filter(m => m.status === 'in-progress').length}/{modules.length}</div>
           <div class="text-gray-400">Module đang học</div>
         </div>
         <div class="text-center w-full">
-          <div class="text-3xl font-bold text-green-400">21</div>
+          <div class="text-3xl font-bold text-green-400">{modules.reduce((sum, m) => sum + (m.weeks ? m.weeks.reduce((s, w) => s + w.lessons.length, 0) : 0), 0)}</div>
           <div class="text-gray-400">Bài học</div>
         </div>
         <div class="text-center w-full">
-          <div class="text-3xl font-bold text-purple-400">4</div>
+          <div class="text-3xl font-bold text-purple-400">{modules.reduce((sum, m) => sum + (m.weeks ? m.weeks.length : 0), 0)}</div>
           <div class="text-gray-400">Tuần</div>
         </div>
       </div>
@@ -207,8 +219,8 @@ const getStatusText = (status: string) => {
                   )}
                 </div>
 
-                <!-- Module 1 with expandable weeks -->
-                {mod.id === 1 && mod.weeks && (
+                <!-- Hiển thị weeks cho mọi module có weeks -->
+                {mod.weeks ? (
                   <div class="space-y-4 w-full">
                     {mod.weeks.map((week) => (
                       <details class="bg-gray-700 rounded-lg overflow-hidden w-full">
@@ -236,10 +248,7 @@ const getStatusText = (status: string) => {
                       </details>
                     ))}
                   </div>
-                )}
-
-                <!-- Other modules -->
-                {mod.id !== 1 && (
+                ) : (
                   <p class="text-gray-300 mb-4 w-full">{mod.description}</p>
                 )}
               </div>

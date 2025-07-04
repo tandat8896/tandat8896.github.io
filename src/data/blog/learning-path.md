@@ -1,22 +1,22 @@
 ---
-title: "Learning Path - AI & Machine Learning"
+title: "🚀 Learning Path"
 pubDatetime: 2025-06-28
-description: "Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản đến nâng cao"
+description: "Learning path - Quá trình học tập của mình tại AIO 2025"
 tags: ["learning-path", "ai", "machine-learning"]
 ---
 
 # 🚀 Learning Path
 
-Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản đến nâng cao
+Learning path - Quá trình học tập của mình tại AIO 2025
 
 ## 📊 Tổng quan tiến độ
 - **12 Modules**
-- **1/12 Module đang học**
-- **21 Bài học**
-- **4 Tuần**
+- **1 module đã hoàn thành, 1/12 module đang học**
+- **23 Bài học**
+- **5 Tuần**
 
-## Module 1 - Fundamental Math and Programming (🔄 Đang học)
-### Tuần 1
+## Module 1 - Fundamental Math and Programming (✅ Hoàn thành)
+### Week 1
 - [Skills for AIO2025](/posts/w1-skills-aio2025)
 - [Basic Python (Branching~Rule based Chatbot)](/posts/w1-basic-python-branching)
 - [Database SQL (1)](/posts/w1-database-sql-1)
@@ -24,7 +24,7 @@ Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản �
 - [Coding Methodology](/posts/w1-coding-methodology)
 - [TA Exercise (activation functions)](/posts/w1-ta-exercise-activation)
 
-### Tuần 2
+### Week 2
 - [List](/posts/w2-list)
 - [Data Structure (list~IoU, Top K Searching)](/posts/w2-list-advanced)
 - [Database SQL (2)](/posts/w2-database-sql-2)
@@ -32,20 +32,26 @@ Lộ trình học tập toàn diện về AI & Machine Learning từ cơ bản �
 - [Git&Github for Version Control](/posts/w2-git-github)
 - [TA Exercise (Word Suggestion)](/posts/w2-exercise)
 
-### Tuần 3
+### Week 3
 - [Classes and Objects](/posts/w3-classes-objects)
 - [Data Structure (Graph and Tree)](/posts/w3-data-structure-graph)
 - [Database SQL (3)](/posts/w3-database-sql-3)
 - [OOP with Python (Custom PyTorch Class)](/posts/w3-oop-pytorch)
 - [TA Exercise (OOP)](/posts/w3-ta-exercise-oop)
 
-### Tuần 4
+### Week 4
 - [Project 1.1: Basic Web and Streamlit for Simple Deployment](/posts/w4-project-1-1)
 - [Unix&Linux](/posts/w4-unix-linux)
 - [Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân](/posts/w4-project-1-2)
 
-## Module 2 - Advanced Math and Programming (⏳ Chưa bắt đầu)
-Chi tiết sẽ được thêm sau
+## Module 2 - Advanced Math and Programming (🔄 Đang học)
+### Week 1
+- [Numpy array cơ bản](/posts/m2-w1-numpyarray)
+- [Numpy array 2d 3d data representation](/posts/m2-w2-numpy)
+- [Database-NoSQL](/posts/m2-w1-nosql-mongodb)
+- [Linear Algebra Applications](/posts/m2-w1-linear-algrebra)
+- [Logical thinking and problem solving in AI](/posts/m2-w1-logicalthinking)
+- [TA Exercise](/posts/m2-w2-exercise)
 
 ## Module 3 - Basic Machine Learning (⏳ Chưa bắt đầu)
 Chi tiết sẽ được thêm sau
