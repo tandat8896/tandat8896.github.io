@@ -48,7 +48,6 @@ Learning path - Quá trình học tập của mình tại AIO 2025
 
 ## Module 2 - Advanced Math and Programming (🔄 Đang học)
 ### Week 1
-- [Numpy array cơ bản](/posts/m2-w1-numpyarray)
 - [Numpy array 2d 3d data representation](/posts/m2-w2-numpy)
 - [Database-NoSQL](/posts/m2-w1-nosql-mongodb)
 - [Linear Algebra Applications](/posts/m2-w2-linearalgebra)
