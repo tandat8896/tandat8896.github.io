@@ -2,7 +2,7 @@
 title: "🚀 Learning Path"
 pubDatetime: 2025-06-28
 featured: true
-description: "Learning path - Quá trình học tập của mình tại AIO 2025"
+description: "Learning path - Quá trình học tập của mình"
 tags: ["learning-path", "ai", "machine-learning"]
 ---
 
@@ -10,7 +10,7 @@ tags: ["learning-path", "ai", "machine-learning"]
 
 # 🚀 Learning Path
 
-Learning path - Quá trình học tập của mình tại AIO 2025
+Learning path - Quá trình học tập của mình 
 
 ## 📊 Tổng quan tiến độ
 - **12 Modules**
@@ -20,7 +20,6 @@ Learning path - Quá trình học tập của mình tại AIO 2025
 
 ## Module 1 - Fundamental Math and Programming (✅ Hoàn thành)
 ### Week 1
-- [Skills for AIO2025](/posts/w1-skills-aio2025)
 - [Basic Python (Branching~Rule based Chatbot)](/posts/w1-basic-python-branching)
 - [Database SQL (1)](/posts/w1-database-sql-1)
 - [Basic Python (String and Loops~Text preprocessing)](/posts/w1-basic-python-loops)

@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://astro-paper.pages.dev/", // replace this with your deployed domain
   author: "Tấn Đạt",
   profile: "https://satnaing.dev/",
-  desc: "Blog học tập AI & Machine Learning - AIO 2025",
+  desc: "Blog học tập AI & Machine Learning ",
   title: "Tấn Đạt",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
