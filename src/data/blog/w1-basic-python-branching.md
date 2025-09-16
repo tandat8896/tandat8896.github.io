@@ -2,6 +2,7 @@
 title: "Tuần 1: Python Cơ Bản cho AI - Từ Biểu diễn Dữ liệu đến Chatbot Thông Minh"
 description: "Khám phá toàn diện Python cơ bản cho AI: biểu diễn dữ liệu, functions, mathematical functions, conditions, rule-based chatbot và các khái niệm quan trọng trong lập trình AI."
 pubDatetime: 2025-06-28T10:00:00Z
+featured: true
 tags:
   - python
   - ai

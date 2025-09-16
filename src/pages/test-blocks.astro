@@ -1,0 +1,37 @@
+---
+import BlockLayout from "@/layouts/BlockLayout.astro";
+import NavigationBlock from "@/components/blocks/NavigationBlock.astro";
+import HeroBlock from "@/components/blocks/HeroBlock.astro";
+import FooterBlock from "@/components/blocks/FooterBlock.astro";
+---
+
+<BlockLayout title="Test Blocks - New Architecture">
+  <NavigationBlock />
+  
+  <main class="min-h-screen">
+    <div class="mx-auto max-w-app px-4 py-8">
+      <HeroBlock 
+        title="🎉 Block Architecture Test"
+        subtitle="New modular design is working!"
+        description="If you can see this page with the new navigation and hero block, then the block architecture is working correctly!"
+        showRss={true}
+        showSocials={true}
+      />
+      
+      <div class="mt-12 p-8 bg-muted rounded-lg">
+        <h2 class="text-2xl font-bold text-accent mb-4">✅ Success!</h2>
+        <p class="text-muted-foreground">
+          The new block-based architecture is working! You should see:
+        </p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>• New navigation with improved styling</li>
+          <li>• Hero block with title, subtitle, and description</li>
+          <li>• RSS and social links in the hero section</li>
+          <li>• Footer with social links and copyright</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  
+  <FooterBlock />
+</BlockLayout>

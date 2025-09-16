@@ -159,18 +159,21 @@ db.grades.insertMany([
 db.inspections.find({ "address.zip": 11385 })
 ```
 
-4. Toán tử truy vấn quan trọng
-• Toán tử so sánh: Sử dụng cú pháp {field: {operator: value}}.
-◦ $eq: Bằng (equal to). Ví dụ: {"salary":{$eq:50000}}
-◦ $lt: Nhỏ hơn (less than). Ví dụ: {"salary":{$lt:50000}}
-◦ $gt: Lớn hơn (greater than).
-◦ $ne: Không bằng (not equal to).
-◦ $lte: Nhỏ hơn hoặc bằng.
-◦ $gte: Lớn hơn hoặc bằng.
-◦ $in: Trong tập hợp các giá trị. Ví dụ: {"salary":{$in:[40000,50000]}}
-◦ $nin: Không trong tập hợp các giá trị.
-• Toán tử logic:
-◦ $and: Trả về tài liệu khớp với TẤT CẢ các điều kiện. Ví dụ:
+## 4. Toán tử truy vấn quan trọng
+
+### Toán tử so sánh
+Sử dụng cú pháp `{field: {operator: value}}`:
+- **$eq**: Bằng (equal to). Ví dụ: `{"salary":{"$eq":50000}}`
+- **$lt**: Nhỏ hơn (less than). Ví dụ: `{"salary":{"$lt":50000}}`
+- **$gt**: Lớn hơn (greater than).
+- **$ne**: Không bằng (not equal to).
+- **$lte**: Nhỏ hơn hoặc bằng.
+- **$gte**: Lớn hơn hoặc bằng.
+- **$in**: Trong tập hợp các giá trị. Ví dụ: `{"salary":{"$in":[40000,50000]}}`
+- **$nin**: Không trong tập hợp các giá trị.
+
+### Toán tử logic
+- **$and**: Trả về tài liệu khớp với TẤT CẢ các điều kiện. Ví dụ:
 ```js
 db.trips.find({ $and: [ { "tripduration": { $gt: 400 } }, { "birth year": { $gt: 1988 } } ] })
 ```
@@ -193,19 +196,19 @@ Với truy vấn phức tạp, explicit sẽ giúp bạn dễ dàng thêm, bớt
 
 **Tóm lại:** Hãy ưu tiên viết query explicit với các toán tử $ để code rõ ràng, dễ bảo trì!
 
-◦ $or: Trả về tài liệu khớp với BẤT KỲ điều kiện nào. Ví dụ, tìm tài liệu mà trường "start station name" hoặc "end station name" có giá trị null:
+- **$or**: Trả về tài liệu khớp với BẤT KỲ điều kiện nào. Ví dụ, tìm tài liệu mà trường "start station name" hoặc "end station name" có giá trị null:
 ```js
 db.trips.find({ $or: [ { "start station name": null }, { "end station name": null } ] })
 ```
-◦ $not: Trả về tài liệu không khớp với biểu thức. Ví dụ: db.trips.find({"usertype": {$not:{$eq:"Subscriber"}}}) tương đương với db.trips.find({"usertype": {$ne:"Subscriber"}}).
-◦ $nor: Trả về tài liệu không khớp với BẤT KỲ điều kiện nào.
-• $expr: Cho phép bạn sử dụng các biểu thức tổng hợp để so sánh các trường với nhau hoặc thực hiện các phép tính phức tạp. Ví dụ, tìm tài liệu mà giá trị của "field1" giống với "field2":
+- **$not**: Trả về tài liệu không khớp với biểu thức. Ví dụ: `db.trips.find({"usertype": {"$not":{"$eq":"Subscriber"}}})` tương đương với `db.trips.find({"usertype": {"$ne":"Subscriber"}})`.
+- **$nor**: Trả về tài liệu không khớp với BẤT KỲ điều kiện nào.
+- **$expr**: Cho phép bạn sử dụng các biểu thức tổng hợp để so sánh các trường với nhau hoặc thực hiện các phép tính phức tạp. Ví dụ, tìm tài liệu mà giá trị của "field1" giống với "field2":
 ```js
 db.collection.find({ $expr: { $eq: [ "$field1", "$field2" ] } })
 ```
-• Toán tử phần tử:
-◦ $exists: Trả về tài liệu chứa trường được chỉ định. Ví dụ: db.companies.find({"ipo":{$exists:true}})
-◦ $type: Trả về tài liệu mà trường chứa giá trị của một kiểu dữ liệu BSON cụ thể (ví dụ: 2 cho String, 4 cho Array, 10 cho Null). Ví dụ: db.companies.find({"homepage_url":{$type:2}}) để tìm các URL có kiểu String.
+### Toán tử phần tử
+- **$exists**: Trả về tài liệu chứa trường được chỉ định. Ví dụ: `db.companies.find({"ipo":{"$exists":true}})`
+- **$type**: Trả về tài liệu mà trường chứa giá trị của một kiểu dữ liệu BSON cụ thể (ví dụ: 2 cho String, 4 cho Array, 10 cho Null). Ví dụ: `db.companies.find({"homepage_url":{"$type":2}})` để tìm các URL có kiểu String.
 
 5. Phương thức con trỏ (Cursor Methods)
 Khi bạn chạy lệnh find(), MongoDB sẽ trả về một con trỏ (cursor) tới tập kết quả. Bạn có thể áp dụng các phương thức sau lên con trỏ:
@@ -271,17 +274,18 @@ db.companies.updateMany({}, { $set: { "country": "Vietnam" } })
 db.grades.updateOne({ "student_id": 1 }, { $push: { "scores": { "type": "bonus", "score": 10 } } })
 ```
 
-10. Toán tử cập nhật (Update Operators)
-• $set: Thay thế giá trị của một trường bằng giá trị được chỉ định.
-◦ db.student.updateMany({"name":"Hoa"}, {$set:{"address":"Ho Chi Minh"}})
-• $unset: Xóa một trường cụ thể.
-◦ db.collection.updateMany({filter},{$unset:{field:value,…}})
-• $rename: Đổi tên một trường.
-◦ db.collection.updateMany({filter},{$rename:{field:value,…}})
-• $inc: Tăng giá trị của một trường lên một giá trị cụ thể.
-◦ db.student.updateMany({"age":20}, {$inc:{"age":1}})
-• $push: Thêm một giá trị vào cuối một mảng.
-◦ db.student.updateMany({"name":"Hoa"}, {$push:{"address":"Ha Noi"}})
+## 10. Toán tử cập nhật (Update Operators)
+
+- **$set**: Thay thế giá trị của một trường bằng giá trị được chỉ định.
+  - `db.student.updateMany({"name":"Hoa"}, {"$set":{"address":"Ho Chi Minh"}})`
+- **$unset**: Xóa một trường cụ thể.
+  - `db.collection.updateMany({filter},{"$unset":{field:value,…}})`
+- **$rename**: Đổi tên một trường.
+  - `db.collection.updateMany({filter},{"$rename":{field:value,…}})`
+- **$inc**: Tăng giá trị của một trường lên một giá trị cụ thể.
+  - `db.student.updateMany({"age":20}, {"$inc":{"age":1}})`
+- **$push**: Thêm một giá trị vào cuối một mảng.
+  - `db.student.updateMany({"name":"Hoa"}, {"$push":{"address":"Ha Noi"}})`
 
 Ví dụ thực tế:
 ```js

@@ -1,0 +1,52 @@
+---
+import Card from "../Card.astro";
+import LinkButton from "../LinkButton.astro";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@/config";
+
+export interface Props {
+  posts: CollectionEntry<"blog">[];
+  showViewAll?: boolean;
+  maxPosts?: number;
+}
+
+const { 
+  posts, 
+  showViewAll = true,
+  maxPosts = SITE.postPerIndex 
+} = Astro.props;
+
+const displayPosts = posts.slice(0, maxPosts);
+---
+
+{posts.length > 0 && (
+  <section id="recent-posts" class="py-12">
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-foreground mb-2">
+        Bài Học Gần Đây
+      </h2>
+      <p class="text-muted-foreground">
+        Các bài học mới nhất trong lộ trình học tập của bạn
+      </p>
+    </div>
+    
+    <div class="space-y-4">
+      {displayPosts.map(data => (
+        <Card variant="h3" {...data} />
+      ))}
+    </div>
+    
+    {showViewAll && posts.length > maxPosts && (
+      <div class="mt-8 text-center">
+        <LinkButton 
+          href="/posts/"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-accent text-background rounded-lg font-medium hover:bg-accent/90 transition-colors"
+        >
+          Xem Tất Cả Bài Học
+          <IconArrowRight class="w-4 h-4 rtl:-rotate-180" />
+        </LinkButton>
+      </div>
+    )}
+  </section>
+)}

@@ -1,0 +1,104 @@
+---
+import Socials from "../Socials.astro";
+import LinkButton from "../LinkButton.astro";
+import IconRss from "@/assets/icons/IconRss.svg";
+import { SITE } from "@/config";
+import { SOCIALS } from "@/constants";
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  showRss?: boolean;
+  showSocials?: boolean;
+}
+
+const {
+  title = "Mingalaba",
+  subtitle,
+  description = "AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro blog theme. This theme follows best practices and provides accessibility out of the box. Light and dark mode are supported by default. Moreover, additional color schemes can also be configured.",
+  showRss = true,
+  showSocials = true,
+} = Astro.props;
+---
+
+<section id="hero" class="relative py-12 bg-gradient-to-b from-background to-muted/20">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid lg:grid-cols-12 gap-8 items-center">
+      <!-- Left content -->
+      <div class="lg:col-span-8">
+        <div class="flex items-center gap-4 mb-4">
+          <h1 class="text-4xl font-bold text-foreground sm:text-5xl lg:text-6xl">
+            {title}
+          </h1>
+          {showRss && (
+            <a
+              target="_blank"
+              href="/rss.xml"
+              class="p-2 rounded-lg bg-accent/10 hover:bg-accent/20 transition-colors"
+              aria-label="rss feed"
+              title="RSS Feed"
+            >
+              <IconRss width={20} height={20} class="stroke-accent" />
+              <span class="sr-only">RSS Feed</span>
+            </a>
+          )}
+        </div>
+        
+        {subtitle && (
+          <h2 class="text-xl text-muted-foreground font-medium mb-6 sm:text-2xl">
+            {subtitle}
+          </h2>
+        )}
+        
+        <p class="text-base leading-relaxed text-muted-foreground mb-8 max-w-2xl">
+          {description}
+        </p>
+        
+        <div class="flex flex-wrap gap-4">
+          <LinkButton
+            class="px-6 py-3 bg-accent text-background rounded-lg font-medium hover:bg-accent/90 transition-colors"
+            href="/learning-path"
+          >
+            Xem Bài Học
+          </LinkButton>
+          
+          <LinkButton
+            class="px-6 py-3 border border-border text-foreground rounded-lg font-medium hover:bg-muted transition-colors"
+            href="/learning-path"
+          >
+            Lộ Trình Học
+          </LinkButton>
+        </div>
+      </div>
+      
+      <!-- Right content - Stats or info -->
+      <div class="lg:col-span-4">
+        <div class="bg-background/50 border border-border rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-foreground mb-4">Tiến Độ Học Tập</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-muted-foreground">Modules hoàn thành</span>
+              <span class="text-sm font-medium text-accent">1/12</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-muted-foreground">Bài học</span>
+              <span class="text-sm font-medium text-accent">23</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-muted-foreground">Tuần học</span>
+              <span class="text-sm font-medium text-accent">5</span>
+            </div>
+          </div>
+          
+          {showSocials && SOCIALS.length > 0 && (
+            <div class="mt-6 pt-4 border-t border-border">
+              <p class="text-sm text-muted-foreground mb-3">Kết nối</p>
+              <Socials />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

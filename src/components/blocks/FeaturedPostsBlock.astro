@@ -1,0 +1,35 @@
+---
+import Card from "../Card.astro";
+import Hr from "../Hr.astro";
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  posts: CollectionEntry<"blog">[];
+  showDivider?: boolean;
+}
+
+const { posts, showDivider = true } = Astro.props;
+---
+
+{posts.length > 0 && (
+  <>
+    <section id="featured" class="py-12">
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-foreground mb-2">
+          Bài Học Nổi Bật
+        </h2>
+        <p class="text-muted-foreground">
+          Những bài học quan trọng và đáng chú ý trong lộ trình AIO 2025
+        </p>
+      </div>
+      
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map(data => (
+          <Card variant="h3" {...data} />
+        ))}
+      </div>
+    </section>
+    
+    {showDivider && <Hr />}
+  </>
+)}

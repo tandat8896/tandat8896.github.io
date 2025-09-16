@@ -9,6 +9,7 @@ html[data-theme="light"] {
   --foreground: #282728;
   --accent: #006cac;
   --muted: #e6e6e6;
+  --muted-foreground: #6b7280;
   --border: #ece9e9;
 }
 
@@ -17,6 +18,7 @@ html[data-theme="dark"] {
   --foreground: #eaedf3;
   --accent: #ff6b01;
   --muted: #343f60bf;
+  --muted-foreground: #9ca3af;
   --border: #ab4b08;
 }
 
@@ -25,6 +27,7 @@ html[data-theme="dark"] {
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
 }
 
@@ -38,7 +41,7 @@ html[data-theme="dark"] {
     @apply overflow-y-scroll scroll-smooth;
   }
   body {
-    @apply flex min-h-svh flex-col bg-background font-mono text-foreground selection:bg-accent/75 selection:text-background;
+    @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
   }
   a,
   button {
@@ -50,12 +53,184 @@ html[data-theme="dark"] {
   }
   section,
   footer {
-    @apply mx-auto max-w-app px-4;
+    @apply w-full px-0;
   }
 }
 
+/* Block-specific styles */
+@layer components {
+  .block-container {
+    @apply w-full px-0 text-left;
+  }
+  
+  .block-section {
+    @apply py-16;
+  }
+  
+  .app-prose {
+    @apply text-left max-w-none w-full;
+  }
+  
+  .block-title {
+    @apply text-3xl font-bold tracking-wide text-foreground;
+  }
+  
+  .block-subtitle {
+    @apply mt-2 text-sm text-muted-foreground;
+  }
+  
+  .block-content {
+    @apply mt-6;
+  }
+  
+  /* Hero block styles */
+  .hero-title {
+    @apply text-5xl font-bold sm:text-6xl lg:text-7xl;
+  }
+  
+  .hero-subtitle {
+    @apply text-2xl text-muted-foreground font-light sm:text-3xl;
+  }
+  
+  .hero-description {
+    @apply text-lg leading-relaxed text-muted-foreground;
+  }
+  
+  /* Navigation block styles */
+  .nav-container {
+    @apply sticky top-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50 shadow-sm;
+  }
+  
+  .nav-link {
+    @apply text-sm font-medium transition-all duration-300 hover:text-accent;
+  }
+  
+  .nav-link.active {
+    @apply text-accent bg-accent/10;
+  }
+  
+  /* Card block styles */
+  .card-container {
+    @apply space-y-6;
+  }
+  
+  .card-item {
+    @apply hover:bg-accent/5;
+  }
+  
+  .card-title {
+    @apply text-xl font-semibold text-foreground hover:text-accent transition-colors duration-300;
+  }
+  
+  .card-description {
+    @apply text-muted-foreground leading-relaxed;
+  }
+  
+  /* Footer block styles */
+  .footer-container {
+    @apply w-full mt-auto;
+  }
+  
+  .footer-content {
+    @apply flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4;
+  }
+  
+  .footer-copyright {
+    @apply my-2 flex flex-col items-center whitespace-nowrap sm:flex-row;
+  }
+  
+  /* Modern animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite 2s;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out;
+  }
+  
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-foreground to-accent bg-clip-text text-transparent;
+  }
+  
+  /* Glass effect */
+  .glass {
+    @apply bg-background/50 backdrop-blur-xl border border-border/50;
+  }
+  
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent/20;
+  }
+}
+
+/* Keyframe animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Line clamp utility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply w-full;
 }
 
 .active-nav {

@@ -1,0 +1,229 @@
+---
+import Hr from "../Hr.astro";
+import IconX from "@/assets/icons/IconX.svg";
+import IconMoon from "@/assets/icons/IconMoon.svg";
+import IconSearch from "@/assets/icons/IconSearch.svg";
+import IconArchive from "@/assets/icons/IconArchive.svg";
+import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
+import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
+import LinkButton from "../LinkButton.astro";
+import { SITE } from "@/config";
+
+const { pathname } = Astro.url;
+
+// Remove trailing slash from current pathname if exists
+const currentPath =
+  pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
+
+const isActive = (path: string) => {
+  const currentPathArray = currentPath.split("/").filter(p => p.trim());
+  const pathArray = path.split("/").filter(p => p.trim());
+
+  return currentPath === path || currentPathArray[0] === pathArray[0];
+};
+---
+
+<header class="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
+  <a
+    id="skip-to-content"
+    href="#main-content"
+    class="absolute start-16 -top-full z-50 bg-accent text-background px-3 py-1 rounded text-sm font-medium transition-all focus:top-2 hover:bg-accent/90"
+  >
+    Skip to content
+  </a>
+  
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="flex items-center justify-between py-4">
+      <!-- Logo/Brand -->
+      <a
+        href="/"
+        class="text-xl font-bold text-foreground hover:text-accent transition-colors"
+      >
+        {SITE.title}
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden sm:flex items-center space-x-2">
+        <a 
+          href="/posts" 
+          class:list={[
+            "px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent rounded-md",
+            { "bg-muted text-accent": isActive("/posts") }
+          ]}
+        >
+          Bài Học
+        </a>
+        <a 
+          href="/tags" 
+          class:list={[
+            "px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent rounded-md",
+            { "bg-muted text-accent": isActive("/tags") }
+          ]}
+        >
+          Thẻ
+        </a>
+        <a 
+          href="/about" 
+          class:list={[
+            "px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent rounded-md",
+            { "bg-muted text-accent": isActive("/about") }
+          ]}
+        >
+          Giới Thiệu
+        </a>
+        
+        {SITE.showArchives && (
+          <LinkButton
+            href="/archives"
+            class:list={[
+              "p-2 hover:text-accent transition-colors",
+              { "text-accent": isActive("/archives") }
+            ]}
+            ariaLabel="archives"
+            title="Archives"
+          >
+            <IconArchive class="w-5 h-5" />
+          </LinkButton>
+        )}
+        
+        <LinkButton
+          href="/search"
+          class:list={[
+            "p-2 hover:text-accent transition-colors",
+            { "text-accent": isActive("/search") }
+          ]}
+          ariaLabel="search"
+          title="Search"
+        >
+          <IconSearch class="w-5 h-5" />
+        </LinkButton>
+        
+        {SITE.lightAndDarkMode && (
+          <button
+            id="theme-btn"
+            class="p-2 hover:text-accent transition-colors"
+            title="Toggles light & dark"
+            aria-label="auto"
+            aria-live="polite"
+          >
+            <IconMoon class="w-5 h-5 absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="w-5 h-5 absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+          </button>
+        )}
+      </nav>
+      
+      <!-- Mobile Menu Button -->
+      <button
+        id="menu-btn"
+        class="sm:hidden p-2 hover:text-accent transition-colors"
+        aria-label="Open Menu"
+        aria-expanded="false"
+        aria-controls="menu-items"
+      >
+        <IconX id="close-icon" class="hidden w-6 h-6" />
+        <IconMenuDeep id="menu-icon" class="w-6 h-6" />
+      </button>
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <nav
+      id="menu-items"
+      class="hidden sm:hidden pb-4"
+    >
+      <div class="grid grid-cols-2 gap-2">
+        <a 
+          href="/posts" 
+          class:list={[
+            "block px-4 py-3 text-center font-medium rounded-lg transition-colors hover:bg-muted",
+            { "text-accent bg-muted": isActive("/posts") }
+          ]}
+        >
+          Posts
+        </a>
+        <a 
+          href="/tags" 
+          class:list={[
+            "block px-4 py-3 text-center font-medium rounded-lg transition-colors hover:bg-muted",
+            { "text-accent bg-muted": isActive("/tags") }
+          ]}
+        >
+          Tags
+        </a>
+        <a 
+          href="/about" 
+          class:list={[
+            "block px-4 py-3 text-center font-medium rounded-lg transition-colors hover:bg-muted",
+            { "text-accent bg-muted": isActive("/about") }
+          ]}
+        >
+          About
+        </a>
+        
+        {SITE.showArchives && (
+          <a 
+            href="/archives" 
+            class:list={[
+              "flex items-center justify-center px-4 py-3 font-medium rounded-lg transition-colors hover:bg-muted",
+              { "text-accent bg-muted": isActive("/archives") }
+            ]}
+          >
+            <IconArchive class="w-4 h-4 mr-2" />
+            Archives
+          </a>
+        )}
+        
+        <a 
+          href="/search" 
+          class:list={[
+            "flex items-center justify-center px-4 py-3 font-medium rounded-lg transition-colors hover:bg-muted",
+            { "text-accent bg-muted": isActive("/search") }
+          ]}
+        >
+          <IconSearch class="w-4 h-4 mr-2" />
+          Search
+        </a>
+        
+        {SITE.lightAndDarkMode && (
+          <button
+            id="theme-btn-mobile"
+            class="flex items-center justify-center px-4 py-3 font-medium rounded-lg transition-colors hover:bg-muted"
+            title="Toggles light & dark"
+            aria-label="auto"
+            aria-live="polite"
+          >
+            <IconMoon class="w-4 h-4 mr-2 absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="w-4 h-4 mr-2 absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+            Theme
+          </button>
+        )}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function toggleNav() {
+    const menuBtn = document.querySelector("#menu-btn");
+    const menuItems = document.querySelector("#menu-items");
+    const menuIcon = document.querySelector("#menu-icon");
+    const closeIcon = document.querySelector("#close-icon");
+
+    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+
+    menuBtn.addEventListener("click", () => {
+      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
+
+      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
+      menuBtn.setAttribute("aria-label", openMenu ? "Open Menu" : "Close Menu");
+
+      menuItems.classList.toggle("hidden");
+      menuIcon.classList.toggle("hidden");
+      closeIcon.classList.toggle("hidden");
+    });
+  }
+
+  toggleNav();
+
+  // Runs on view transitions navigation
+  document.addEventListener("astro:after-swap", toggleNav);
+</script>

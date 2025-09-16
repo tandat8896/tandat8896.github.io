@@ -14,23 +14,34 @@ const { title, description, pubDatetime, modDatetime, timezone } = data;
 
 const headerProps = {
   style: { viewTransitionName: slugifyStr(title) },
-  class: "text-lg font-medium decoration-dashed hover:underline",
+  class: "text-xl font-semibold text-foreground hover:text-accent transition-colors duration-300",
 };
 ---
 
-<li class="my-6">
+<li class="card-item">
   <a
     href={getPath(id, filePath)}
-    class="inline-block text-lg font-medium text-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
+    class="block p-5 bg-background border border-border hover:border-accent/30 hover:shadow-md transition-all duration-200 rounded-lg"
   >
-    {
-      variant === "h2" ? (
-        <h2 {...headerProps}>{title}</h2>
-      ) : (
-        <h3 {...headerProps}>{title}</h3>
-      )
-    }
+    <div class="space-y-3">
+      {
+        variant === "h2" ? (
+          <h2 {...headerProps}>{title}</h2>
+        ) : (
+          <h3 {...headerProps}>{title}</h3>
+        )
+      }
+      
+      <div class="flex items-center gap-3 text-sm text-muted-foreground">
+        <Datetime {pubDatetime} {modDatetime} {timezone} />
+        <span class="text-xs bg-muted text-foreground px-2 py-1 rounded">
+          {data.tags?.[0] || 'General'}
+        </span>
+      </div>
+      
+      <p class="text-muted-foreground leading-relaxed text-sm">
+        {description}
+      </p>
+    </div>
   </a>
-  <Datetime {pubDatetime} {modDatetime} {timezone} />
-  <p>{description}</p>
 </li>

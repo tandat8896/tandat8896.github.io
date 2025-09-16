@@ -1,6 +1,7 @@
 ---
 title: "🚀 Learning Path"
 pubDatetime: 2025-06-28
+featured: true
 description: "Learning path - Quá trình học tập của mình tại AIO 2025"
 tags: ["learning-path", "ai", "machine-learning"]
 ---

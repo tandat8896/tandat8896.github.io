@@ -1,0 +1,108 @@
+---
+import BlockLayout from "@/layouts/BlockLayout.astro";
+import NavigationBlock from "@/components/blocks/NavigationBlock.astro";
+import HeroBlock from "@/components/blocks/HeroBlock.astro";
+import FeaturedPostsBlock from "@/components/blocks/FeaturedPostsBlock.astro";
+import RecentPostsBlock from "@/components/blocks/RecentPostsBlock.astro";
+import FooterBlock from "@/components/blocks/FooterBlock.astro";
+import ContentBlock from "@/components/blocks/ContentBlock.astro";
+import Hr from "@/components/Hr.astro";
+import { getCollection } from "astro:content";
+import getSortedPosts from "@/utils/getSortedPosts";
+
+const posts = await getCollection("blog");
+const sortedPosts = getSortedPosts(posts);
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+---
+
+<BlockLayout
+  title="Block Components Demo"
+  description="Demo page showcasing the new block-based architecture"
+>
+  <NavigationBlock />
+  
+  <main id="main-content">
+    <div class="mx-auto max-w-app px-4">
+      <!-- Hero Block Demo -->
+      <HeroBlock 
+        title="Block Components Demo"
+        subtitle="Modular Architecture Showcase"
+        description="This page demonstrates the new block-based architecture of AstroPaper. Each section is now a reusable component that can be easily customized and rearranged."
+        showRss={true}
+        showSocials={true}
+      />
+      
+      <Hr />
+      
+      <!-- Featured Posts Block Demo -->
+      <FeaturedPostsBlock 
+        posts={featuredPosts.slice(0, 3)} 
+        showDivider={true}
+      />
+      
+      <!-- Recent Posts Block Demo -->
+      <RecentPostsBlock 
+        posts={recentPosts.slice(0, 5)} 
+        showViewAll={true}
+        maxPosts={5}
+      />
+      
+      <Hr />
+      
+      <!-- Content Block Demo -->
+      <ContentBlock 
+        pageTitle="Block Architecture Benefits"
+        pageDesc="Why this modular approach is better"
+      >
+        <div class="space-y-6">
+          <h2 class="text-xl font-semibold">Key Benefits</h2>
+          
+          <div class="grid gap-4 md:grid-cols-2">
+            <div class="p-4 border border-border rounded-lg">
+              <h3 class="font-semibold text-accent">Modularity</h3>
+              <p class="text-sm text-muted-foreground mt-1">
+                Each block is independent and reusable across different pages.
+              </p>
+            </div>
+            
+            <div class="p-4 border border-border rounded-lg">
+              <h3 class="font-semibold text-accent">Maintainability</h3>
+              <p class="text-sm text-muted-foreground mt-1">
+                Easy to update and modify individual components without affecting others.
+              </p>
+            </div>
+            
+            <div class="p-4 border border-border rounded-lg">
+              <h3 class="font-semibold text-accent">Flexibility</h3>
+              <p class="text-sm text-muted-foreground mt-1">
+                Mix and match blocks to create different page layouts.
+              </p>
+            </div>
+            
+            <div class="p-4 border border-border rounded-lg">
+              <h3 class="font-semibold text-accent">Consistency</h3>
+              <p class="text-sm text-muted-foreground mt-1">
+                Unified styling and behavior across all pages.
+              </p>
+            </div>
+          </div>
+          
+          <div class="mt-8 p-4 bg-muted rounded-lg">
+            <h3 class="font-semibold mb-2">Available Block Components</h3>
+            <ul class="text-sm space-y-1">
+              <li>• <code class="bg-background px-2 py-1 rounded">NavigationBlock</code> - Header navigation</li>
+              <li>• <code class="bg-background px-2 py-1 rounded">HeroBlock</code> - Hero section with title and description</li>
+              <li>• <code class="bg-background px-2 py-1 rounded">FeaturedPostsBlock</code> - Featured posts showcase</li>
+              <li>• <code class="bg-background px-2 py-1 rounded">RecentPostsBlock</code> - Recent posts list</li>
+              <li>• <code class="bg-background px-2 py-1 rounded">ContentBlock</code> - Content pages layout</li>
+              <li>• <code class="bg-background px-2 py-1 rounded">FooterBlock</code> - Footer with social links</li>
+            </ul>
+          </div>
+        </div>
+      </ContentBlock>
+    </div>
+  </main>
+  
+  <FooterBlock />
+</BlockLayout>
