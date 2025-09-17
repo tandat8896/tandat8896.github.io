@@ -1,8 +1,13 @@
 # Private folder chứa CI/CD configs (backup)
 .private/
 
-# CI/CD configs (giữ lại để GitHub Actions hoạt động)
-# .github/workflows/ - KHÔNG ẩn file này
+# CI/CD configs (ẩn khỏi public - chỉ ẩn file cũ)
+# .github/workflows/deploy.yml - KHÔNG ẩn file này
+# .github/workflows/ci.yml - Ẩn file này
+.github/workflows/ci.yml
+
+# Hide old workflow files
+.github/workflows/deploy-old.yml
 
 # Environment files
 .env
