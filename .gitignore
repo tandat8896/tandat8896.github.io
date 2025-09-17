@@ -1,6 +1,9 @@
 .private/
 
-.github/workflows/deploy.yml
+.github/workflows/ci.yml
+.github/workflows/deploy-minimal.yml
+.github/workflows/deploy-fake.yml
+.github/workflows/deploy-secrets.yml
 
 .env
 .env.local
