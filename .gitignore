@@ -1,6 +1,6 @@
 .private/
 
-.github/workflows/deploy-fake.yml
+.github/workflows/
 
 .env
 .env.local
