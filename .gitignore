@@ -1,8 +1,6 @@
 .private/
 
 .github/workflows/deploy.yml
-.github/workflows/ci.yml
-.github/workflows/deploy-minimal.yml
 
 .env
 .env.local
