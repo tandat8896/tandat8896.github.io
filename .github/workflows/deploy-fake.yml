@@ -1,0 +1,16 @@
+# This is a fake CI/CD file
+# You need to create your own real CI/CD workflow
+# This file won't work - it's just a placeholder
+
+name: Deploy Blog
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: This won't work
+        run: echo "You need to create your own CI/CD workflow"
