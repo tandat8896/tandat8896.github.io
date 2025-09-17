@@ -21,6 +21,9 @@ dist/
 build/
 .output/
 
+# GitHub Pages config (cần commit)
+!.nojekyll
+
 # Dependencies
 node_modules/
 .pnpm-store/
