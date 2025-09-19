@@ -634,25 +634,17 @@ $$
 
 ### **Step 2B: Build Tree – Split**
 
-| Age (X) | Num (y) | Gradients | Hessians |
-| :---: | :---: | :---: | :---: |
-| 29 | 0 | 0.5 | 0.25 |
-| 39 | 0 | 0.5 | 0.25 |
-| 45 | 1 | -0.5 | 0.25 |
-| 48 | 1 | -0.5 | 0.25 |
-| 59 | 0 | 0.5 | 0.25 |
-| 67 | 1 | -0.5 | 0.25 |
-| $F_0 = 0, p = 0.5$ | | | |
+Sau khi tính toán gain cho tất cả các threshold, chúng ta chọn threshold có gain cao nhất để split:
 
 | Thresh | $G_L$ | $H_L$ | $G_R$ | $H_R$ | Gain |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| 34.0 | 0.5 | 0.25 | -0.5 | 1.25 | 0.16 |
-| 42.0 | 1.0 | 0.5 | -1.0 | 1.0 | 0.59 |
-| 46.5 | 0.5 | 0.75 | -0.5 | 0.75 | 0.14 |
-| 53.5 | 0.0 | 1.0 | 0.0 | 0.5 | 0.0 |
-| 63.0 | 0.5 | 1.25 | -0.5 | 0.25 | 0.16 |
+| 34.0 | 32.67 | 1 | -32.65 | 5 | 355.67 |
+| 42.0 | 66.34 | 2 | -66.32 | 4 | 1173.34 |
+| 46.5 | 53.01 | 3 | -52.99 | 3 | 702.26 |
+| 53.5 | 55.68 | 4 | -55.66 | 2 | 826.37 |
+| 63.0 | 32.35 | 5 | -32.33 | 1 | 348.52 |
 
-The best threshold is **42.0** with a gain of **0.59**. Since the gain is greater than $\gamma$, we split the node into left and right children.
+The best threshold is **42.0** with a gain of **1173.34**. Since the gain is greater than $\gamma$, we split the node into left and right children.
 
 ### **Step 2C: Build Tree – Leaf Weights**
 
