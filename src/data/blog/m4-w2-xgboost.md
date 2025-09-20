@@ -1,7 +1,7 @@
 
 ---
 title: "Behind The Scene của XGBoost"
-pubDatetime: 2025-01-16T10:00:00Z
+pubDatetime: 2025-09-20T10:00:00Z
 featured: false
 description: "Tìm hiểu chi tiết về thuật toán XGBoost, từ hàm mục tiêu đến quá trình xây dựng cây quyết định"
 tags: ["machine-learning", "xgboost", "gradient-boosting", "algorithm"]

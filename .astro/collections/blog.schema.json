@@ -6,7 +6,7 @@
       "properties": {
         "author": {
           "type": "string",
-          "default": "Tấn Đạt"
+          "default": "Tấn Đạt Blogs"
         },
         "pubDatetime": {
           "anyOf": [

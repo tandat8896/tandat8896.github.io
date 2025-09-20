@@ -1,12 +1,12 @@
 export const SITE = {
   website: "https://astro-paper.pages.dev/", // replace this with your deployed domain
-  author: "Tấn Đạt",
+  author: "Tấn Đạt Blogs",
   profile: "https://satnaing.dev/",
   desc: "Blog học tập AI & Machine Learning ",
-  title: "Tấn Đạt",
+  title: "Tấn Đạt Blogs",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
-  postPerIndex: 4,
+  postPerIndex: 6,
   postPerPage: 4,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
   showArchives: true,

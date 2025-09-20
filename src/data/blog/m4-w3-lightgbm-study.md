@@ -1,6 +1,6 @@
 ---
 title: "LightGBM Study - Thuật toán Gradient Boosting hiệu quả"
-pubDatetime: 2025-01-16T14:00:00Z
+pubDatetime: 2025-09-20T14:00:00Z
 featured: false
 description: "Tìm hiểu chi tiết về LightGBM, thuật toán gradient boosting với GOSS sampling và histogram-based splitting"
 tags: ["machine-learning", "lightgbm", "gradient-boosting", "algorithm", "optimization"]

@@ -13,6 +13,7 @@ const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+
 ---
 
 <BlockLayout>
@@ -20,16 +21,16 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   
   <main id="main-content" data-layout="index" class="min-h-screen">
     <HeroBlock 
-      title="Tấn Đạt"
+      title="Tấn Đạt Blogs"
       subtitle="Hành trình học tập AI & Machine Learning"
       description="Chào mừng đến với blog học tập của mình! Nơi chia sẻ kiến thức về Python, Machine Learning, Database và các kỹ năng lập trình quan trọng trong lĩnh vực AI."
       showRss={false}
     />
     
     <div class="max-w-6xl mx-auto px-6">
-      <FeaturedPostsBlock posts={featuredPosts} />
+      <!-- <FeaturedPostsBlock posts={featuredPosts} /> -->
       
-      <!-- <RecentPostsBlock posts={recentPosts} /> -->
+      <!-- <RecentPostsBlock posts={sortedPosts} /> -->
       
       <!-- Copyright at bottom -->
       <div class="mt-16 text-center text-sm text-muted-foreground">

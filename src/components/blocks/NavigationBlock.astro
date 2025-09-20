@@ -45,10 +45,10 @@ const isActive = (path: string) => {
       <!-- Desktop Navigation -->
       <nav class="hidden sm:flex items-center space-x-2">
         <a 
-          href="/posts" 
+          href="/learning-path" 
           class:list={[
             "px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent rounded-md",
-            { "bg-muted text-accent": isActive("/posts") }
+            { "bg-muted text-accent": isActive("/learning-path") }
           ]}
         >
           Bài Học
@@ -132,13 +132,13 @@ const isActive = (path: string) => {
     >
       <div class="grid grid-cols-2 gap-2">
         <a 
-          href="/posts" 
+          href="/learning-path" 
           class:list={[
             "block px-4 py-3 text-center font-medium rounded-lg transition-colors hover:bg-muted",
-            { "text-accent bg-muted": isActive("/posts") }
+            { "text-accent bg-muted": isActive("/learning-path") }
           ]}
         >
-          Posts
+          Bài Học
         </a>
         <a 
           href="/tags" 
