@@ -1,18 +1,7 @@
 ---
-import { getCollection } from "astro:content";
 import BlockLayout from "@/layouts/BlockLayout.astro";
 import NavigationBlock from "@/components/blocks/NavigationBlock.astro";
 import HeroBlock from "@/components/blocks/HeroBlock.astro";
-import FeaturedPostsBlock from "@/components/blocks/FeaturedPostsBlock.astro";
-import RecentPostsBlock from "@/components/blocks/RecentPostsBlock.astro";
-import Hr from "@/components/Hr.astro";
-import getSortedPosts from "@/utils/getSortedPosts";
-
-const posts = await getCollection("blog");
-
-const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
 ---
 
@@ -28,10 +17,6 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     />
     
     <div class="max-w-6xl mx-auto px-6">
-      <!-- <FeaturedPostsBlock posts={featuredPosts} /> -->
-      
-      <!-- <RecentPostsBlock posts={sortedPosts} /> -->
-      
       <!-- Copyright at bottom -->
       <div class="mt-16 text-center text-sm text-muted-foreground">
         <span>Copyright © 2025 | All rights reserved.</span>
