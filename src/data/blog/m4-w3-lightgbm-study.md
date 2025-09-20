@@ -6,7 +6,7 @@ description: "Tìm hiểu chi tiết về LightGBM, thuật toán gradient boost
 tags: ["machine-learning", "lightgbm", "gradient-boosting", "algorithm", "optimization"]
 ---
 
-# LightGBM Study - Thuật toán Gradient Boosting hiệu quả
+# LightGBM Study 
 
 ## Hàm mục tiêu (Objective) trong LightGBM
 
