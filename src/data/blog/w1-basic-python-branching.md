@@ -20,7 +20,7 @@ draft: false
 
 ## Mở đầu
 
-Chào mừng các bạn đến với series học tập AI của tôi! Tuần này, tôi đã bắt đầu hành trình khám phá Python - ngôn ngữ lập trình quan trọng nhất trong lĩnh vực Trí tuệ Nhân tạo. Dưới sự hướng dẫn của Tiến sĩ Khoa học Máy tính Quang-Vinh Dinh, tôi đã được tiếp cận với những khái niệm cơ bản nhưng vô cùng quan trọng trong Python, từ cách biểu diễn dữ liệu, định nghĩa hàm, sử dụng các câu lệnh điều kiện, cho đến việc xây dựng một chatbot đơn giản dựa trên quy tắc.
+Chào mừng các bạn đến với series học tập AI của tôi! Tuần này, tôi đã bắt đầu hành trình khám phá Python - ngôn ngữ lập trình quan trọng nhất trong lĩnh vực Trí tuệ Nhân tạo.
 
 ## 1. Biểu diễn Dữ liệu (Data Representation)
 
