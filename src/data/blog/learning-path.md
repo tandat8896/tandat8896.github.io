@@ -1,6 +1,6 @@
 ---
 title: "🚀 Learning Path"
-pubDatetime: 2025-06-28
+pubDatetime: 2025-06-28T00:00:00Z
 featured: true
 description: "Learning path - Quá trình học tập của mình"
 tags: ["learning-path", "ai", "machine-learning"]
@@ -57,9 +57,12 @@ Learning path - Quá trình học tập của mình
 ## Module 3 - Basic Machine Learning (⏳ Chưa bắt đầu)
 Chi tiết sẽ được thêm sau
 
-## Module 4 - Advanced Machine Learning (⏳ Chưa bắt đầu)
+## Module 4 - Advanced Machine Learning (🔄 Đang học)
 ### Week 2
 - [Behind The Scene của XGBoost](/posts/m4-w2-xgboost)
+
+### Week 3
+- [LightGBM Study - Thuật toán Gradient Boosting hiệu quả](/posts/m4-w3-lightgbm-study)
 
 ## Module 5 - Steps into Deep Learning (1) (⏳ Chưa bắt đầu)
 Chi tiết sẽ được thêm sau
