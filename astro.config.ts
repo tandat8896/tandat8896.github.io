@@ -1,17 +1,17 @@
-import { defineConfig, envField } from "astro/config";
-import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
-import remarkToc from "remark-toc";
+import {
+    transformerNotationDiff,
+    transformerNotationHighlight,
+    transformerNotationWordHighlight,
+} from "@shikijs/transformers";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, envField } from "astro/config";
+import rehypeKatex from "rehype-katex";
 import remarkCollapse from "remark-collapse";
 import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
-import {
-  transformerNotationDiff,
-  transformerNotationHighlight,
-  transformerNotationWordHighlight,
-} from "@shikijs/transformers";
-import { transformerFileName } from "./src/utils/transformers/fileName";
+import remarkToc from "remark-toc";
 import { SITE } from "./src/config";
+import { transformerFileName } from "./src/utils/transformers/fileName";
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,7 +28,20 @@ export default defineConfig({
       remarkMath,
     ],
     rehypePlugins: [
-      rehypeKatex,
+      [rehypeKatex, {
+        throwOnError: false,
+        strict: false,
+        trust: true,
+        displayMode: false,
+        errorColor: "#cc0000",
+        macros: {
+          "\\f": "#1f(#2)",
+          "\\vdots": "\\vdots",
+          "\\ddots": "\\ddots", 
+          "\\cdots": "\\cdots",
+          "\\ldots": "\\ldots"
+        }
+      }],
     ],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes

@@ -1,6 +1,22 @@
 @import "tailwindcss";
 @import "./typography.css";
 
+/* Show KaTeX errors for debugging */
+.katex-error {
+  display: block !important;
+  color: #cc0000 !important;
+}
+
+/* Show undefined text in math contexts */
+.prose :is(.katex, .katex-display) {
+  color: inherit;
+}
+
+.prose :is(.katex, .katex-display) .undefined {
+  display: block !important;
+  color: #cc0000 !important;
+}
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root,

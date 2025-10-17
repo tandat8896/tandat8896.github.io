@@ -11,40 +11,40 @@ const modules = [
       {
         week: "Week 1",
         lessons: [
-          { title: "Basic Python (Branching~Rule based Chatbot)", link: "/posts/w1-basic-python-branching" },
-          { title: "Database SQL (1)", link: "/posts/w1-database-sql-1" },
-          { title: "Basic Python (String and Loops~Text preprocessing)", link: "/posts/w1-basic-python-loops" },
-          { title: "Coding Methodology", link: "/posts/w1-coding-methodology" },
-          { title: "TA Exercise (activation functions)", link: "/posts/w1-ta-exercise-activation" }
+          { title: "Basic Python (Branching~Rule based Chatbot)", link: "/posts/module1/w1-basic-python-branching" },
+          { title: "Database SQL (1)", link: "/posts/module1/w1-database-sql-1" },
+          { title: "Basic Python (String and Loops~Text preprocessing)", link: "/posts/module1/w1-basic-python-loops" },
+          { title: "Coding Methodology", link: "/posts/module1/w1-coding-methodology" },
+          { title: "TA Exercise (activation functions)", link: "/posts/module1/w1-ta-exercise-activation" }
         ]
       },
       {
         week: "Week 2",
         lessons: [
-          { title: "List", link: "/posts/w2-list" },
-          { title: "Data Structure (list~IoU, Top K Searching)", link: "/posts/w2-list-advanced" },
-          { title: "Database SQL (2)", link: "/posts/w2-database-sql-2" },
-          { title: "Data Structure (Non maximum supression and Histogram)", link: "/posts/w2-datastructure" },
-          { title: "Git&Github for Version Control", link: "/posts/w2-git-github" },
-          { title: "TA Exercise (Word Suggestion)", link: "/posts/w2-exercise" }
+          { title: "List", link: "/posts/module1/w2-list" },
+          { title: "Data Structure (list~IoU, Top K Searching)", link: "/posts/module1/w2-list-advanced" },
+          { title: "Database SQL (2)", link: "/posts/module1/w2-database-sql-2" },
+          { title: "Data Structure (Non maximum supression and Histogram)", link: "/posts/module1/w2-datastructure" },
+          { title: "Git&Github for Version Control", link: "/posts/module1/w2-git-github" },
+          { title: "TA Exercise (Word Suggestion)", link: "/posts/module1/w2-exercise" }
         ]
       },
       {
         week: "Week 3",
         lessons: [
-          { title: "Classes and Objects", link: "/posts/w3-classes-objects" },
-          { title: "Data Structure (Graph and Tree)", link: "/posts/w3-data-structure-graph" },
-          { title: "Database SQL (3)", link: "/posts/w3-database-sql-3" },
-          { title: "OOP with Python (Custom PyTorch Class)", link: "/posts/w3-oop-pytorch" },
-          { title: "TA Exercise (OOP)", link: "/posts/w3-ta-exercise-oop" }
+          { title: "Classes and Objects", link: "/posts/module1/w3-classes-objects" },
+          { title: "Data Structure (Graph and Tree)", link: "/posts/module1/w3-data-structure-graph" },
+          { title: "Database SQL (3)", link: "/posts/module1/w3-database-sql-3" },
+          { title: "OOP with Python (Custom PyTorch Class)", link: "/posts/module1/w3-oop-pytorch" },
+          { title: "TA Exercise (OOP)", link: "/posts/module1/w3-ta-exercise-oop" }
         ]
       },
       {
         week: "Week 4",
         lessons: [
-          { title: "Project 1.1: Basic Web and Streamlit for Simple Deployment", link: "/posts/w4-project-1-1" },
-          { title: "Unix&Linux", link: "/posts/w4-unix-linux" },
-          { title: "Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân", link: "/posts/w4-project-1-2" }
+          { title: "Project 1.1: Basic Web and Streamlit for Simple Deployment", link: "/posts/module1/w4-project-1-1" },
+          { title: "Unix&Linux", link: "/posts/module1/w4-unix-linux" },
+          { title: "Project 1.2: Tạo và triển khai một chatbot cho một chủ đề cá nhân", link: "/posts/module1/w4-project-1-2" }
         ]
       }
     ]
@@ -57,11 +57,11 @@ const modules = [
       {
         week: "Week 1",
         lessons: [
-          { title: "Numpy array 2d 3d data representation", link: "/posts/m2-w2-numpy" },
-          { title: "Database-NoSQL", link: "/posts/m2-w1-nosql-mongodb" },
-          { title: "Linear Algebra Applications", link: "/posts/m2-w2-linearalgebra" },
-          { title: "Logical thinking and problem solving in AI", link: "/posts/m2-w1-logicalthinking" },
-          { title: "TA Exercise", link: "/posts/m2-w2-exercise" }
+          { title: "Numpy array 2d 3d data representation", link: "/posts/module2/m2-w2-numpy" },
+          { title: "Database-NoSQL", link: "/posts/module2/m2-w1-nosql-mongodb" },
+          { title: "Linear Algebra Applications", link: "/posts/module2/m2-w2-linearalgebra" },
+          { title: "Logical thinking and problem solving in AI", link: "/posts/module2/m2-w1-logicalthinking" },
+          { title: "TA Exercise", link: "/posts/module2/m2-w2-exercise" }
         ]
       }
     ]
@@ -70,7 +70,14 @@ const modules = [
     id: 3,
     title: "Module 3 - Basic Machine Learning",
     status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Coming Soon", link: "#" }
+        ]
+      }
+    ]
   },
   {
     id: 4,
@@ -78,15 +85,30 @@ const modules = [
     status: "in-progress",
     weeks: [
       {
+        week: "Week 1",
+        lessons: [
+          { title: "Random Forest Study - Thuật toán Ensemble Learning với Bootstrap Aggregating", link: "/posts/module4/m4-w1-random-forest-study" },
+          { title: "Random Forest Proximity - Quy trình đầy đủ từ Missing Values đến Proximity Matrix", link: "/posts/module4/m4-w1-random-forest-proximity" },
+          { title: "Random Forest Regression - Thuật toán Ensemble Learning cho Regression", link: "/posts/module4/m4-w2-random-forest-regression" }
+        ]
+      },
+      {
         week: "Week 2",
         lessons: [
-          { title: "Behind The Scene của XGBoost", link: "/posts/m4-w2-xgboost" }
+          { title: "Gradient Boosting Study - Thuật toán Gradient Boosting từ cơ bản đến nâng cao", link: "/posts/module4/m4-w2-gradient-boosting-study" },
+          { title: "Gradient Boosting Classification - Thuật toán Gradient Boosting cho Classification", link: "/posts/module4/m4-w2-gradient-boosting-classification" },
+          { title: "AdaBoost Study - Thuật toán Adaptive Boosting", link: "/posts/module4/m4-w2-adaboost-study" },
+          { title: "AdaBoost Regression - Thuật toán Adaptive Boosting cho Regression", link: "/posts/module4/m4-w2-adaboost-regression-detailed" },
+          { title: "Behind The Scene của XGBoost", link: "/posts/module4/m4-w2-xgboost" }
         ]
       },
       {
         week: "Week 3",
         lessons: [
-          { title: "LightGBM Study - Thuật toán Gradient Boosting hiệu quả", link: "/posts/m4-w3-lightgbm-study" }
+          { title: "XGBoost Classification - Thuật toán Gradient Boosting cho Classification", link: "/posts/module4/m4-w3-xgboost-classification" },
+          { title: "LightGBM Classification - Thuật toán Gradient Boosting hiệu quả cho Classification", link: "/posts/module4/m4-w3-lightgbm-classification" },
+          { title: "LightGBM Study - Thuật toán Gradient Boosting hiệu quả", link: "/posts/module4/m4-w3-lightgbm-study" },
+          { title: "CatBoost Study  ", link: "/posts/module4/m4-w3-catboost-classification" }
         ]
       }
     ]
@@ -94,50 +116,118 @@ const modules = [
   {
     id: 5,
     title: "Module 5 - Steps into Deep Learning (1)",
-    status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    status: "in-progress",
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Bridge to Linear Regression", link: "/posts/module5/m5-w1-bridge-to-linear-regression" },
+          { title: "XAI-LIME", link: "/posts/module5/m5-w1-lime" },
+          { title: "Data Version Control", link: "/posts/module5/m5-w1-dataversioncontrol" },
+          { title: "Road to Linear Regression", link: "/posts/module5/m5-w1-roadintolinearegression" }
+        ]
+      },
+      {
+        week: "Week 2",
+        lessons: [
+        { title: "Loss Function And Regularization", link: "/posts/module5/m5-w2-loss" },
+        { title: "Feast MLOps", link: "/posts/module5/m5-w2-feast" },
+        { title: "Vectorization Linear Regression", link: "/posts/module5/m5-w2-vecorization" }
+
+        ]
+      }
+    ]
   },
   {
     id: 6,
     title: "Module 6 - Steps into Deep Learning (2)",
     status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Coming Soon", link: "#" }
+        ]
+      }
+    ]
   },
   {
     id: 7,
     title: "Module 7 - Deep Learning (1)",
     status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Coming Soon", link: "#" }
+        ]
+      }
+    ]
   },
   {
     id: 8,
     title: "Module 8 - Deep Learning (2)",
     status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Coming Soon", link: "#" }
+        ]
+      }
+    ]
   },
   {
     id: 9,
     title: "Module 9 - Deep Learning Applications for Images",
     status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Coming Soon", link: "#" }
+        ]
+      }
+    ]
   },
   {
     id: 10,
     title: "Module 10 - Deep Learning Applications for Text",
     status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Coming Soon", link: "#" }
+        ]
+      }
+    ]
   },
   {
     id: 11,
     title: "Module 11 - Generative Models & GANs",
     status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Coming Soon", link: "#" }
+        ]
+      }
+    ]
   },
   {
     id: 12,
     title: "Module 12 - LLMs & RL & 3D CV",
     status: "not-started",
-    description: "Chi tiết sẽ được thêm sau"
+    weeks: [
+      {
+        week: "Week 1",
+        lessons: [
+          { title: "Coming Soon", link: "#" }
+        ]
+      }
+    ]
   }
 ];
 

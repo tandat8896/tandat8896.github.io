@@ -74,11 +74,10 @@ const allPosts = posts.map(({ data: { title }, id, filePath }) => ({
   filePath,
 }));
 
-const currentPostIndex = allPosts.findIndex(a => a.id === post.id);
+const currentPostIndex = post?.id ? allPosts.findIndex(a => a.id === post.id) : -1;
 
-const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
-const nextPost =
-  currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
+const prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
+const nextPost = currentPostIndex >= 0 && currentPostIndex < allPosts.length - 1 ? allPosts[currentPostIndex + 1] : null;
 ---
 
 <BlockLayout {...layoutProps}>
@@ -131,7 +130,7 @@ const nextPost =
     <EditPost class="sm:hidden" {hideEditPost} {post} />
 
     <ul class="mt-4 mb-8 sm:my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
+      {tags?.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
     </ul>
 
     <BackToTopButton />
