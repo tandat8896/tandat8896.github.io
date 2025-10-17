@@ -24,7 +24,7 @@ ta có
 
 $$
 \theta = \begin{bmatrix}
-b\\
+b \\
 w
 \end{bmatrix}
 $$
@@ -34,7 +34,7 @@ $$
 $$
 x=
 \begin{bmatrix}
-1\\
+1 \\
 x_1
 \end{bmatrix}
 $$
@@ -42,7 +42,7 @@ $$
 với cái hành động tự nhiên là dotproduct(tích vô hướng)
 
 $$
-\theta^T *x = \begin{bmatrix}
+\theta^T *\vec{x} = \begin{bmatrix}
 b,w
 \end{bmatrix}* \begin{bmatrix}
 1\\
@@ -57,16 +57,38 @@ $$
 $$
 nên ỡ bước này ta không cần vectorization gì cả 
 
-- compute gradient
+compute gradient
 
 $$
 \begin{aligned}
-\frac{\partial \mathcal{L}}{\partial b} &= 2(\hat{y} - y) \\
-\frac{\partial \mathcal{L}}{\partial w} &= 2(\hat{y} - y)x_1
+\frac{\partial \mathcal{L}}{\partial b} &= 2(\hat{y} - y)*1 \\
+\frac{\partial \mathcal{L}}{\partial w} &= 2(\hat{y} - y){x_1}
 \end{aligned}
 $$
 
-mà \(x_1\) là feature đầu tiên của sample.
+$$
+\vec{x} \text{ là vector đặc trưng (feature vector)}
+$$
+
+nên ta có thể ghi gọn lại là 
+
+$$
+\nabla_\theta \mathcal{L} =
+\begin{bmatrix}
+\frac{\partial \mathcal{L}}{\partial b} \\
+\frac{\partial \mathcal{L}}{\partial w}
+\end{bmatrix}
+=
+2(\hat{y} - y)
+\begin{bmatrix}
+1 \\
+x_1
+\end{bmatrix}
+$$
+
+
+
+
 
 
 
