@@ -6,7 +6,7 @@ description: "Tìm hiểu chi tiết về DVC (Data Version Control) và cách c
 tags: ["dvc", "aws", "s3", "data-versioning", "mlops", "data-management"]
 ---
 
-# DVC và AWS S3: Hướng Dẫn Toàn Diện về Data Version Control
+# DVC và AWS S3: Hướng Dẫn về Data Version Control
 
 > **📚 Mục tiêu:** Hiểu rõ cách sử dụng DVC để quản lý phiên bản dữ liệu và tích hợp với AWS S3 làm remote storage
 

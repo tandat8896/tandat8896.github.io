@@ -75,25 +75,28 @@ Huber Loss được xây dựng để tận dụng ưu điểm của MSE (cho l�
 **Yêu cầu Khả vi:**
 Để Gradient-based Optimization hoạt động hiệu quả, hàm mất mát phải liên tục và khả vi tại mọi vị trí, bao gồm điểm chuyển đổi.
 
-**Huber Loss sử dụng ngưỡng δ (delta) để chuyển đổi:**
+**Huber Loss sử dụng ngưỡng Δ (delta) để chuyển đổi:**
 
-$$L(\hat{y}, y) = \begin{cases}
-\frac{1}{2}(\hat{y} - y)^2 & \text{for } |\hat{y} - y| \leq \delta \\
-\delta|\hat{y} - y| - \frac{1}{2}\delta^2 & \text{otherwise}
-\end{cases}$$
+**Công thức Huber Loss:**
 
-#### **Vai trò của δ:**
+Khi $$|\hat{y} - y| \leq \Delta$$:
+$$L(\hat{y}, y) = \frac{1}{2}(\hat{y} - y)^2$$
 
-- **δ càng nhỏ:** Huber Loss càng tiến về MAE.
-- **δ càng lớn:** Huber Loss càng tiến về MSE.
+Khi $$|\hat{y} - y| > \Delta$$:
+$$L(\hat{y}, y) = \Delta|\hat{y} - y| - \frac{1}{2}\Delta^2$$
 
-Huber Loss đảm bảo tính liên tục và khả vi bằng cách điều chỉnh hệ số của nhánh tuyến tính (δ và \(-\frac{1}{2}\delta^2\)) sao cho đạo hàm bên trái và bên phải tại điểm δ bằng nhau.
+#### **Vai trò của Δ:**
+
+- **Δ càng nhỏ:** Huber Loss càng tiến về MAE.
+- **Δ càng lớn:** Huber Loss càng tiến về MSE.
+
+Huber Loss đảm bảo tính liên tục và khả vi bằng cách điều chỉnh hệ số của nhánh tuyến tính (Δ và \(-\frac{1}{2}\Delta^2\)) sao cho đạo hàm bên trái và bên phải tại điểm Δ bằng nhau.
 
 #### **Đạo hàm của Huber Loss:**
 
 $$\frac{\partial L}{\partial w} = \begin{cases}
-x(\hat{y} - y) & \text{for } |\hat{y} - y| \leq \delta \\
-x \cdot \delta \cdot \text{sign}(\hat{y} - y) & \text{otherwise}
+x(\hat{y} - y) & \text{for } |\hat{y} - y| \leq \Delta \\
+x \cdot \Delta \cdot \text{sign}(\hat{y} - y) & \text{otherwise}
 \end{cases}$$
 
 #### **Ưu điểm của Huber Loss:**
