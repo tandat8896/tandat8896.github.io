@@ -9,6 +9,19 @@ const allPosts = await getCollection("blog", ({ data }) => !data.draft);
 const recentPosts = getSortedPosts(allPosts).slice(0, 8);
 const totalPosts = allPosts.length;
 
+const projectDemos = [
+  {
+    title: "Fraud Detection Workflow Demo",
+    description: "Video đại diện (31 phút) cho quá trình setup và triển khai pipeline gian lận.",
+    embed: "https://www.youtube.com/embed/nQeXxgIRT-g",
+  },
+  {
+    title: "KServe Local Deployment Demo",
+    description: "Demo triển khai KServe local và test routing/model serving.",
+    embed: "https://www.youtube.com/embed/qJGMT12w4OE",
+  },
+] as const;
+
 const featuredProjects = [
   {
     title: "Multimodal Video RAG System - AI Challenge HCM 2025",
@@ -33,13 +46,14 @@ const featuredProjects = [
     stack: ["Kafka", "Feast", "DVC", "Airflow", "MLflow"],
     highlights: [
       "Đã hoàn thành pipeline realtime với Kafka + online feature lookup từ Feast.",
-      "Mình trực tiếp chạy và đánh giá bằng Precision@K, Recall@K với kết quả thực tế: P@100=0.30, R@100=0.73, R@10000=0.92.",
+      "Mình trực tiếp chạy và đánh giá bằng Precision@K, Recall@K với kết quả: P@100=0.30, R@100=0.73, R@10000=0.92.",
       "Đã xây dựng logic ưu tiên giao dịch rủi ro để giảm tải review thủ công theo mục tiêu vận hành.",
       "In progress: tích hợp monitoring với Evidently AI + Prometheus + Grafana.",
     ],
     links: [
       { label: "GitHub", href: "https://github.com/tandat8896/fraud_rt_projects" },
-      { label: "Project Workflow (4-part video series)", href: "https://www.youtube.com/watch?v=AtsQwF9pSVg&list=PLRkwChN4lOmfjJLMB9fVPjxvJeA0QUNti" },
+      { label: "YouTube Workflow Playlist (4 videos)", href: "https://www.youtube.com/playlist?list=PLRkwChN4lOmfjJLMB9fVPjxvJeA0QUNti" },
+      { label: "Representative Demo Video", href: "https://youtu.be/nQeXxgIRT-g" },
     ],
   },
   {
@@ -70,7 +84,7 @@ const featuredProjects = [
     ],
     links: [
       { label: "GitHub", href: "https://github.com/tandat8896/sales-forecasting-end-to-end" },
-      { label: "Demo", href: "https://youtu.be/qJGMT12w4OE" },
+      { label: "KServe Demo Video", href: "https://youtu.be/qJGMT12w4OE" },
     ],
   },
 ] as const;
@@ -114,14 +128,14 @@ const skillGroups = [
             Open to Internship / Fresher Opportunities
           </p>
 
-          <h1 class="max-w-4xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+          <h1 class="max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
             Hi, mình là Tấn Đạt.
             <span class="block text-accent">AI/ML & Data Engineer Portfolio.</span>
           </h1>
 
           <p class="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
             Mình là ứng viên AI/ML Engineer và Data Engineer, tập trung vào Machine Learning, Computer Vision, MLOps và Data Engineering,
-            với kinh nghiệm triển khai dự án thực tế từ xây dựng pipeline đến tối ưu và đánh giá mô hình.
+            với kinh nghiệm triển khai dự án từ xây dựng pipeline đến tối ưu và đánh giá mô hình.
           </p>
 
           <div class="mt-8 flex flex-wrap gap-3">
@@ -138,7 +152,7 @@ const skillGroups = [
         </div>
 
         <div class="mx-auto w-full max-w-sm animate-profile-in">
-          <div class="relative rounded-3xl border border-border/70 bg-background/95 p-3 shadow-xl backdrop-blur-sm">
+          <div class="neo-panel relative rounded-3xl border border-border/70 bg-background/95 p-3 shadow-[0_14px_40px_rgba(11,40,79,0.16)] backdrop-blur-sm">
             <div class="pointer-events-none absolute -inset-3 -z-10 rounded-[1.75rem] bg-gradient-to-br from-accent/20 via-background to-accent/10 blur-xl"></div>
             <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-[#dfe7f3]">
               <img
@@ -163,7 +177,7 @@ const skillGroups = [
 
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {skillGroups.map(group => (
-          <article class="rounded-xl border border-border bg-background p-5 hover:border-accent/40 hover:shadow-md transition-all duration-200">
+          <article class="neo-panel rounded-xl border border-border/90 bg-background/90 p-5 hover:border-accent/40 hover:shadow-md transition-all duration-200">
             <h3 class="text-lg font-semibold">{group.title}</h3>
             <ul class="mt-3 space-y-2 text-sm text-muted-foreground">
               {group.items.map(item => (
@@ -182,19 +196,19 @@ const skillGroups = [
       <div class="mx-auto w-full max-w-6xl px-6 py-16">
         <h2 class="text-3xl font-bold">Dự án nổi bật</h2>
         <p class="mt-2 max-w-2xl text-muted-foreground">
-          Các dự án thực tế và dự án thi đấu mình đã triển khai. Khi bạn gửi architecture, mình sẽ gắn thêm sơ đồ cho từng card.
+          Các dự án và dự án thi đấu mình đã triển khai. Khi bạn gửi architecture, mình sẽ gắn thêm sơ đồ cho từng card.
         </p>
 
         <div class="mt-8 grid gap-5 lg:grid-cols-2">
           {featuredProjects.map(project => (
-            <article class="rounded-xl border border-border bg-background p-5 hover:-translate-y-1 hover:border-accent/40 hover:shadow-lg transition-all duration-200">
+            <article class="neo-panel rounded-xl border border-border/90 bg-background/92 p-5 hover:-translate-y-1 hover:border-accent/40 hover:shadow-lg transition-all duration-200">
               <h3 class="text-xl font-semibold">{project.title}</h3>
               <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-accent">{project.role}</p>
               <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
 
               <div class="mt-4 flex flex-wrap gap-2">
                 {project.stack.map(tech => (
-                  <span class="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">{tech}</span>
+                  <span class="neo-pill rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">{tech}</span>
                 ))}
               </div>
 
@@ -213,6 +227,36 @@ const skillGroups = [
                     {link.label}
                   </a>
                 ))}
+              </div>
+
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="project-demos" class="border-y border-border bg-muted/20">
+      <div class="mx-auto w-full max-w-6xl px-6 py-16">
+        <h2 class="text-3xl font-bold">Project Demos</h2>
+        <p class="mt-2 max-w-2xl text-muted-foreground">
+          Một vài video demo tiêu biểu cho quá trình mình triển khai dự án.
+        </p>
+
+        <div class="mt-8 grid gap-6 lg:grid-cols-2">
+          {projectDemos.map(demo => (
+            <article class="neo-panel video-showcase rounded-2xl border border-border bg-background p-5 sm:p-6">
+              <h3 class="text-lg font-semibold">{demo.title}</h3>
+              <p class="mt-2 text-sm text-muted-foreground">{demo.description}</p>
+              <div class="mt-4 overflow-hidden rounded-xl border border-border bg-muted/30 shadow-sm transition-transform duration-300 hover:scale-[1.01]">
+                <iframe
+                  class="block aspect-video w-full"
+                  src={demo.embed}
+                  title={`${demo.title} video`}
+                  loading="lazy"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
               </div>
             </article>
           ))}
