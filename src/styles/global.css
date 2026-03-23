@@ -21,21 +21,21 @@
 
 :root,
 html[data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --muted-foreground: #6b7280;
-  --border: #ece9e9;
+  --background: #f7f9fc;
+  --foreground: #1f2937;
+  --accent: #0b6fcb;
+  --muted: #e9eef6;
+  --muted-foreground: #5f6f86;
+  --border: #d9e1ec;
 }
 
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60bf;
-  --muted-foreground: #9ca3af;
-  --border: #ab4b08;
+  --background: #f7f9fc;
+  --foreground: #1f2937;
+  --accent: #0b6fcb;
+  --muted: #e9eef6;
+  --muted-foreground: #5f6f86;
+  --border: #d9e1ec;
 }
 
 @theme inline {
@@ -175,6 +175,33 @@ html[data-theme="dark"] {
   .animate-scale-in {
     animation: scaleIn 0.4s ease-out;
   }
+
+  .animate-profile-in {
+    animation: profileIn 0.9s ease-out;
+  }
+
+  .hero-photo-bg {
+    position: absolute;
+    inset: -8%;
+    background-image: linear-gradient(120deg, rgba(11, 111, 203, 0.08), rgba(11, 111, 203, 0.02)), url('/assets/profile.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+    filter: blur(2px) saturate(1.1);
+    animation: heroReveal 1s ease-out, heroDrift 16s ease-in-out infinite alternate;
+  }
+
+  .portfolio-page-bg {
+    position: absolute;
+    inset: -6%;
+    background-image:
+      radial-gradient(circle at 18% 12%, rgba(11, 111, 203, 0.12), transparent 40%),
+      radial-gradient(circle at 82% 14%, rgba(11, 111, 203, 0.08), transparent 42%),
+      radial-gradient(circle at 50% 88%, rgba(11, 111, 203, 0.06), transparent 45%);
+    opacity: 0.9;
+    filter: blur(1px) saturate(1.04);
+    animation: heroReveal 1.1s ease-out, heroDrift 20s ease-in-out infinite alternate;
+  }
   
   /* Gradient text */
   .gradient-text {
@@ -237,6 +264,38 @@ html[data-theme="dark"] {
   }
 }
 
+@keyframes profileIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.12;
+  }
+}
+
+@keyframes heroDrift {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.04) translate3d(-1.5%, -1%, 0);
+  }
+  100% {
+    transform: scale(1.08) translate3d(1%, 1.5%, 0);
+  }
+}
+
 /* Line clamp utility */
 .line-clamp-3 {
   display: -webkit-box;
@@ -250,7 +309,7 @@ html[data-theme="dark"] {
 }
 
 .active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-4;
+  @apply rounded-md border border-accent bg-accent/10 px-3 py-1 text-accent no-underline;
 }
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */

@@ -1,88 +1,291 @@
 ---
-import BlockLayout from "@/layouts/BlockLayout.astro";
-import NavigationBlock from "@/components/blocks/NavigationBlock.astro";
-import HeroBlock from "@/components/blocks/HeroBlock.astro";
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Card from "@/components/Card.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
 
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const recentPosts = getSortedPosts(allPosts).slice(0, 8);
+const totalPosts = allPosts.length;
+
+const featuredProjects = [
+  {
+    title: "Multimodal Video RAG System - AI Challenge HCM 2025",
+    role: "Data Engineering | Team: AIO_AuraQ (Reached Qualification Round 3)",
+    description:
+      "Xây dựng pipeline truy hồi video đa phương thức trong môi trường thi đấu, tối ưu retrieval theo từng vòng để cải thiện điểm số.",
+    stack: ["OpenCV", "PyTorch", "Milvus", "Kaggle Environments"],
+    highlights: [
+      "Tăng 45% điểm số từ Round 2 (15.4) lên Round 3 (22.4/35).",
+      "Phát triển module Keyframe Sampling và CLIP Embedding cho video search.",
+    ],
+    links: [
+      { label: "Codebase", href: "https://github.com/dtmhdev89/HCMAI2025_Baseline" },
+      { label: "Image Result", href: "https://drive.google.com/drive/folders/1oUb_0HdjAEWWK0tl9sLHoYQfvCMphqZv?hl=vi" },
+    ],
+  },
+  {
+    title: "Near-Real-time Fraud Detection Pipeline (In Progress)",
+    role: "Personal Project",
+    description:
+      "Xây dựng hệ thống phát hiện gian lận nhiều tầng theo hướng end-to-end; hiện dự án đang trong giai đoạn hoàn thiện monitoring và production hardening.",
+    stack: ["Kafka", "Feast", "DVC", "Airflow", "MLflow"],
+    highlights: [
+      "Đã hoàn thành pipeline realtime với Kafka + online feature lookup từ Feast.",
+      "Mình trực tiếp chạy và đánh giá bằng Precision@K, Recall@K với kết quả thực tế: P@100=0.30, R@100=0.73, R@10000=0.92.",
+      "Đã xây dựng logic ưu tiên giao dịch rủi ro để giảm tải review thủ công theo mục tiêu vận hành.",
+      "In progress: tích hợp monitoring với Evidently AI + Prometheus + Grafana.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tandat8896/fraud_rt_projects" },
+      { label: "Project Workflow (4-part video series)", href: "https://www.youtube.com/watch?v=AtsQwF9pSVg&list=PLRkwChN4lOmfjJLMB9fVPjxvJeA0QUNti" },
+    ],
+  },
+  {
+    title: "Demand-driven Inventory Optimization (Multi-store)",
+    role: "Personal Project",
+    description:
+      "Phát triển pipeline dự báo nhu cầu và điều phối tồn kho đa cửa hàng, tối ưu chi phí chuyển hàng và mức độ cân bằng tồn.",
+    stack: ["LightGBM", "GA", "NSGA-II", "Pandas"],
+    highlights: [
+      "Dự báo nhu cầu 30 ngày bằng LightGBM từ dữ liệu bán hàng.",
+      "Thiết kế logic tồn kho theo ngưỡng days-of-inventory (excess vs needed).",
+      "Triển khai thuật toán transfer rule-based và tối ưu bằng GA + NSGA-II.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tandat8896/demand-driven-inventory-optimazer" },
+    ],
+  },
+  {
+    title: "Local KServe Implementation (Pre-Infra Stage)",
+    role: "Personal Project",
+    description:
+      "Thực nghiệm triển khai model serving cục bộ trên Minikube với KServe, Knative và Istio, tập trung vào routing và service configuration.",
+    stack: ["KServe", "Knative", "Istio", "Minikube", "Kubernetes YAML"],
+    highlights: [
+      "Viết InferenceService YAML cho KServe trên Minikube.",
+      "Cấu hình routing, selector, port và service cho model endpoint.",
+      "Test HTTPS (mTLS) với mock JSON input và quan sát traffic bằng Kiali.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tandat8896/sales-forecasting-end-to-end" },
+      { label: "Demo", href: "https://youtu.be/qJGMT12w4OE" },
+    ],
+  },
+] as const;
+
+const skillGroups = [
+  {
+    title: "Machine Learning",
+    items: ["Scikit-learn", "XGBoost", "LightGBM", "Model Evaluation"],
+  },
+  {
+    title: "Deep Learning",
+    items: ["PyTorch", "CNN", "Transfer Learning", "Computer Vision"],
+  },
+  {
+    title: "Data & Backend",
+    items: ["Python", "SQL", "FastAPI"],
+  },
+  {
+    title: "Dev Workflow",
+    items: ["Git/GitHub", "Docker", "Linux CLI", "tmux", "Neovim", "VS Code", "CI/CD cơ bản"],
+  },
+] as const;
 ---
 
-<BlockLayout>
-  <NavigationBlock />
-  
-  <main id="main-content" data-layout="index" class="min-h-screen">
-    <HeroBlock 
-      title="Tấn Đạt Blogs"
-      subtitle="Hành trình học tập AI & Machine Learning"
-      description="Chào mừng đến với blog học tập của mình! Nơi chia sẻ kiến thức về Python, Machine Learning, Database và các kỹ năng lập trình quan trọng trong lĩnh vực AI."
-      showRss={false}
-    />
-    
-    <div class="max-w-6xl mx-auto px-6">
-      <!-- Skills Section -->
-      <section class="py-16">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-foreground mb-4">Kỹ Năng Chuyên Môn</h2>
-          <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Các công nghệ và kỹ năng đã học và áp dụng trong các dự án
-          </p>
-        </div>
+<Layout
+  title="Portfolio | Tấn Đạt"
+  description="Portfolio của Tấn Đạt - ứng tuyển vị trí AI Engineer / Machine Learning Engineer."
+>
+  <Header />
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-card border rounded-lg p-6 text-center">
-            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-              </svg>
-            </div>
-            <h3 class="text-lg font-semibold mb-2">Machine Learning</h3>
-            <p class="text-sm text-muted-foreground">Scikit-learn, XGBoost, LightGBM, SHAP, LIME</p>
-          </div>
-
-          <div class="bg-card border rounded-lg p-6 text-center">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-            </div>
-            <h3 class="text-lg font-semibold mb-2">Deep Learning</h3>
-            <p class="text-sm text-muted-foreground">PyTorch, TensorFlow, OpenCV, YOLO, CNN</p>
-          </div>
-
-          <div class="bg-card border rounded-lg p-6 text-center">
-            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-              </svg>
-            </div>
-            <h3 class="text-lg font-semibold mb-2">MLOps</h3>
-            <p class="text-sm text-muted-foreground">Docker, Kubernetes, MLflow, GitHub Actions</p>
-          </div>
-
-          <div class="bg-card border rounded-lg p-6 text-center">
-            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-            </div>
-            <h3 class="text-lg font-semibold mb-2">NLP & LLM</h3>
-            <p class="text-sm text-muted-foreground">LangChain, OpenAI, RAG, Transformers</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Copyright at bottom -->
-      <div class="mt-16 text-center text-sm text-muted-foreground">
-        <span>Copyright © 2025 | All rights reserved.</span>
-      </div>
+  <main id="main-content" class="relative min-h-screen">
+    <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div class="portfolio-page-bg"></div>
     </div>
+
+    <section class="relative overflow-hidden border-b border-border">
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,108,172,0.16),transparent_40%),radial-gradient(circle_at_80%_10%,rgba(0,108,172,0.10),transparent_40%)]"></div>
+      <div class="mx-auto grid w-full max-w-6xl gap-10 px-6 py-18 sm:py-24 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
+        <div>
+          <p class="mb-5 inline-flex rounded-full border border-accent/30 bg-accent/10 px-4 py-1 text-sm font-medium text-accent">
+            Open to Internship / Fresher Opportunities
+          </p>
+
+          <h1 class="max-w-4xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            Hi, mình là Tấn Đạt.
+            <span class="block text-accent">AI/ML & Data Engineer Portfolio.</span>
+          </h1>
+
+          <p class="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+            Mình là ứng viên AI/ML Engineer và Data Engineer, tập trung vào Machine Learning, Computer Vision, MLOps và Data Engineering,
+            với kinh nghiệm triển khai dự án thực tế từ xây dựng pipeline đến tối ưu và đánh giá mô hình.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#projects" class="rounded-md bg-accent px-5 py-3 text-sm font-semibold text-background transition hover:opacity-90">
+              Xem dự án nổi bật
+            </a>
+            <a href="/learning-path" class="rounded-md border border-border px-5 py-3 text-sm font-semibold transition hover:border-accent hover:text-accent">
+              Vào Blog học tập
+            </a>
+            <a href="#contact" class="rounded-md border border-border px-5 py-3 text-sm font-semibold transition hover:border-accent hover:text-accent">
+              Liên hệ phỏng vấn
+            </a>
+          </div>
+        </div>
+
+        <div class="mx-auto w-full max-w-sm animate-profile-in">
+          <div class="relative rounded-3xl border border-border/70 bg-background/95 p-3 shadow-xl backdrop-blur-sm">
+            <div class="pointer-events-none absolute -inset-3 -z-10 rounded-[1.75rem] bg-gradient-to-br from-accent/20 via-background to-accent/10 blur-xl"></div>
+            <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-[#dfe7f3]">
+              <img
+                src="/assets/profile.jpg"
+                alt="Portrait of Tan Dat"
+                class="h-full w-full object-cover"
+                loading="eager"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="mx-auto w-full max-w-6xl px-6 py-16">
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-3xl font-bold">Năng lực chuyên môn</h2>
+          <p class="mt-2 text-muted-foreground">Những nhóm kỹ năng mình dùng thường xuyên trong bài tập và project.</p>
+        </div>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {skillGroups.map(group => (
+          <article class="rounded-xl border border-border bg-background p-5 hover:border-accent/40 hover:shadow-md transition-all duration-200">
+            <h3 class="text-lg font-semibold">{group.title}</h3>
+            <ul class="mt-3 space-y-2 text-sm text-muted-foreground">
+              {group.items.map(item => (
+                <li class="flex items-center gap-2">
+                  <span class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="projects" class="border-y border-border bg-muted/20">
+      <div class="mx-auto w-full max-w-6xl px-6 py-16">
+        <h2 class="text-3xl font-bold">Dự án nổi bật</h2>
+        <p class="mt-2 max-w-2xl text-muted-foreground">
+          Các dự án thực tế và dự án thi đấu mình đã triển khai. Khi bạn gửi architecture, mình sẽ gắn thêm sơ đồ cho từng card.
+        </p>
+
+        <div class="mt-8 grid gap-5 lg:grid-cols-2">
+          {featuredProjects.map(project => (
+            <article class="rounded-xl border border-border bg-background p-5 hover:-translate-y-1 hover:border-accent/40 hover:shadow-lg transition-all duration-200">
+              <h3 class="text-xl font-semibold">{project.title}</h3>
+              <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-accent">{project.role}</p>
+              <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
+
+              <div class="mt-4 flex flex-wrap gap-2">
+                {project.stack.map(tech => (
+                  <span class="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">{tech}</span>
+                ))}
+              </div>
+
+              <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
+                {project.highlights.map(point => (
+                  <li class="flex gap-2">
+                    <span class="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="mt-6 flex gap-3 text-sm font-semibold">
+                {project.links.map(link => (
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="blog" class="border-y border-border bg-muted/20">
+      <div class="mx-auto w-full max-w-6xl px-6 py-16">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 class="text-3xl font-bold">Blog</h2>
+            <p class="mt-2 text-muted-foreground">Hiện có {totalPosts} bài viết. Bên dưới là các bài mới nhất để recruiter xem nhanh năng lực học tập và triển khai dự án.</p>
+          </div>
+          <a href="/learning-path" class="text-sm font-semibold text-accent hover:underline">Xem toàn bộ blog</a>
+        </div>
+
+        <ul class="mt-8 grid gap-4 md:grid-cols-2">
+          {recentPosts.map(post => (
+            <Card {...post} variant="h3" />
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section id="experience" class="mx-auto w-full max-w-6xl px-6 py-16">
+      <h2 class="text-3xl font-bold">Learning Journey</h2>
+      <div class="mt-8 grid gap-4 lg:grid-cols-3">
+        <article class="rounded-xl border border-border p-5">
+          <p class="text-xs font-semibold uppercase tracking-wide text-accent">2024 - 2025</p>
+          <h3 class="mt-2 text-lg font-semibold">AI Foundation</h3>
+          <p class="mt-2 text-sm text-muted-foreground">Nền tảng Python, SQL, Data Structure, thuật toán và tư duy giải quyết vấn đề.</p>
+        </article>
+        <article class="rounded-xl border border-border p-5">
+          <p class="text-xs font-semibold uppercase tracking-wide text-accent">2025</p>
+          <h3 class="mt-2 text-lg font-semibold">Machine Learning & MLOps</h3>
+          <p class="mt-2 text-sm text-muted-foreground">Thực hành mô hình phân loại/hồi quy, explainability và quy trình train-track-deploy.</p>
+        </article>
+        <article class="rounded-xl border border-border p-5">
+          <p class="text-xs font-semibold uppercase tracking-wide text-accent">Now</p>
+          <h3 class="mt-2 text-lg font-semibold">Portfolio for Interview</h3>
+          <p class="mt-2 text-sm text-muted-foreground">Tập trung đóng gói dự án, viết case study và chuẩn hóa profile để ứng tuyển.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="mx-auto w-full max-w-6xl px-6 py-16">
+      <div class="rounded-2xl border border-accent/30 bg-gradient-to-r from-accent/10 to-background p-8 sm:p-10">
+        <h2 class="text-3xl font-bold">Sẵn sàng cho cơ hội phỏng vấn</h2>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="mailto:yourmail@gmail.com" class="rounded-md bg-accent px-5 py-3 text-sm font-semibold text-background transition hover:opacity-90">
+            Gửi email
+          </a>
+          <a href="https://github.com/tandat8896" class="rounded-md border border-border px-5 py-3 text-sm font-semibold transition hover:border-accent hover:text-accent">
+            GitHub
+          </a>
+          <a href="/about" class="rounded-md border border-border px-5 py-3 text-sm font-semibold transition hover:border-accent hover:text-accent">
+            About Me
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-border">
+      <div class="mx-auto w-full max-w-6xl px-6 py-8 text-center text-sm text-muted-foreground">
+        Copyright © 2026 | All rights reserved.
+      </div>
+    </section>
   </main>
-</BlockLayout>
+</Layout>
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset?.layout;
-    if (indexLayout) {
-      sessionStorage.setItem("backUrl", "/");
-    }
+    sessionStorage.setItem("backUrl", "/");
   });
 </script>
