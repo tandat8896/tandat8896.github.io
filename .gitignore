@@ -58,8 +58,6 @@ jspm_packages/
 dist
 
 .cache/
-public
-
 .out
 .storybook-out
 
