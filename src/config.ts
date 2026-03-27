@@ -1,7 +1,7 @@
 export const SITE = {
-  website: "https://astro-paper.pages.dev/", // replace this with your deployed domain
+  website: "https://tandat8896.github.io/", // replace this with your deployed domain
   author: "Tấn Đạt",
-  profile: "https://satnaing.dev/",
+  profile: "https://www.linkedin.com/in/dat-tan-858549387/",
   desc: "Portfolio AI & Machine Learning của Tấn Đạt, kèm blog học tập theo module.",
   title: "Tấn Đạt Portfolio",
   ogImage: "astropaper-og.jpg",

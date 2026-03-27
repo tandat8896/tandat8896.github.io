@@ -1,0 +1,141 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+
+const skills = [
+  "Machine Learning: LightGBM, XGBoost, model evaluation, Transformers (basic)",
+  "MLOps: Airflow, MLflow, Kubernetes (KServe), ArgoCD (basic)",
+  "Data Engineering: Kafka, Feast, SQL, PySpark (basic ETL)",
+  "Programming: Python (NumPy, Pandas, Scikit-learn, PyTorch)",
+  "Developer Workflow: Linux WSL2, Bash, Neovim, tmux, Git/GitHub",
+  "English: technical reading, basic communication",
+] as const;
+
+const projects = [
+  {
+    title: "Near-Real-time Fraud Detection Pipeline (In Progress)",
+    stack: "Kafka, Feast, DVC, Airflow, MLflow",
+    bullets: [
+      "Designed 3-layer detection flow: rule-based, unsupervised, supervised.",
+      "Built realtime pipeline with Kafka and online feature lookup from Feast.",
+      "Evaluated by Precision@K/Recall@K with P@100=0.30, R@100=0.73, R@10000=0.92.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tandat8896/fraud_rt_projects" },
+      { label: "Workflow Video", href: "https://www.youtube.com/watch?v=AtsQwF9pSVg&list=PLRkwChN4lOmfjJLMB9fVPjxvJeA0QUNti" },
+    ],
+  },
+  {
+    title: "Local KServe Implementation (Pre-Infra Stage)",
+    stack: "KServe, Knative, Istio, Minikube",
+    bullets: [
+      "Wrote KServe InferenceService YAML on Minikube.",
+      "Configured routing, selector, port, and service.",
+      "Validated HTTPS (mTLS) with mock requests and Kiali traffic check.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tandat8896/sales-forecasting-end-to-end" },
+      { label: "Demo Video", href: "https://youtu.be/qJGMT12w4OE" },
+    ],
+  },
+  {
+    title: "Multimodal Video RAG System - AI Challenge HCM 2025",
+    stack: "OpenCV, PyTorch, Milvus, Kaggle Environments",
+    bullets: [
+      "Role: Data Engineering | Team AIO_AuraQ (Reached Qualification Round 3).",
+      "Improved score by 45% from Round 2 (15.4) to Round 3 (22.4/35).",
+      "Developed keyframe sampling and CLIP embedding for retrieval.",
+    ],
+    links: [
+      { label: "Codebase", href: "https://github.com/dtmhdev89/HCMAI2025_Baseline" },
+      { label: "Image Result", href: "https://drive.google.com/drive/folders/1oUb_0HdjAEWWK0tl9sLHoYQfvCMphqZv?hl=vi" },
+    ],
+  },
+  {
+    title: "Demand-driven Inventory Optimization (Multi-store)",
+    stack: "LightGBM, GA, NSGA-II, Pandas",
+    bullets: [
+      "Forecasted 30-day demand with LightGBM.",
+      "Designed inventory imbalance logic and transfer optimization.",
+    ],
+    links: [{ label: "GitHub", href: "https://github.com/tandat8896/demand-driven-inventory-optimazer" }],
+  },
+] as const;
+---
+
+<Layout title="CV | Tấn Đạt" description="CV online của Ngô Tấn Đạt">
+  <Header />
+
+  <main id="main-content" class="mx-auto w-full max-w-5xl px-6 py-10">
+    <section class="neo-panel rounded-2xl border border-border bg-background/90 p-6 sm:p-8">
+      <h1 class="text-3xl font-bold sm:text-4xl">NGO TAN DAT</h1>
+      <p class="mt-2 text-lg font-semibold text-accent">Machine Learning Engineer Intern</p>
+      <p class="mt-3 text-sm text-muted-foreground">Ho Chi Minh City | tandat88963820@gmail.com</p>
+      <div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold">
+        <a href="mailto:tandat88963820@gmail.com" class="text-accent hover:underline">Email</a>
+        <a href="https://www.linkedin.com/in/dat-tan-858549387/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">LinkedIn</a>
+        <a href="https://github.com/tandat8896" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">GitHub</a>
+        <a href="/cv/ngo-tan-dat-mlops-cv.tex" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">LaTeX Source</a>
+      </div>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-2xl font-bold">Summary</h2>
+      <p class="mt-3 text-muted-foreground">
+        Data Processing student aiming to become a Machine Learning Engineer, focusing on practical ML pipelines
+        from data processing and model training to deployment, with a strong interest in MLOps.
+      </p>
+    </section>
+
+    <section class="mt-8 grid gap-5 sm:grid-cols-2">
+      <article class="neo-panel rounded-xl border border-border bg-background/90 p-5">
+        <h2 class="text-xl font-bold">Education</h2>
+        <p class="mt-3 text-sm"><span class="font-semibold">FPT Polytechnic College</span> - Expected Graduation: 11/2026</p>
+        <p class="mt-1 text-sm text-muted-foreground">Software Engineering / Data Processing | GPA: 3.77/4.0</p>
+        <p class="mt-3 text-sm"><span class="font-semibold">AI VietNam</span> - 12/2024 to 06/2026</p>
+        <p class="mt-1 text-sm text-muted-foreground">AI Mastery Program (ML/DL/MLOps Specialist)</p>
+      </article>
+
+      <article class="neo-panel rounded-xl border border-border bg-background/90 p-5">
+        <h2 class="text-xl font-bold">Certification</h2>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+          <li>AWS Certified Cloud Practitioner (CLF-C02) - Scheduled: May 11, 2026</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-2xl font-bold">Core Skills</h2>
+      <ul class="mt-3 grid gap-3 sm:grid-cols-2">
+        {skills.map(skill => (
+          <li class="neo-panel rounded-lg border border-border bg-background/90 px-4 py-3 text-sm text-muted-foreground">{skill}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-2xl font-bold">Projects</h2>
+      <div class="mt-4 space-y-4">
+        {projects.map(project => (
+          <article class="neo-panel rounded-xl border border-border bg-background/90 p-5">
+            <h3 class="text-lg font-semibold">{project.title}</h3>
+            <p class="mt-2 text-sm text-muted-foreground">Stack: {project.stack}</p>
+            <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+              {project.bullets.map(bullet => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+            <div class="mt-3 flex flex-wrap gap-3 text-sm font-semibold">
+              {project.links.map(link => (
+                <a href={link.href} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">{link.label}</a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
