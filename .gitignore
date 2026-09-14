@@ -1,6 +1,7 @@
 .private/
 
 .astro/
+.direnv/
 
 .env
 .env.local
@@ -64,16 +65,46 @@ dist
 tmp/
 temp/
 
+# IDE & Editors (VSCode, JetBrains, Neovim/Vim)
 .vscode/
 .idea/
 *.swp
 *.swo
+*.un~
+*.undo
 *~
+Session.vim
+Session.vim.*
+.netrwhist
 
+# Nix & Direnv
+result
+result-*
+.envrc.local
+.envrc.cache
+
+# TypeScript & Vite cache
+*.tsbuildinfo
+.vite/
+
+# Draw.io backup and lock files
+*.drawio.bkp
+*.drawio.dtmp
+~$*
+
+# Secrets & Local credentials
+*.pem
+*.key
+credentials*.json
+.env.*.local
+
+# OS Metadata
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
+.Trash-*
+.directory
 ehthumbs.db
-Thumbs.db
+Thumbs.db

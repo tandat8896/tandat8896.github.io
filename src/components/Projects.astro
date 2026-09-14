@@ -1,0 +1,1130 @@
+---
+interface ProjectItem {
+  id: string;
+  title: string;
+  category: string;
+  timeline: string;
+  summary: string;
+  githubUrl?: string;
+  youtubeUrl?: string;
+  context: string;
+  missions: string[];
+  results: string[];
+  techEnv: string[];
+  challenges: { problem: string; solution: string }[];
+}
+
+const PROJECTS: ProjectItem[] = [
+  {
+    id: "oracle-rac-ha",
+    title: "Oracle RAC 19c Active-Active & Data Guard HA Enterprise Architecture",
+    category: "Enterprise High Availability & Storage Clustering",
+    timeline: "2026",
+    summary: "Cụm cơ sở dữ liệu quan trọng 2-node Active-Active (Oracle Linux 9) trên Oracle ASM (3 disk groups) kết hợp Data Guard Physical Standby (FSFO) và phân vùng mạng Zero-Trust L4.",
+    githubUrl: "https://github.com/tandat8896/oracle-rac-data-guard-lab",
+    youtubeUrl: "https://www.youtube.com/watch?v=-eH738r5fRQ",
+    context: "Hệ thống cơ sở dữ liệu sản xuất quy mô lớn đòi hỏi tính sẵn sàng liên tục 99.999%, đảm bảo không gián đoạn dịch vụ khi một node vật lý gặp thảm họa và tự động chuyển đổi dự phòng (Zero-Loss Failover) mà không cần can thiệp thủ công.",
+    missions: [
+      "Dựng cụm Active-Active gồm 2 node (racdb1 và racdb2) trên Oracle Linux với Clusterware (CRS) đồng bộ online song song.",
+      "Cấu hình Oracle ASM quản lý 3 disk groups độc lập: +OCRVOTE (10GB - Voting Disks), +DATA (30GB - Database Datafiles) và +FRA (30GB - Fast Recovery Area / Archive Logs) cố định bằng udev rules.",
+      "Thiết lập mạng Private Interconnect MTU 9000 dành riêng cho Cache Fusion; SCAN Listener tập trung (10.10.50.30:1521) phục vụ cân bằng tải kết nối qua Virtual IPs (VIPs).",
+      "Thiết lập Physical Standby kết nối qua Data Guard Broker với cơ chế Fast-Start Failover (FSFO) và Observer tự động điều phối."
+    ],
+    results: [
+      "Hoàn thành trọn vẹn chu trình Switchover, Failover và Reinstate Standby bằng Flashback Database.",
+      "RMAN online hot backup validate 100% dữ liệu vào diskgroup +FRA.",
+      "Biên soạn 57 tài liệu kỹ thuật chi tiết cùng video demo dài thực nghiệm công khai trên GitHub và YouTube."
+    ],
+    techEnv: [
+      "Oracle RAC 19c Enterprise",
+      "Oracle ASM",
+      "Data Guard Broker",
+      "Fast-Start Failover (FSFO)",
+      "Oracle Linux 9 UEK",
+      "AWR / ASH Profiling",
+      "Flashback Database",
+      "RMAN Hot Backup",
+      "udev rules",
+      "KVM Bare-Metal"
+    ],
+    challenges: [
+      {
+        problem: "Lỗi ORA-1017 (invalid username/password) khi kích hoạt Fast-Start Failover giữa primary và standby.",
+        solution: "Phát hiện tiện ích orapwd chạy độc lập trên từng node tạo ra chuỗi cryptographic salt khác nhau cho tài khoản SYS. Khắc phục bằng cách copy đồng bộ file password từ primary sang standby và khởi tạo lại static listener."
+      },
+      {
+        problem: "Lỗi ORA-1033 (ORACLE initialization or shutdown in progress) khi Data Guard Broker thực hiện switchover.",
+        solution: "Thiếu cấu hình static service listener _DGMGRL trong listener.ora khiến broker không thể kết nối restart instance khi database đang ở trạng thái MOUNT."
+      }
+    ]
+  },
+  {
+    id: "hadoop-spark-ha",
+    title: "Apache Hadoop HA & Spark Cluster (Zero-Trust L4 Segregation)",
+    category: "Distributed Big Data HA & Enterprise Network Hardening",
+    timeline: "2026",
+    summary: "Cụm 3-node Rocky Linux triển khai Hadoop HA (Active/Standby NameNodes, JournalNode Quorum 3/3, ZooKeeper Ensemble 3-node, DataNodes) kết hợp Spark Master HA và Spark Workers. Phân tách rạch ròi Storage HDFS cô lập Air-Gapped khỏi Compute, kết nối tới Oracle RAC qua tường lửa Zero-Trust L4.",
+    githubUrl: "https://github.com/tandat8896/oracle-rac-data-guard-lab",
+    context: "Hạ tầng Big Data doanh nghiệp đòi hỏi tính sẵn sàng cao (Zero Single Point of Failure) cho cả tầng lưu trữ phân tán HDFS và tầng tính toán Spark, đồng thời phải thiết lập vành đai bảo mật Zero-Trust L4 ngăn chặn rò rỉ dữ liệu hoặc tấn công nội bộ giữa vùng tính toán và vùng cơ sở dữ liệu lõi.",
+    missions: [
+      "Triển khai cụm 3 node Rocky Linux (datanode, workernode1, workernode2) với card mạng kép tách biệt Compute (10.10.20.0/24) và Storage HDFS (10.10.30.0/24).",
+      "Cấu hình Hadoop HDFS HA với 2 NameNodes (Active nn1 trên datanode, Standby nn2 trên workernode1), đồng bộ edits log qua JournalNode Quorum (3 node) và tự động failover bằng ZKFC.",
+      "Thiết lập Apache ZooKeeper 3.8 Quorum 3 nodes phục vụ đồng thuận phân tán cho cả NameNode và Spark Master HA.",
+      "Triển khai Apache Spark Standalone Cluster với Active Spark Master và Standby Spark Master phục hồi trạng thái qua ZooKeeper, kết hợp 2 Spark Workers thực thi tính toán phân tán.",
+      "Thiết lập vành đai tường lửa Zero-Trust L4 trên host NixOS: Chỉ mở duy nhất TCP 1521 tới SCAN RAC (10.10.50.30) và RAC VIPs (.21, .22), chặn toàn bộ SSH (22) và direct node IPs, cô lập 100% mạng HDFS Private."
+    ],
+    results: [
+      "HDFS HA tự động failover thành công dưới 3 giây khi ngắt NameNode Active.",
+      "Spark Master tự động bầu chọn và phục hồi ứng dụng qua ZooKeeper không làm đứt gãy job đang chạy.",
+      "Xác thực đo kiểm 100% 4 luật tường lửa Zero-Trust: Spark JDBC sang SCAN đạt 0.01s, quét port SSH hoặc chọc node IP vật lý đều bị DROP timeout ngay lập tức."
+    ],
+    techEnv: [
+      "Apache Hadoop 3.3.6 HDFS HA",
+      "Apache Spark 3.5 Standalone HA",
+      "Apache ZooKeeper 3.8 Quorum",
+      "JournalNode Quorum (3/3)",
+      "ZKFC (Failover Controller)",
+      "Rocky Linux 10 & KVM Hypervisor",
+      "Zero-Trust iptables L4 Hardening",
+      "Oracle RAC JDBC Integration",
+      "virbr Network Segregation"
+    ],
+    challenges: [
+      {
+        problem: "Hiện tượng Split-Brain khi mạng giữa 2 NameNode bị chập chờn, cả 2 node đều tự nhận là Active gây hỏng dữ liệu HDFS.",
+        solution: "Cấu hình cơ chế Fencing thông qua SSH fencing agent và cấu hình JournalNode Quorum yêu cầu quá bán (2/3 nodes đồng thuận) mới cho phép commit transaction log."
+      },
+      {
+        problem: "Spark Driver / Workers bị kẹt kết nối khi truy vấn Oracle RAC do SCAN chuyển hướng TNS REDIRECT tới Local Listener trên node IP.",
+        solution: "Bổ sung luật tường lửa Zero-Trust mở thêm cổng 1521 tới 2 địa chỉ RAC VIPs (10.10.50.21, 10.10.50.22) song song với SCAN IP, đảm bảo quy trình bắt tay TNS REDIRECT hoàn tất mà vẫn giữ nguyên chính sách chặn toàn bộ cổng quản trị."
+      }
+    ]
+  },
+  {
+    id: "zero-downtime-cdc",
+    title: "Zero-Downtime Real-Time CDC Migration Pipeline to Apache Iceberg",
+    category: "Real-time CDC & Data Governance",
+    timeline: "2026",
+    summary: "Pipeline đồng bộ dữ liệu thời gian thực từ PostgreSQL qua logical replication (pgoutput) bằng Debezium Server 2.5, chuẩn hóa Avro với Confluent Schema Registry, Spark stream nạp vào Apache Iceberg với SCD Type 2.",
+    githubUrl: "https://github.com/tandat8896/migration-data-pipeline",
+    context: "Chuyển dịch dữ liệu sản xuất từ cơ sở dữ liệu quan hệ giao dịch OLTP sang Data Lakehouse phân tích hiện đại mà không gây gián đoạn hệ thống (Zero-Downtime), bảo đảm theo dõi toàn vẹn lịch sử thay đổi của từng thuộc tính.",
+    missions: [
+      "PostgreSQL logical replication plugin (pgoutput) xuất chuỗi thay đổi Write-Ahead Log (WAL).",
+      "Debezium Server 2.5.4 bắt các sự kiện INSERT / UPDATE / DELETE và chuyển đổi thành thông điệp nhị phân.",
+      "Confluent Schema Registry quản trị phiên bản schema Avro, kiểm tra tương thích ngược (backward compatibility).",
+      "Spark Streaming giải mã Confluent Wire Format (Magic Byte + Schema ID), làm phẳng cấu trúc CDC Envelope (before, after, op, ts_ms).",
+      "Ghi dữ liệu vào Apache Iceberg Table Format, thiết lập cột version và is_current mô hình hóa dữ liệu biến đổi chậm SCD Type 2."
+    ],
+    results: [
+      "Kiểm chứng tính toàn vẹn 100% của mọi thao tác INSERT, UPDATE, DELETE.",
+      "Hỗ trợ truy vấn lịch sử (Time-Travel Queries) nhờ cơ chế snapshot của Apache Iceberg."
+    ],
+    techEnv: [
+      "Debezium Server 2.5.4",
+      "PostgreSQL Logical Replication",
+      "Apache Iceberg",
+      "Confluent Schema Registry",
+      "Apache Spark Streaming",
+      "Avro Serialization",
+      "SCD Type 2 Modeling"
+    ],
+    challenges: [
+      {
+        problem: "Lỗi double serialization giữa Debezium Server và Apache Kafka khiến dữ liệu Avro bị đóng gói kép trong JSON wrapper, làm Spark consumer không thể phân tích byte.",
+        solution: "Cấu hình ByteArraySerializer cho Kafka producer trong Debezium, truyền trực tiếp luồng byte thuần đã được mã hóa bởi Avro Serializer."
+      }
+    ]
+  },
+  {
+    id: "tinydb-rust",
+    title: "tinydb — Relational Storage Engine Internals in Rust",
+    category: "Low-Level Database Internals (CMU 15-445)",
+    timeline: "2026",
+    summary: "Storage engine quan hệ viết bằng Rust theo chuẩn CMU 15-445: tổ chức slotted page 8KB, heap file, chỉ mục B+Tree, bộ ghi nhật ký WAL ARIES, transaction manager và SQL REPL executor với 38 bài test pass.",
+    githubUrl: "https://github.com/tandat8896/tinydb",
+    context: "Hiện thực hóa kiến trúc lõi của một hệ quản trị cơ sở dữ liệu quan hệ từ mức byte đĩa cứng, nắm bắt sâu sắc cấu trúc trang lưu trữ, thuật toán cân bằng cây chỉ mục và cơ chế phục hồi giao dịch crash recovery.",
+    missions: [
+      "Disk Manager tổ chức file dữ liệu thành các trang cố định 8KB (Slotted-Page Architecture) lưu tuple metadata và payload biến thiên.",
+      "Buffer Pool Manager kiểm soát bộ nhớ đệm trang với chính sách thay thế tối ưu, đồng bộ trang bẩn (dirty pages).",
+      "Index Manager cài đặt cấu trúc B+Tree tự cân bằng hỗ trợ tìm kiếm điểm (Point Query) và duyệt khoảng (Range Scan).",
+      "Transaction & Log Manager ghi nhận Write-Ahead Logging (WAL) theo chuẩn ARIES phục hồi dữ liệu khi tiến trình bị ngắt đột ngột.",
+      "SQL Lexer, Parser và Executor cho phép tương tác qua terminal REPL với cú pháp chuẩn SQL."
+    ],
+    results: [
+      "Vượt qua 38/38 unit tests và integration tests bao quát các kịch bản đọc/ghi/phục hồi.",
+      "Tách biệt hoàn toàn tầng trừu tượng I/O, sẵn sàng mở rộng các thuật toán concurrency control cấp cao."
+    ],
+    techEnv: [
+      "Rust 2021 Edition",
+      "CMU 15-445 Standards",
+      "8KB Slotted Page",
+      "B+Tree Indexing",
+      "Write-Ahead Logging (WAL)",
+      "ARIES Crash Recovery",
+      "SQL Lexer & Parser",
+      "Buffer Pool Manager"
+    ],
+    challenges: [
+      {
+        problem: "Hiện tượng phân mảnh (fragmentation) và dời offset con trỏ trong trang 8KB khi xóa hoặc cập nhật tuple kích thước biến đổi.",
+        solution: "Thiết kế mảng Slot Pointer nằm ở đầu trang trỏ về payload dữ liệu được nạp ngược từ cuối trang lên (two-way growth), thực hiện compaction slot khi tỷ lệ byte trống phân mảnh vượt ngưỡng."
+      },
+      {
+        problem: "Đảm bảo tính toàn vẹn của B+Tree khi tách nốt (split) hoặc gộp nốt (merge) trong môi trường nhiều con trỏ.",
+        solution: "Triển khai chặt chẽ cơ chế borrow / redistribute con trỏ giữa các nốt anh em (sibling nodes) trước khi quyết định merge, đảm bảo chiều cao cây cân bằng tuyệt đối."
+      }
+    ]
+  }
+];
+---
+
+<section class="py-24 bg-[#000000] border-t border-[#141414]" id="projects-section">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mb-14 text-center">
+      <span class="text-xs font-mono uppercase tracking-[3px] text-[#ffbd39] font-bold block mb-2">
+        // PRODUCTION ARCHITECTURE DIAGRAMS &amp; LAB BENCHMARKS
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        Sơ Đồ Kiến Trúc Hệ Thống (Cloud &amp; Data Architectures)
+      </h2>
+      <p class="text-xs sm:text-sm font-mono text-gray-400 mt-2 max-w-2xl mx-auto">
+        Thiết kế theo chuẩn kiến trúc chuyên nghiệp (AWS / MLOps / Systems Architecture). Tích hợp các luồng dữ liệu sống (Living Data Flow) với icon công nghệ chính thức.
+      </p>
+    </div>
+
+    <!-- Architecture Canvas Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {PROJECTS.map(project => (
+        <div
+          class="project-card flex flex-col justify-between rounded-xl overflow-hidden border border-[#1e2333] hover:border-[#ffbd39] cursor-pointer group transition-all duration-300 shadow-2xl bg-[#07080d]"
+          data-project-id={project.id}
+        >
+          <!-- Top Architecture Diagram Canvas -->
+          <div class="relative p-4 sm:p-5 bg-[#05060a] border-b border-[#181a26] overflow-hidden flex items-center justify-center">
+            {project.id === "oracle-rac-ha" && (
+              <svg class="w-full h-auto max-h-[340px]" viewBox="0 0 920 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="aws-grid-rac" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <circle cx="12" cy="12" r="0.75" fill="#334155" opacity="0.3"/>
+                  </pattern>
+                  <marker id="aws-arrow-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f97316"/>
+                  </marker>
+                  <marker id="aws-arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+                  </marker>
+                  <marker id="aws-arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#c084fc"/>
+                  </marker>
+                  <marker id="aws-arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+                  </marker>
+                </defs>
+
+                <!-- Background -->
+                <rect width="920" height="400" fill="#070a12"/>
+                <rect width="920" height="400" fill="url(#aws-grid-rac)"/>
+
+                <!-- AWS Architecture Header Bar -->
+                <rect x="16" y="10" width="888" height="24" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+                <text x="28" y="26" fill="#f97316" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="bold">AWS REFERENCE ARCHITECTURE: ORACLE 19c ENTERPRISE RAC &amp; DATA GUARD HA</text>
+                <text x="600" y="26" fill="#94a3b8" font-family="monospace" font-size="8.5">Dual-Node Active-Active • Shared ASM • Zero-Trust L4</text>
+                <text x="892" y="26" text-anchor="end" fill="#10b981" font-family="monospace" font-size="8.5" font-weight="bold">AVAILABILITY: 99.999%</text>
+
+                <!-- ================= VPC BOUNDARY CONTAINER ================= -->
+                <rect x="16" y="42" width="888" height="346" rx="8" fill="none" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="6 4"/>
+                <rect x="26" y="34" width="165" height="18" rx="3" fill="#1e3a8a"/>
+                <text x="108" y="46" text-anchor="middle" fill="#bfdbfe" font-family="monospace" font-size="8" font-weight="bold">VPC: 10.10.0.0/16 (Corporate Lab)</text>
+
+                <!-- ================= SUBNET 1: CLIENT / COMPUTE SUBNET ================= -->
+                <rect x="28" y="60" width="125" height="316" rx="6" fill="#0284c7" fill-opacity="0.04" stroke="#0284c7" stroke-width="1"/>
+                <rect x="36" y="52" width="105" height="16" rx="3" fill="#0369a1"/>
+                <text x="88" y="63" text-anchor="middle" fill="#e0f2fe" font-family="monospace" font-size="7.5" font-weight="bold">Compute 10.10.20.0/24</text>
+
+                <!-- Client Icon Node -->
+                <rect x="42" y="90" width="96" height="85" rx="6" fill="#0c1626" stroke="#38bdf8" stroke-width="1.2"/>
+                <circle cx="90" cy="115" r="16" fill="#0369a1"/>
+                <path d="M 83 121 v -2 a 7 7 0 0 1 14 0 v 2 M 90 111 a 3.5 3.5 0 1 0 0 -7 a 3.5 3.5 0 0 0 0 7 z" fill="none" stroke="#ffffff" stroke-width="1.6"/>
+                <text x="90" y="142" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">Spark / App</text>
+                <text x="90" y="154" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="7.5">10.10.20.10</text>
+                <text x="90" y="165" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="6.8">Thin JDBC Client</text>
+
+                <!-- Security Box Note -->
+                <rect x="36" y="240" width="108" height="80" rx="4" fill="#08101a" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="90" y="258" text-anchor="middle" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">SECURITY SCOPE</text>
+                <line x1="44" y1="264" x2="136" y2="264" stroke="#1e293b"/>
+                <text x="90" y="278" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7">Only port 1521</text>
+                <text x="90" y="291" text-anchor="middle" fill="#f87171" font-family="monospace" font-size="7">SSH :22 Blocked</text>
+                <text x="90" y="304" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="6.5">No direct node access</text>
+
+                <!-- ================= FIREWALL APPLIANCE / SECURITY GATEWAY ================= -->
+                <rect x="168" y="90" width="36" height="230" rx="6" fill="#1c0a0a" stroke="#ef4444" stroke-width="1.2"/>
+                <rect x="174" y="100" width="24" height="24" rx="4" fill="#991b1b"/>
+                <path d="M 186 106 l 7 3 v 6 c 0 5 -4 8 -7 9 c -3 -1 -7 -4 -7 -9 v -6 z" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+                <text x="186" y="145" text-anchor="middle" fill="#fca5a5" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold" transform="rotate(-90, 186, 145)">L4 FIREWALL</text>
+                <text x="186" y="235" text-anchor="middle" fill="#f87171" font-family="monospace" font-size="7" font-weight="bold" transform="rotate(-90, 186, 235)">ZERO-TRUST</text>
+
+                <!-- ================= SUBNET 2: ORACLE RAC PUBLIC SUBNET ================= -->
+                <rect x="220" y="60" width="485" height="316" rx="6" fill="#ea580c" fill-opacity="0.04" stroke="#ea580c" stroke-width="1"/>
+                <rect x="230" y="52" width="165" height="16" rx="3" fill="#9a3412"/>
+                <text x="312" y="63" text-anchor="middle" fill="#ffedd5" font-family="monospace" font-size="7.5" font-weight="bold">Database Subnet: 10.10.50.0/24</text>
+
+                <!-- SCAN LISTENER (ENTRYPOINT) -->
+                <rect x="235" y="76" width="455" height="46" rx="6" fill="#1f1406" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="245" y="85" width="28" height="28" rx="4" fill="#d97706"/>
+                <circle cx="259" cy="99" r="8" fill="none" stroke="#ffffff" stroke-width="1.6"/>
+                <path d="M 255 99 h 8 M 259 95 v 8" stroke="#ffffff" stroke-width="1.6"/>
+                <text x="282" y="95" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" font-weight="bold">SCAN LISTENER (Central Virtual Hub)</text>
+                <text x="282" y="109" fill="#fde68a" font-family="monospace" font-size="7.8">10.10.50.30:1521 • Hostname: rac-scan.localdomain • Round-Robin TNS REDIRECT</text>
+
+                <!-- AVAILABILITY ZONE 1: racdb1 -->
+                <rect x="235" y="132" width="220" height="135" rx="6" fill="#0b1320" stroke="#38bdf8" stroke-width="1.2"/>
+                <rect x="243" y="140" width="24" height="24" rx="4" fill="#0284c7"/>
+                <path d="M 249 146 h 12 v 12 h -12 z M 255 146 v 12 M 249 152 h 12" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="274" y="149" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" font-weight="bold">racdb1 (Primary Node 1)</text>
+                <text x="274" y="160" fill="#38bdf8" font-family="monospace" font-size="7.5">Instance: racdb1 [ACTIVE]</text>
+                <line x1="243" y1="168" x2="445" y2="168" stroke="#1e293b"/>
+                <text x="245" y="181" fill="#94a3b8" font-family="monospace" font-size="7">Physical Node IP:</text>
+                <text x="445" y="181" text-anchor="end" fill="#f8fafc" font-family="monospace" font-size="7">10.10.50.11</text>
+                <text x="245" y="194" fill="#94a3b8" font-family="monospace" font-size="7">Virtual VIP (Failover):</text>
+                <text x="445" y="194" text-anchor="end" fill="#4ade80" font-family="monospace" font-size="7" font-weight="bold">10.10.50.21</text>
+                <text x="245" y="207" fill="#94a3b8" font-family="monospace" font-size="7">Local Listener:</text>
+                <text x="445" y="207" text-anchor="end" fill="#cbd5e1" font-family="monospace" font-size="7">Port 1521</text>
+                <text x="245" y="220" fill="#94a3b8" font-family="monospace" font-size="7">ASM Storage Agent:</text>
+                <text x="445" y="220" text-anchor="end" fill="#f59e0b" font-family="monospace" font-size="7">+ASM1</text>
+                <rect x="243" y="228" width="60" height="12" rx="2" fill="#14532d"/>
+                <text x="273" y="237" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="6.5" font-weight="bold">CRS: ONLINE</text>
+
+                <!-- AVAILABILITY ZONE 2: racdb2 -->
+                <rect x="470" y="132" width="220" height="135" rx="6" fill="#0b1320" stroke="#38bdf8" stroke-width="1.2"/>
+                <rect x="478" y="140" width="24" height="24" rx="4" fill="#0284c7"/>
+                <path d="M 484 146 h 12 v 12 h -12 z M 490 146 v 12 M 484 152 h 12" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="509" y="149" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" font-weight="bold">racdb2 (Primary Node 2)</text>
+                <text x="509" y="160" fill="#38bdf8" font-family="monospace" font-size="7.5">Instance: racdb2 [ACTIVE]</text>
+                <line x1="478" y1="168" x2="680" y2="168" stroke="#1e293b"/>
+                <text x="480" y="181" fill="#94a3b8" font-family="monospace" font-size="7">Physical Node IP:</text>
+                <text x="680" y="181" text-anchor="end" fill="#f8fafc" font-family="monospace" font-size="7">10.10.50.12</text>
+                <text x="480" y="194" fill="#94a3b8" font-family="monospace" font-size="7">Virtual VIP (Failover):</text>
+                <text x="480" y="194" text-anchor="end" fill="#4ade80" font-family="monospace" font-size="7" font-weight="bold">10.10.50.22</text>
+                <text x="480" y="207" fill="#94a3b8" font-family="monospace" font-size="7">Local Listener:</text>
+                <text x="680" y="207" text-anchor="end" fill="#cbd5e1" font-family="monospace" font-size="7">Port 1521</text>
+                <text x="480" y="220" fill="#94a3b8" font-family="monospace" font-size="7">ASM Storage Agent:</text>
+                <text x="680" y="220" text-anchor="end" fill="#f59e0b" font-family="monospace" font-size="7">+ASM2</text>
+                <rect x="478" y="228" width="60" height="12" rx="2" fill="#14532d"/>
+                <text x="508" y="237" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="6.5" font-weight="bold">CRS: ONLINE</text>
+
+                <!-- CACHE FUSION INTERCONNECT BUS (BETWEEN RAC1 & RAC2) -->
+                <line x1="455" y1="195" x2="470" y2="195" stroke="#c084fc" stroke-width="3"/>
+                <rect x="430" y="184" width="68" height="22" rx="3" fill="#3b0764" stroke="#a855f7" stroke-width="0.8"/>
+                <text x="464" y="194" text-anchor="middle" fill="#f3e8ff" font-family="monospace" font-size="6.5" font-weight="bold">CACHE FUSION</text>
+                <text x="464" y="203" text-anchor="middle" fill="#d8b4fe" font-family="monospace" font-size="5.8">MTU 9000 (10.10.10.x)</text>
+
+                <!-- SHARED STORAGE POOL: ORACLE ASM (BOTTOM TIER) -->
+                <rect x="235" y="280" width="455" height="84" rx="6" fill="#080e18" stroke="#10b981" stroke-width="1.2"/>
+                <rect x="245" y="288" width="20" height="20" rx="3" fill="#065f46"/>
+                <path d="M 249 293 a 6 2 0 0 0 12 0 a 6 2 0 0 0 -12 0 v 8 a 6 2 0 0 0 12 0 v -8" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="272" y="297" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">SHARED STORAGE LAYER: ORACLE ASM (SCSI Shared Block / udev)</text>
+
+                <!-- 3 Disks -->
+                <rect x="245" y="312" width="135" height="44" rx="4" fill="#0d1829" stroke="#334155" stroke-width="0.8"/>
+                <text x="255" y="326" fill="#38bdf8" font-family="monospace" font-size="7.5" font-weight="bold">+DATA (30GB)</text>
+                <text x="255" y="338" fill="#94a3b8" font-family="monospace" font-size="6.5">SYSTEM, SYSAUX, PDBs</text>
+                <text x="255" y="349" fill="#cbd5e1" font-family="monospace" font-size="6.5">Concurrent Block Access</text>
+
+                <rect x="395" y="312" width="135" height="44" rx="4" fill="#0d1829" stroke="#334155" stroke-width="0.8"/>
+                <text x="405" y="326" fill="#f59e0b" font-family="monospace" font-size="7.5" font-weight="bold">+FRA (30GB)</text>
+                <text x="405" y="338" fill="#94a3b8" font-family="monospace" font-size="6.5">Archived Redo, Flashback</text>
+                <text x="405" y="349" fill="#cbd5e1" font-family="monospace" font-size="6.5">RMAN Backup Recovery</text>
+
+                <rect x="545" y="312" width="135" height="44" rx="4" fill="#0d1829" stroke="#334155" stroke-width="0.8"/>
+                <text x="555" y="326" fill="#c084fc" font-family="monospace" font-size="7.5" font-weight="bold">+OCRVOTE (10GB)</text>
+                <text x="555" y="338" fill="#94a3b8" font-family="monospace" font-size="6.5">Cluster Registry &amp; 3x Vote</text>
+                <text x="555" y="349" fill="#4ade80" font-family="monospace" font-size="6.5">Quorum Split-Brain Prev</text>
+
+                <!-- ================= SUBNET 3: DISASTER RECOVERY PHYSICAL STANDBY ================= -->
+                <rect x="720" y="60" width="170" height="316" rx="6" fill="#581c87" fill-opacity="0.04" stroke="#a855f7" stroke-width="1"/>
+                <rect x="728" y="52" width="140" height="16" rx="3" fill="#581c87"/>
+                <text x="798" y="63" text-anchor="middle" fill="#f3e8ff" font-family="monospace" font-size="7.5" font-weight="bold">DR Standby Subnet</text>
+
+                <!-- Standby Node -->
+                <rect x="732" y="90" width="146" height="135" rx="6" fill="#140b20" stroke="#c084fc" stroke-width="1.2"/>
+                <rect x="740" y="98" width="24" height="24" rx="4" fill="#7e22ce"/>
+                <path d="M 746 104 h 12 v 12 h -12 z M 752 104 v 12 M 746 110 h 12" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="770" y="107" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">stdby1 (Standby)</text>
+                <text x="770" y="118" fill="#c084fc" font-family="monospace" font-size="7.5">Instance: racdb_s</text>
+                <line x1="740" y1="126" x2="868" y2="126" stroke="#2e1065"/>
+                <text x="742" y="139" fill="#94a3b8" font-family="monospace" font-size="7">Standby IP: 10.10.50.40</text>
+                <text x="742" y="152" fill="#cbd5e1" font-family="monospace" font-size="7">Real-Time Apply (MRP)</text>
+                <text x="742" y="165" fill="#cbd5e1" font-family="monospace" font-size="7">Standby Redo Logs (SRLs)</text>
+                <text x="742" y="178" fill="#4ade80" font-family="monospace" font-size="7">Sync Transport: NSS2</text>
+                <rect x="740" y="186" width="115" height="14" rx="2" fill="#3b0764"/>
+                <text x="797" y="196" text-anchor="middle" fill="#e9d5ff" font-family="monospace" font-size="6.5" font-weight="bold">ZERO DATA LOSS (FSFO)</text>
+
+                <!-- Observer Node -->
+                <rect x="732" y="240" width="146" height="85" rx="6" fill="#130712" stroke="#f43f5e" stroke-width="1"/>
+                <text x="805" y="258" text-anchor="middle" fill="#fb7185" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">FSFO OBSERVER</text>
+                <line x1="742" y1="265" x2="868" y2="265" stroke="#371020"/>
+                <text x="805" y="278" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7">Data Guard Broker</text>
+                <text x="805" y="291" text-anchor="middle" fill="#f43f5e" font-family="monospace" font-size="7">Fast-Start Failover</text>
+                <text x="805" y="304" text-anchor="middle" fill="#34d399" font-family="monospace" font-size="6.5">Flashback Reinstate</text>
+
+                <!-- ================= NUMBERED FLOW PATHS (AWS CALLOUT STYLE ① ② ③ ④ ⑤ ⑥) ================= -->
+                <!-- ① Client to Firewall & SCAN -->
+                <path d="M 138 125 H 168" stroke="#f97316" stroke-width="2" marker-end="url(#aws-arrow-orange)"/>
+                <circle cx="153" cy="115" r="8" fill="#f97316"/>
+                <text x="153" y="118" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">1</text>
+
+                <path d="M 204 100 H 235" stroke="#f97316" stroke-width="2" marker-end="url(#aws-arrow-orange)"/>
+                <circle cx="219" cy="90" r="8" fill="#f97316"/>
+                <text x="219" y="93" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">2</text>
+
+                <!-- ③ SCAN to Nodes (Orthogonal Split) -->
+                <path d="M 345 122 V 132" stroke="#38bdf8" stroke-width="2" marker-end="url(#aws-arrow-blue)"/>
+                <circle cx="345" cy="127" r="7" fill="#0284c7"/>
+                <text x="345" y="130" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">3</text>
+
+                <path d="M 580 122 V 132" stroke="#38bdf8" stroke-width="2" marker-end="url(#aws-arrow-blue)"/>
+                <circle cx="580" cy="127" r="7" fill="#0284c7"/>
+                <text x="580" y="130" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">3</text>
+
+                <!-- ④ Cache Fusion Interconnect Callout -->
+                <circle cx="464" cy="172" r="8" fill="#a855f7"/>
+                <text x="464" y="175" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">4</text>
+
+                <!-- ⑤ Nodes to Shared ASM Disks -->
+                <path d="M 345 267 V 280" stroke="#10b981" stroke-width="2" marker-end="url(#aws-arrow-emerald)"/>
+                <circle cx="345" cy="273" r="7" fill="#10b981"/>
+                <text x="345" y="276" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">5</text>
+
+                <path d="M 580 267 V 280" stroke="#10b981" stroke-width="2" marker-end="url(#aws-arrow-emerald)"/>
+                <circle cx="580" cy="273" r="7" fill="#10b981"/>
+                <text x="580" y="276" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">5</text>
+
+                <!-- ⑥ Primary to Standby Redo Shipping -->
+                <path d="M 690 195 H 732" stroke="#c084fc" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#aws-arrow-purple)"/>
+                <circle cx="711" cy="185" r="8" fill="#9333ea"/>
+                <text x="711" y="188" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">6</text>
+              </svg>
+            )}
+
+            {project.id === "hadoop-spark-ha" && (
+              <svg class="w-full h-auto max-h-[340px]" viewBox="0 0 920 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="aws-grid-ha" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <circle cx="12" cy="12" r="0.75" fill="#334155" opacity="0.3"/>
+                  </pattern>
+                  <marker id="aws-arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#06b6d4"/>
+                  </marker>
+                  <marker id="aws-arrow-indigo" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#6366f1"/>
+                  </marker>
+                  <marker id="aws-arrow-amber2" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f59e0b"/>
+                  </marker>
+                </defs>
+
+                <!-- Background -->
+                <rect width="920" height="400" fill="#070a12"/>
+                <rect width="920" height="400" fill="url(#aws-grid-ha)"/>
+
+                <!-- Architecture Header Bar -->
+                <rect x="16" y="10" width="888" height="24" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+                <text x="28" y="26" fill="#06b6d4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="bold">AWS REFERENCE ARCHITECTURE: HADOOP HDFS HA &amp; SPARK MASTER HA</text>
+                <text x="590" y="26" fill="#94a3b8" font-family="monospace" font-size="8.5">Dual-NIC Architecture • JournalNode Quorum (3/3) • Air-Gapped Storage</text>
+                <text x="892" y="26" text-anchor="end" fill="#10b981" font-family="monospace" font-size="8.5" font-weight="bold">HA QUORUM: 3/3</text>
+
+                <!-- ================= VPC CONTAINER ================= -->
+                <rect x="16" y="42" width="888" height="346" rx="8" fill="none" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="6 4"/>
+                <rect x="26" y="34" width="205" height="18" rx="3" fill="#312e81"/>
+                <text x="128" y="46" text-anchor="middle" fill="#c7d2fe" font-family="monospace" font-size="8" font-weight="bold">VPC: 10.10.0.0/16 (BigData Cluster)</text>
+
+                <!-- ================= SUBNET 1: COMPUTE SUBNET (TOP HALF) ================= -->
+                <rect x="28" y="60" width="670" height="145" rx="6" fill="#0284c7" fill-opacity="0.04" stroke="#0284c7" stroke-width="1"/>
+                <rect x="36" y="52" width="190" height="16" rx="3" fill="#0369a1"/>
+                <text x="131" y="63" text-anchor="middle" fill="#e0f2fe" font-family="monospace" font-size="7.5" font-weight="bold">Compute Subnet: 10.10.20.0/24 (NIC eth0)</text>
+
+                <!-- Node 1: datanode Compute -->
+                <rect x="38" y="74" width="205" height="118" rx="6" fill="#0b1320" stroke="#38bdf8" stroke-width="1.2"/>
+                <rect x="46" y="82" width="24" height="24" rx="4" fill="#0284c7"/>
+                <path d="M 52 88 h 12 v 12 h -12 z M 58 88 v 12 M 52 94 h 12" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="76" y="91" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">datanode (Master)</text>
+                <text x="76" y="102" fill="#38bdf8" font-family="monospace" font-size="7.5">IP: 10.10.20.10</text>
+                <line x1="46" y1="110" x2="235" y2="110" stroke="#1e293b"/>
+                <text x="48" y="123" fill="#4ade80" font-family="monospace" font-size="7.2" font-weight="bold">HDFS NameNode 1 [ACTIVE]</text>
+                <text x="48" y="136" fill="#f59e0b" font-family="monospace" font-size="7.2" font-weight="bold">Spark Master [ACTIVE]</text>
+                <text x="48" y="149" fill="#94a3b8" font-family="monospace" font-size="6.8">• WebUI: http://10.10.20.10:9870</text>
+                <text x="48" y="161" fill="#94a3b8" font-family="monospace" font-size="6.8">• Master RPC: :7077 • ZKFC Active</text>
+                <rect x="46" y="168" width="60" height="12" rx="2" fill="#14532d"/>
+                <text x="76" y="177" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="6.5" font-weight="bold">STATE: LEADER</text>
+
+                <!-- Node 2: workernode1 Compute -->
+                <rect x="260" y="74" width="205" height="118" rx="6" fill="#0b1320" stroke="#f59e0b" stroke-width="1.2"/>
+                <rect x="268" y="82" width="24" height="24" rx="4" fill="#d97706"/>
+                <path d="M 274 88 h 12 v 12 h -12 z M 280 88 v 12 M 274 94 h 12" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="298" y="91" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">workernode1 (Worker 1)</text>
+                <text x="298" y="102" fill="#38bdf8" font-family="monospace" font-size="7.5">IP: 10.10.20.11</text>
+                <line x1="268" y1="110" x2="457" y2="110" stroke="#1e293b"/>
+                <text x="270" y="123" fill="#fde68a" font-family="monospace" font-size="7.2" font-weight="bold">HDFS NameNode 2 [STANDBY]</text>
+                <text x="270" y="136" fill="#fde68a" font-family="monospace" font-size="7.2" font-weight="bold">Spark Master [STANDBY]</text>
+                <text x="270" y="149" fill="#94a3b8" font-family="monospace" font-size="6.8">• Auto Failover via ZKFC in &lt;3s</text>
+                <text x="270" y="161" fill="#38bdf8" font-family="monospace" font-size="6.8">• Spark Worker 1 (8 Cores, 16G)</text>
+                <rect x="268" y="168" width="70" height="12" rx="2" fill="#78350f"/>
+                <text x="303" y="177" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="6.5" font-weight="bold">STATE: STANDBY</text>
+
+                <!-- Node 3: workernode2 Compute -->
+                <rect x="482" y="74" width="205" height="118" rx="6" fill="#0b1320" stroke="#6366f1" stroke-width="1.2"/>
+                <rect x="490" y="82" width="24" height="24" rx="4" fill="#4f46e5"/>
+                <path d="M 496 88 h 12 v 12 h -12 z M 502 88 v 12 M 496 94 h 12" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="520" y="91" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">workernode2 (Worker 2)</text>
+                <text x="520" y="102" fill="#38bdf8" font-family="monospace" font-size="7.5">IP: 10.10.20.12</text>
+                <line x1="490" y1="110" x2="679" y2="110" stroke="#1e293b"/>
+                <text x="492" y="123" fill="#818cf8" font-family="monospace" font-size="7.2" font-weight="bold">Compute Executor Node</text>
+                <text x="492" y="136" fill="#cbd5e1" font-family="monospace" font-size="7.2">YARN NodeManager</text>
+                <text x="492" y="149" fill="#94a3b8" font-family="monospace" font-size="6.8">• Spark Worker 2 (8 Cores, 16G)</text>
+                <text x="492" y="161" fill="#94a3b8" font-family="monospace" font-size="6.8">• Shuffle Service &amp; Local Disk Cache</text>
+                <rect x="490" y="168" width="60" height="12" rx="2" fill="#312e81"/>
+                <text x="520" y="177" text-anchor="middle" fill="#c7d2fe" font-family="monospace" font-size="6.5" font-weight="bold">EXECUTOR</text>
+
+                <!-- ================= SUBNET 2: STORAGE SUBNET (BOTTOM HALF - AIR-GAPPED) ================= -->
+                <rect x="28" y="220" width="670" height="156" rx="6" fill="#4f46e5" fill-opacity="0.04" stroke="#4f46e5" stroke-width="1"/>
+                <rect x="36" y="212" width="220" height="16" rx="3" fill="#312e81"/>
+                <text x="146" y="223" text-anchor="middle" fill="#e0e7ff" font-family="monospace" font-size="7.5" font-weight="bold">Storage Subnet: 10.10.30.0/24 (NIC eth1 - Air-Gapped)</text>
+
+                <!-- Storage Node 1 -->
+                <rect x="38" y="236" width="205" height="128" rx="6" fill="#080c18" stroke="#312e81" stroke-width="1"/>
+                <text x="48" y="252" fill="#a5b4fc" font-family="monospace" font-size="8" font-weight="bold">Storage: 10.10.30.10</text>
+                <line x1="46" y1="258" x2="235" y2="258" stroke="#1e293b"/>
+                <text x="48" y="272" fill="#cbd5e1" font-family="monospace" font-size="7.2">JournalNode 1 (:8485)</text>
+                <text x="48" y="285" fill="#cbd5e1" font-family="monospace" font-size="7.2">ZooKeeper Peer 1 (:2181)</text>
+                <text x="48" y="298" fill="#38bdf8" font-family="monospace" font-size="7.2">DataNode 1 Block Pool (:9866)</text>
+                <rect x="46" y="306" width="189" height="46" rx="3" fill="#030712" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="52" y="320" fill="#f59e0b" font-family="monospace" font-size="6.8" font-weight="bold">JN QUORUM PARTICIPANT 1/3</text>
+                <text x="52" y="331" fill="#94a3b8" font-family="monospace" font-size="6.2">Edits Log Sync from Active NN1</text>
+                <text x="52" y="342" fill="#4ade80" font-family="monospace" font-size="6.2">2/3 Majority Paxos Consensus</text>
+
+                <!-- Storage Node 2 -->
+                <rect x="260" y="236" width="205" height="128" rx="6" fill="#080c18" stroke="#312e81" stroke-width="1"/>
+                <text x="270" y="252" fill="#a5b4fc" font-family="monospace" font-size="8" font-weight="bold">Storage: 10.10.30.11</text>
+                <line x1="268" y1="258" x2="457" y2="258" stroke="#1e293b"/>
+                <text x="270" y="272" fill="#cbd5e1" font-family="monospace" font-size="7.2">JournalNode 2 (:8485)</text>
+                <text x="270" y="285" fill="#cbd5e1" font-family="monospace" font-size="7.2">ZooKeeper Peer 2 (:2181)</text>
+                <text x="270" y="298" fill="#38bdf8" font-family="monospace" font-size="7.2">DataNode 2 Block Pool (:9866)</text>
+                <rect x="268" y="306" width="189" height="46" rx="3" fill="#030712" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="274" y="320" fill="#c084fc" font-family="monospace" font-size="6.8" font-weight="bold">ZK LEADER ELECTION LOCK</text>
+                <text x="274" y="331" fill="#94a3b8" font-family="monospace" font-size="6.2">ZKFC Ephemeral Active Node</text>
+                <text x="274" y="342" fill="#4ade80" font-family="monospace" font-size="6.2">Automated Split-Brain Fencing</text>
+
+                <!-- Storage Node 3 -->
+                <rect x="482" y="236" width="205" height="128" rx="6" fill="#080c18" stroke="#312e81" stroke-width="1"/>
+                <text x="492" y="252" fill="#a5b4fc" font-family="monospace" font-size="8" font-weight="bold">Storage: 10.10.30.12</text>
+                <line x1="490" y1="258" x2="679" y2="258" stroke="#1e293b"/>
+                <text x="492" y="272" fill="#cbd5e1" font-family="monospace" font-size="7.2">JournalNode 3 (:8485)</text>
+                <text x="492" y="285" fill="#cbd5e1" font-family="monospace" font-size="7.2">ZooKeeper Peer 3 (:2181)</text>
+                <text x="492" y="298" fill="#38bdf8" font-family="monospace" font-size="7.2">DataNode 3 Block Pool (:9866)</text>
+                <rect x="490" y="306" width="189" height="46" rx="3" fill="#030712" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="496" y="320" fill="#38bdf8" font-family="monospace" font-size="6.8" font-weight="bold">3X BLOCK REPLICATION QUORUM</text>
+                <text x="496" y="331" fill="#94a3b8" font-family="monospace" font-size="6.2">128MB HDFS Block Placement</text>
+                <text x="496" y="342" fill="#4ade80" font-family="monospace" font-size="6.2">Rack-Aware Tolerant Storage</text>
+
+                <!-- ================= RIGHT COLUMN: L4 BOUNDARY & ORACLE RAC TARGET ================= -->
+                <rect x="715" y="60" width="175" height="316" rx="6" fill="#180b0b" stroke="#ef4444" stroke-width="1"/>
+                <rect x="723" y="52" width="140" height="16" rx="3" fill="#991b1b"/>
+                <text x="793" y="63" text-anchor="middle" fill="#fee2e2" font-family="monospace" font-size="7.5" font-weight="bold">EGRESS TARGET: ORACLE</text>
+
+                <!-- Oracle SCAN Gateway -->
+                <rect x="725" y="80" width="155" height="98" rx="6" fill="#1e1205" stroke="#f59e0b" stroke-width="1.2"/>
+                <rect x="733" y="88" width="24" height="24" rx="4" fill="#d97706"/>
+                <circle cx="745" cy="100" r="7" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+                <text x="763" y="97" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">ORACLE RAC SCAN</text>
+                <text x="763" y="108" fill="#fde68a" font-family="monospace" font-size="7">10.10.50.30:1521</text>
+                <line x1="733" y1="116" x2="870" y2="116" stroke="#78350f"/>
+                <text x="735" y="129" fill="#cbd5e1" font-family="monospace" font-size="7">Spark JDBC Direct Query</text>
+                <text x="735" y="142" fill="#4ade80" font-family="monospace" font-size="7">Latency: 0.01s Verified</text>
+                <rect x="733" y="149" width="85" height="12" rx="2" fill="#14532d"/>
+                <text x="775" y="158" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="6" font-weight="bold">RULE: F-01 PASS</text>
+
+                <!-- Zero-Trust L4 Rules -->
+                <rect x="725" y="190" width="155" height="85" rx="6" fill="#240707" stroke="#dc2626" stroke-width="1"/>
+                <text x="735" y="206" fill="#f87171" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">L4 DROP AUDIT</text>
+                <line x1="733" y1="212" x2="870" y2="212" stroke="#7f1d1d"/>
+                <text x="735" y="225" fill="#fecaca" font-family="monospace" font-size="6.8">✗ SSH :22 -> TIMEOUT</text>
+                <text x="735" y="238" fill="#fecaca" font-family="monospace" font-size="6.8">✗ Direct Node IPs -> DROP</text>
+                <text x="735" y="251" fill="#fecaca" font-family="monospace" font-size="6.8">✗ Storage Subnet -> 100% DROP</text>
+                <text x="735" y="264" fill="#a1a1aa" font-family="monospace" font-size="6.5">State: ESTABLISHED,RELATED</text>
+
+                <!-- Air-gap Note -->
+                <rect x="725" y="285" width="155" height="80" rx="6" fill="#080d18" stroke="#4338ca" stroke-width="1"/>
+                <text x="802" y="303" text-anchor="middle" fill="#818cf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">AIR-GAP ISOLATION</text>
+                <text x="802" y="318" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="6.8">Storage 10.10.30.0/24</text>
+                <text x="802" y="331" text-anchor="middle" fill="#f87171" font-family="monospace" font-size="6.8">No default gateway on eth1</text>
+                <text x="802" y="344" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5">Zero Database Routing</text>
+
+                <!-- NUMBERED FLOW BADGES -->
+                <circle cx="140" cy="198" r="8" fill="#0284c7"/>
+                <text x="140" y="201" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">1</text>
+
+                <circle cx="362" cy="198" r="8" fill="#f59e0b"/>
+                <text x="362" y="201" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">2</text>
+
+                <circle cx="584" cy="198" r="8" fill="#6366f1"/>
+                <text x="584" y="201" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">3</text>
+
+                <path d="M 687 133 H 725" stroke="#f59e0b" stroke-width="2" marker-end="url(#aws-arrow-amber2)"/>
+                <circle cx="706" cy="123" r="8" fill="#f59e0b"/>
+                <text x="706" y="126" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">4</text>
+              </svg>
+            )}
+
+            {project.id === "zero-downtime-cdc" && (
+              <svg class="w-full h-auto max-h-[340px]" viewBox="0 0 920 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="aws-grid-cdc" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <circle cx="12" cy="12" r="0.75" fill="#334155" opacity="0.3"/>
+                  </pattern>
+                  <marker id="aws-arrow-flow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+                  </marker>
+                </defs>
+
+                <rect width="920" height="400" fill="#070a12"/>
+                <rect width="920" height="400" fill="url(#aws-grid-cdc)"/>
+
+                <rect x="16" y="10" width="888" height="24" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+                <text x="28" y="26" fill="#e7157b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="bold">AWS REFERENCE ARCHITECTURE: ZERO-DOWNTIME CDC TO APACHE ICEBERG</text>
+                <text x="590" y="26" fill="#94a3b8" font-family="monospace" font-size="8.5">Event-Driven Pipeline • Schema Governance • SCD Type 2 Table</text>
+                <text x="892" y="26" text-anchor="end" fill="#10b981" font-family="monospace" font-size="8.5" font-weight="bold">LATENCY: &lt; 5 SEC</text>
+
+                <!-- PIPELINE STAGES (LEFT TO RIGHT AWS PATTERN) -->
+
+                <!-- STAGE 1: SOURCE OLTP -->
+                <rect x="20" y="60" width="160" height="316" rx="6" fill="#081422" stroke="#0284c7" stroke-width="1"/>
+                <rect x="28" y="52" width="115" height="16" rx="3" fill="#0369a1"/>
+                <text x="85" y="63" text-anchor="middle" fill="#e0f2fe" font-family="monospace" font-size="7.5" font-weight="bold">1. Source OLTP Tier</text>
+
+                <rect x="32" y="80" width="136" height="110" rx="6" fill="#0c1a2d" stroke="#38bdf8" stroke-width="1.2"/>
+                <circle cx="100" cy="108" r="16" fill="#0284c7"/>
+                <path d="M 92 108 h 16 M 100 100 v 16" stroke="#ffffff" stroke-width="1.6"/>
+                <text x="100" y="136" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">PostgreSQL 15</text>
+                <text x="100" y="148" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="7.5">WAL (Logical Rep)</text>
+                <text x="100" y="160" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7">Plugin: pgoutput</text>
+                <text x="100" y="172" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="6.5">Zero Table Locking</text>
+
+                <rect x="32" y="205" width="136" height="150" rx="4" fill="#060f1a" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="40" y="222" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">DATA STREAM PROTOCOL</text>
+                <line x1="38" y1="228" x2="162" y2="228" stroke="#1e293b"/>
+                <text x="40" y="242" fill="#cbd5e1" font-family="monospace" font-size="7">Output: Tuple Stream</text>
+                <text x="40" y="255" fill="#cbd5e1" font-family="monospace" font-size="7">op: INSERT, UPDATE, DEL</text>
+                <text x="40" y="268" fill="#4ade80" font-family="monospace" font-size="7">Continuous replication</text>
+                <text x="40" y="281" fill="#94a3b8" font-family="monospace" font-size="6.5">Slot: iceberg_cdc_slot</text>
+                <rect x="38" y="325" width="80" height="12" rx="2" fill="#0369a1"/>
+                <text x="78" y="334" text-anchor="middle" fill="#e0f2fe" font-family="monospace" font-size="6.5" font-weight="bold">WAL DECODER</text>
+
+                <!-- STAGE 2: DEBEZIUM CDC -->
+                <rect x="195" y="60" width="165" height="316" rx="6" fill="#13081e" stroke="#a855f7" stroke-width="1"/>
+                <rect x="203" y="52" width="125" height="16" rx="3" fill="#581c87"/>
+                <text x="265" y="63" text-anchor="middle" fill="#f3e8ff" font-family="monospace" font-size="7.5" font-weight="bold">2. Change Capture</text>
+
+                <rect x="208" y="80" width="139" height="110" rx="6" fill="#1a0d29" stroke="#c084fc" stroke-width="1.2"/>
+                <circle cx="277" cy="108" r="16" fill="#6b21a8"/>
+                <path d="M 271 108 l 4 4 l 8 -8" fill="none" stroke="#ffffff" stroke-width="1.8"/>
+                <text x="277" y="136" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">Debezium Server</text>
+                <text x="277" y="148" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="7.5">Version 2.5.4</text>
+                <text x="277" y="160" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="7">ByteArraySerializer</text>
+                <text x="277" y="172" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5">Raw Byte Avro Stream</text>
+
+                <rect x="208" y="205" width="139" height="150" rx="4" fill="#0b0412" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="216" y="222" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">ENVELOPE METADATA</text>
+                <line x1="214" y1="228" x2="341" y2="228" stroke="#1e293b"/>
+                <text x="216" y="242" fill="#f59e0b" font-family="monospace" font-size="7">before: &#123;old_state&#125;</text>
+                <text x="216" y="255" fill="#4ade80" font-family="monospace" font-size="7">after: &#123;new_state&#125;</text>
+                <text x="216" y="268" fill="#38bdf8" font-family="monospace" font-size="7">op: c/u/d • ts_ms</text>
+                <text x="216" y="281" fill="#cbd5e1" font-family="monospace" font-size="6.8">Source LSN commit info</text>
+                <rect x="214" y="325" width="90" height="12" rx="2" fill="#3b0764"/>
+                <text x="259" y="334" text-anchor="middle" fill="#e9d5ff" font-family="monospace" font-size="6.5" font-weight="bold">NO JSON OVERHEAD</text>
+
+                <!-- STAGE 3: KAFKA & SCHEMA REGISTRY -->
+                <rect x="375" y="60" width="175" height="316" rx="6" fill="#180b12" stroke="#e7157b" stroke-width="1"/>
+                <rect x="383" y="52" width="145" height="16" rx="3" fill="#831843"/>
+                <text x="455" y="63" text-anchor="middle" fill="#fce7f3" font-family="monospace" font-size="7.5" font-weight="bold">3. Ingestion &amp; Registry</text>
+
+                <rect x="387" y="80" width="151" height="110" rx="6" fill="#200d17" stroke="#f43f5e" stroke-width="1.2"/>
+                <circle cx="462" cy="108" r="16" fill="#be123c"/>
+                <path d="M 454 104 h 16 M 454 112 h 16" stroke="#ffffff" stroke-width="1.6"/>
+                <text x="462" y="136" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">Apache Kafka</text>
+                <text x="462" y="148" text-anchor="middle" fill="#f43f5e" font-family="monospace" font-size="7.5">Topic: cdc.prod.orders</text>
+                <text x="462" y="160" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7">Partitioned by PK</text>
+                <text x="462" y="172" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5">Strict Per-Key Ordering</text>
+
+                <rect x="387" y="205" width="151" height="150" rx="4" fill="#12040b" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="395" y="222" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">CONFLUENT REGISTRY</text>
+                <line x1="393" y1="228" x2="532" y2="228" stroke="#1e293b"/>
+                <text x="395" y="242" fill="#fcd34d" font-family="monospace" font-size="7">Magic Byte: 0x00</text>
+                <text x="395" y="255" fill="#fcd34d" font-family="monospace" font-size="7">Schema ID: 4-Byte Int</text>
+                <text x="395" y="268" fill="#4ade80" font-family="monospace" font-size="7">BACKWARD Compatibility</text>
+                <text x="395" y="281" fill="#cbd5e1" font-family="monospace" font-size="6.8">Enforced Schema Contract</text>
+                <rect x="393" y="325" width="95" height="12" rx="2" fill="#831843"/>
+                <text x="440" y="334" text-anchor="middle" fill="#fbcfe8" font-family="monospace" font-size="6.5" font-weight="bold">WIRE FORMAT ID</text>
+
+                <!-- STAGE 4: SPARK STRUCTURED STREAMING -->
+                <rect x="565" y="60" width="165" height="316" rx="6" fill="#140f06" stroke="#f59e0b" stroke-width="1"/>
+                <rect x="573" y="52" width="130" height="16" rx="3" fill="#78350f"/>
+                <text x="638" y="63" text-anchor="middle" fill="#fef3c7" font-family="monospace" font-size="7.5" font-weight="bold">4. Stream Processing</text>
+
+                <rect x="577" y="80" width="141" height="110" rx="6" fill="#1f1609" stroke="#f59e0b" stroke-width="1.2"/>
+                <circle cx="647" cy="108" r="16" fill="#b45309"/>
+                <path d="M 640 114 l 7 -12 l 7 12 z" fill="none" stroke="#ffffff" stroke-width="1.6"/>
+                <text x="647" y="136" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">Apache Spark</text>
+                <text x="647" y="148" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="7.5">Structured Streaming</text>
+                <text x="647" y="160" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7">from_avro() Decoder</text>
+                <text x="647" y="172" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5">Stateful Window Deduplication</text>
+
+                <rect x="577" y="205" width="141" height="150" rx="4" fill="#0f0a04" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="585" y="222" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">SCD2 LOGIC ENGINE</text>
+                <line x1="583" y1="228" x2="712" y2="228" stroke="#1e293b"/>
+                <text x="585" y="242" fill="#38bdf8" font-family="monospace" font-size="6.8">ROW_NUMBER() OVER</text>
+                <text x="585" y="254" fill="#cbd5e1" font-family="monospace" font-size="6.8">(PARTITION BY id</text>
+                <text x="585" y="266" fill="#cbd5e1" font-family="monospace" font-size="6.8">ORDER BY ts_ms DESC)</text>
+                <text x="585" y="280" fill="#4ade80" font-family="monospace" font-size="6.8">SCD Type 2 Expiry/Insert</text>
+                <rect x="583" y="325" width="90" height="12" rx="2" fill="#78350f"/>
+                <text x="628" y="334" text-anchor="middle" fill="#fef3c7" font-family="monospace" font-size="6.5" font-weight="bold">CHECKPOINTING</text>
+
+                <!-- STAGE 5: APACHE ICEBERG LAKEHOUSE -->
+                <rect x="745" y="60" width="155" height="316" rx="6" fill="#081418" stroke="#06b6d4" stroke-width="1"/>
+                <rect x="753" y="52" width="125" height="16" rx="3" fill="#0e7490"/>
+                <text x="815" y="63" text-anchor="middle" fill="#cffafe" font-family="monospace" font-size="7.5" font-weight="bold">5. Lakehouse Table</text>
+
+                <rect x="753" y="80" width="139" height="110" rx="6" fill="#0d1e26" stroke="#06b6d4" stroke-width="1.2"/>
+                <circle cx="822" cy="108" r="16" fill="#0891b2"/>
+                <path d="M 814 104 h 16 v 8 h -16 z M 818 104 v 8" stroke="#ffffff" stroke-width="1.4"/>
+                <text x="822" y="136" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">Apache Iceberg</text>
+                <text x="822" y="148" text-anchor="middle" fill="#06b6d4" font-family="monospace" font-size="7.5">SCD Type 2 Table</text>
+                <text x="822" y="160" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7">_valid_from, _valid_to</text>
+                <text x="822" y="172" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5">ACID Snapshot Commits</text>
+
+                <rect x="753" y="205" width="139" height="150" rx="4" fill="#050e12" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="761" y="222" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">TIME-TRAVEL CAPABILITY</text>
+                <line x1="759" y1="228" x2="886" y2="228" stroke="#1e293b"/>
+                <text x="761" y="242" fill="#22d3ee" font-family="monospace" font-size="6.8">1. Table Metadata (.json)</text>
+                <text x="761" y="255" fill="#22d3ee" font-family="monospace" font-size="6.8">2. Manifest List (.avro)</text>
+                <text x="761" y="268" fill="#22d3ee" font-family="monospace" font-size="6.8">3. Manifest Files (.avro)</text>
+                <text x="761" y="281" fill="#4ade80" font-family="monospace" font-size="6.8">4. Parquet Data Files</text>
+                <rect x="759" y="325" width="95" height="12" rx="2" fill="#0e7490"/>
+                <text x="806" y="334" text-anchor="middle" fill="#cffafe" font-family="monospace" font-size="6.5" font-weight="bold">HISTORICAL AUDIT</text>
+
+                <!-- NUMBERED FLOW BADGES -->
+                <path d="M 180 135 H 195" stroke="#38bdf8" stroke-width="2" marker-end="url(#aws-arrow-flow)"/>
+                <circle cx="187" cy="125" r="7" fill="#0284c7"/>
+                <text x="187" y="128" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">1</text>
+
+                <path d="M 360 135 H 375" stroke="#38bdf8" stroke-width="2" marker-end="url(#aws-arrow-flow)"/>
+                <circle cx="367" cy="125" r="7" fill="#a855f7"/>
+                <text x="367" y="128" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">2</text>
+
+                <path d="M 550 135 H 565" stroke="#38bdf8" stroke-width="2" marker-end="url(#aws-arrow-flow)"/>
+                <circle cx="557" cy="125" r="7" fill="#e7157b"/>
+                <text x="557" y="128" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">3</text>
+
+                <path d="M 730 135 H 745" stroke="#38bdf8" stroke-width="2" marker-end="url(#aws-arrow-flow)"/>
+                <circle cx="737" cy="125" r="7" fill="#f59e0b"/>
+                <text x="737" y="128" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">4</text>
+              </svg>
+            )}
+
+            {project.id === "tinydb-rust" && (
+              <svg class="w-full h-auto max-h-[340px]" viewBox="0 0 920 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="aws-grid-tiny" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <circle cx="12" cy="12" r="0.75" fill="#334155" opacity="0.3"/>
+                  </pattern>
+                  <marker id="aws-arrow-tiny" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f97316"/>
+                  </marker>
+                </defs>
+
+                <rect width="920" height="400" fill="#070a12"/>
+                <rect width="920" height="400" fill="url(#aws-grid-tiny)"/>
+
+                <rect x="16" y="10" width="888" height="24" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+                <text x="28" y="26" fill="#f97316" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="bold">SYSTEMS ARCHITECTURE: tinydb (CMU 15-445 STORAGE ENGINE IN RUST)</text>
+                <text x="590" y="26" fill="#94a3b8" font-family="monospace" font-size="8.5">Volcano Iterator • B+Tree Index • 8KB Slotted Page • ARIES Crash Recovery</text>
+                <text x="892" y="26" text-anchor="end" fill="#10b981" font-family="monospace" font-size="8.5" font-weight="bold">38/38 TESTS PASS</text>
+
+                <!-- 5 TIERS LAYOUT (LEFT TO RIGHT) -->
+
+                <!-- TIER 1: FRONTEND -->
+                <rect x="20" y="60" width="160" height="316" rx="6" fill="#140c06" stroke="#ea580c" stroke-width="1"/>
+                <rect x="28" y="52" width="125" height="16" rx="3" fill="#7c2d12"/>
+                <text x="90" y="63" text-anchor="middle" fill="#ffedd5" font-family="monospace" font-size="7.5" font-weight="bold">1. SQL Parser AST</text>
+
+                <rect x="32" y="80" width="136" height="110" rx="6" fill="#1e1008" stroke="#f97316" stroke-width="1.2"/>
+                <circle cx="100" cy="108" r="16" fill="#9a3412"/>
+                <text x="100" y="113" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="14" font-weight="bold">R</text>
+                <text x="100" y="136" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">Terminal REPL</text>
+                <text x="100" y="148" text-anchor="middle" fill="#fdba74" font-family="monospace" font-size="7.5">DFA Tokenizer</text>
+                <text x="100" y="160" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7">Handcrafted Parser</text>
+                <text x="100" y="172" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5">AST Generation</text>
+
+                <rect x="32" y="205" width="136" height="150" rx="4" fill="#0c0703" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="40" y="222" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">VOLCANO ITERATOR</text>
+                <line x1="38" y1="228" x2="162" y2="228" stroke="#1e293b"/>
+                <text x="40" y="242" fill="#fed7aa" font-family="monospace" font-size="7">init() -> Result&lt;()&gt;</text>
+                <text x="40" y="255" fill="#4ade80" font-family="monospace" font-size="7">next() -> Option&lt;Tuple&gt;</text>
+                <text x="40" y="268" fill="#fed7aa" font-family="monospace" font-size="7">close() -> Result&lt;()&gt;</text>
+                <text x="40" y="281" fill="#cbd5e1" font-family="monospace" font-size="6.8">SeqScan, IndexScan</text>
+                <rect x="38" y="325" width="85" height="12" rx="2" fill="#7c2d12"/>
+                <text x="80" y="334" text-anchor="middle" fill="#ffedd5" font-family="monospace" font-size="6.5" font-weight="bold">PIPELINED TUPLE</text>
+
+                <!-- TIER 2: B+TREE INDEXING -->
+                <rect x="195" y="60" width="165" height="316" rx="6" fill="#081422" stroke="#0284c7" stroke-width="1"/>
+                <rect x="203" y="52" width="125" height="16" rx="3" fill="#0369a1"/>
+                <text x="265" y="63" text-anchor="middle" fill="#e0f2fe" font-family="monospace" font-size="7.5" font-weight="bold">2. B+Tree Indexing</text>
+
+                <rect x="208" y="80" width="139" height="110" rx="6" fill="#0b1c30" stroke="#38bdf8" stroke-width="1.2"/>
+                <rect x="262" y="94" width="30" height="14" rx="2" fill="#0284c7"/>
+                <text x="277" y="104" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="7" font-weight="bold">ROOT</text>
+                <path d="M 270 108 L 245 120 M 284 108 L 309 120" stroke="#38bdf8" stroke-width="1"/>
+                <rect x="235" y="120" width="22" height="12" rx="2" fill="#0369a1"/>
+                <rect x="297" y="120" width="22" height="12" rx="2" fill="#0369a1"/>
+                <path d="M 246 132 L 235 142 M 246 132 L 257 142 M 308 132 L 297 142 M 308 132 L 319 142" stroke="#38bdf8" stroke-width="0.8"/>
+                <rect x="228" y="142" width="15" height="10" rx="1" fill="#065f46"/>
+                <rect x="250" y="142" width="15" height="10" rx="1" fill="#065f46"/>
+                <rect x="290" y="142" width="15" height="10" rx="1" fill="#065f46"/>
+                <rect x="312" y="142" width="15" height="10" rx="1" fill="#065f46"/>
+                <line x1="243" y1="147" x2="250" y2="147" stroke="#10b981" stroke-width="1"/>
+                <line x1="265" y1="147" x2="290" y2="147" stroke="#10b981" stroke-width="1"/>
+                <line x1="305" y1="147" x2="312" y2="147" stroke="#10b981" stroke-width="1"/>
+                <text x="277" y="164" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5">Doubly-Linked Leaves</text>
+                <text x="277" y="176" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="6.5">O(log N) Point • O(K) Range</text>
+
+                <rect x="208" y="205" width="139" height="150" rx="4" fill="#050e18" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="216" y="222" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">CONCURRENCY &amp; SPLIT</text>
+                <line x1="214" y1="228" x2="341" y2="228" stroke="#1e293b"/>
+                <text x="216" y="242" fill="#cbd5e1" font-family="monospace" font-size="7">• Split Node: Order M/2</text>
+                <text x="216" y="255" fill="#cbd5e1" font-family="monospace" font-size="7">• Sibling Key Borrowing</text>
+                <text x="216" y="268" fill="#cbd5e1" font-family="monospace" font-size="7">• Latch Crabbing Protocol</text>
+                <text x="216" y="281" fill="#4ade80" font-family="monospace" font-size="6.8">RecordID: (page_id, slot_id)</text>
+                <rect x="214" y="325" width="85" height="12" rx="2" fill="#0369a1"/>
+                <text x="256" y="334" text-anchor="middle" fill="#e0f2fe" font-family="monospace" font-size="6.5" font-weight="bold">INDEX CONSISTENT</text>
+
+                <!-- TIER 3: BUFFER POOL -->
+                <rect x="375" y="60" width="175" height="316" rx="6" fill="#081412" stroke="#10b981" stroke-width="1"/>
+                <rect x="383" y="52" width="140" height="16" rx="3" fill="#064e3b"/>
+                <text x="453" y="63" text-anchor="middle" fill="#d1fae5" font-family="monospace" font-size="7.5" font-weight="bold">3. Buffer Pool Manager</text>
+
+                <rect x="387" y="80" width="151" height="110" rx="6" fill="#0c1f1a" stroke="#10b981" stroke-width="1.2"/>
+                <circle cx="462" cy="108" r="16" fill="#047857"/>
+                <path d="M 454 108 h 16 M 462 100 v 16" stroke="#ffffff" stroke-width="1.6"/>
+                <text x="462" y="136" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">Buffer Pool</text>
+                <text x="462" y="148" text-anchor="middle" fill="#6ee7b7" font-family="monospace" font-size="7.5">Clock / LRU Policy</text>
+                <text x="462" y="160" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7">Pin Count Tracking</text>
+                <text x="462" y="172" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5">Dirty Page Synchronization</text>
+
+                <rect x="387" y="205" width="151" height="150" rx="4" fill="#04100c" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="395" y="222" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">FRAME TABLE ALLOCATION</text>
+                <line x1="393" y1="228" x2="532" y2="228" stroke="#1e293b"/>
+                <text x="395" y="242" fill="#6ee7b7" font-family="monospace" font-size="6.8">Frame 0: [Page 42, Pin 2]</text>
+                <text x="395" y="255" fill="#6ee7b7" font-family="monospace" font-size="6.8">Frame 1: [Page 10, Evict]</text>
+                <text x="395" y="268" fill="#6ee7b7" font-family="monospace" font-size="6.8">Frame 2: [Page 88, Pin 1]</text>
+                <text x="395" y="285" fill="#fcd34d" font-family="monospace" font-size="6.5">Flush-Before-WAL Invariant</text>
+                <rect x="393" y="325" width="85" height="12" rx="2" fill="#064e3b"/>
+                <text x="435" y="334" text-anchor="middle" fill="#a7f3d0" font-family="monospace" font-size="6.5" font-weight="bold">FRAME TABLE</text>
+
+                <!-- TIER 4: 8KB SLOTTED PAGE -->
+                <rect x="565" y="60" width="165" height="316" rx="6" fill="#0d111a" stroke="#6366f1" stroke-width="1"/>
+                <rect x="573" y="52" width="145" height="16" rx="3" fill="#312e81"/>
+                <text x="645" y="63" text-anchor="middle" fill="#e0e7ff" font-family="monospace" font-size="7.5" font-weight="bold">4. 8KB Slotted Page</text>
+
+                <rect x="577" y="80" width="141" height="275" rx="6" fill="#080c14" stroke="#4f46e5" stroke-width="1"/>
+                <!-- Page Header -->
+                <rect x="585" y="92" width="125" height="34" rx="3" fill="#1e1b4b" stroke="#6366f1" stroke-width="0.8"/>
+                <text x="647" y="105" text-anchor="middle" fill="#c7d2fe" font-family="monospace" font-size="7" font-weight="bold">HEADER (24B)</text>
+                <text x="647" y="117" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="6.5">LSN • FreeSpacePtr</text>
+
+                <!-- Slot Directory -->
+                <rect x="585" y="132" width="125" height="42" rx="3" fill="#172554" stroke="#3b82f6" stroke-width="0.8"/>
+                <text x="647" y="146" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="6.8" font-weight="bold">SLOT ARRAY (↓)</text>
+                <text x="647" y="157" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="6.2">Slot [Offset, Length]</text>
+                <text x="647" y="167" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.2">Pointers to Tuples</text>
+
+                <!-- Free Space -->
+                <rect x="585" y="180" width="125" height="45" rx="3" fill="#0f172a" stroke="#334155" stroke-dasharray="3 2"/>
+                <text x="647" y="205" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="6.8">FREE SPACE</text>
+
+                <!-- Tuple Payload -->
+                <rect x="585" y="232" width="125" height="55" rx="3" fill="#2d1507" stroke="#ea580c" stroke-width="0.8"/>
+                <text x="647" y="246" text-anchor="middle" fill="#fdba74" font-family="monospace" font-size="6.8" font-weight="bold">TUPLES (↑)</text>
+                <text x="647" y="258" text-anchor="middle" fill="#fed7aa" font-family="monospace" font-size="6.2">Variable-length payload</text>
+                <text x="647" y="269" text-anchor="middle" fill="#fed7aa" font-family="monospace" font-size="6.2">Compaction on delete</text>
+
+                <rect x="585" y="295" width="125" height="48" rx="3" fill="#141824"/>
+                <text x="647" y="312" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="6.5">8192 Byte Alignment</text>
+                <text x="647" y="324" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5">O_DIRECT Disk I/O</text>
+
+                <!-- TIER 5: ARIES WAL -->
+                <rect x="745" y="60" width="155" height="316" rx="6" fill="#160808" stroke="#ef4444" stroke-width="1"/>
+                <rect x="753" y="52" width="125" height="16" rx="3" fill="#7f1d1d"/>
+                <text x="815" y="63" text-anchor="middle" fill="#fee2e2" font-family="monospace" font-size="7.5" font-weight="bold">5. WAL &amp; ARIES</text>
+
+                <rect x="753" y="80" width="139" height="110" rx="6" fill="#1c0a0a" stroke="#dc2626" stroke-width="1.2"/>
+                <circle cx="822" cy="108" r="16" fill="#991b1b"/>
+                <path d="M 814 104 h 16 M 814 112 h 16" stroke="#ffffff" stroke-width="1.6"/>
+                <text x="822" y="136" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">WAL Log</text>
+                <text x="822" y="148" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="7.5">Append-Only Ring</text>
+                <text x="822" y="160" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7">Strict LSN Ordering</text>
+                <text x="822" y="172" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="6.5">fsync on Commit</text>
+
+                <rect x="753" y="205" width="139" height="150" rx="4" fill="#140606" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="761" y="222" fill="#fca5a5" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">ARIES 3-PASS RECOVERY</text>
+                <line x1="759" y1="228" x2="886" y2="228" stroke="#450a0a"/>
+                <text x="761" y="242" fill="#fca5a5" font-family="monospace" font-size="7">1. ANALYSIS PASS</text>
+                <text x="761" y="254" fill="#cbd5e1" font-family="monospace" font-size="6.2">Find DPT &amp; Active Tx</text>
+                <text x="761" y="268" fill="#fde68a" font-family="monospace" font-size="7">2. REDO PASS</text>
+                <text x="761" y="280" fill="#cbd5e1" font-family="monospace" font-size="6.2">Repeat history from LSN</text>
+                <text x="761" y="294" fill="#a7f3d0" font-family="monospace" font-size="7">3. UNDO PASS</text>
+                <text x="761" y="306" fill="#cbd5e1" font-family="monospace" font-size="6.2">Rollback losers + CLR</text>
+                <rect x="759" y="325" width="95" height="12" rx="2" fill="#7f1d1d"/>
+                <text x="806" y="334" text-anchor="middle" fill="#fee2e2" font-family="monospace" font-size="6.5" font-weight="bold">CRASH RECOVERY</text>
+
+                <!-- NUMBERED FLOW BADGES -->
+                <path d="M 180 135 H 195" stroke="#f97316" stroke-width="2" marker-end="url(#aws-arrow-tiny)"/>
+                <circle cx="187" cy="125" r="7" fill="#ea580c"/>
+                <text x="187" y="128" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">1</text>
+
+                <path d="M 360 135 H 375" stroke="#f97316" stroke-width="2" marker-end="url(#aws-arrow-tiny)"/>
+                <circle cx="367" cy="125" r="7" fill="#0284c7"/>
+                <text x="367" y="128" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">2</text>
+
+                <path d="M 550 135 H 565" stroke="#f97316" stroke-width="2" marker-end="url(#aws-arrow-tiny)"/>
+                <circle cx="557" cy="125" r="7" fill="#10b981"/>
+                <text x="557" y="128" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">3</text>
+
+                <path d="M 730 135 H 745" stroke="#f97316" stroke-width="2" marker-end="url(#aws-arrow-tiny)"/>
+                <circle cx="737" cy="125" r="7" fill="#6366f1"/>
+                <text x="737" y="128" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="bold">4</text>
+              </svg>
+            )}
+          </div>
+
+          <!-- Bottom Summary & Action Bar -->
+          <div class="p-6 border-t border-[#181a24] bg-[#07080d] space-y-3.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] font-mono text-[#ffbd39] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#ffbd39]/10 border border-[#ffbd39]/20">
+                {project.category}
+              </span>
+              <span class="text-xs font-mono text-gray-500">
+                {project.timeline}
+              </span>
+            </div>
+
+            <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-[#ffbd39] transition">
+              {project.title}
+            </h3>
+
+            <p class="text-xs sm:text-sm text-gray-400 line-clamp-2 leading-relaxed">
+              {project.summary}
+            </p>
+
+            <div class="pt-2 flex items-center justify-between border-t border-[#151722]">
+              <span class="text-xs font-mono text-[#ffbd39] flex items-center gap-1.5 font-bold group-hover:translate-x-1.5 transition duration-200">
+                <span>Phóng to sơ đồ kiến trúc &amp; Phân tích lỗi</span>
+                <span>→</span>
+              </span>
+
+              <div class="flex items-center gap-3 text-xs font-mono">
+                {project.youtubeUrl && (
+                  <span class="text-red-400 font-semibold hover:underline">Demo Video</span>
+                )}
+                {project.githubUrl && (
+                  <span class="text-gray-400 font-semibold hover:underline">GitHub ↗</span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Full Project Modals with Context, Missions, Results, Tech Environment -->
+  {PROJECTS.map(project => (
+    <div id={`modal-${project.id}`} class="project-modal" role="dialog" aria-modal="true">
+      <div class="project-modal-content p-6 sm:p-10 text-gray-200">
+        <!-- Close Button -->
+        <button
+          type="button"
+          data-close-id={`modal-${project.id}`}
+          class="close-modal-btn absolute top-5 right-6 text-gray-400 hover:text-white text-3xl font-light cursor-pointer leading-none z-20"
+          aria-label="Close"
+        >
+          &times;
+        </button>
+
+        <!-- Modal Header -->
+        <div class="border-b border-[#222222] pb-5 mb-6">
+          <span class="text-xs font-mono uppercase tracking-widest text-[#ffbd39] font-bold block mb-1">
+            {project.category}
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+            {project.title}
+          </h2>
+          <span class="text-xs font-mono text-gray-400 mt-1 block">
+            Năm triển khai: {project.timeline}
+          </span>
+        </div>
+
+        <!-- 4 Modal Sections -->
+        <div class="space-y-6 text-sm max-h-[62vh] overflow-y-auto pr-2">
+          <!-- 1. Context -->
+          <div>
+            <h4 class="text-xs font-mono uppercase tracking-widest text-[#ffbd39] font-bold mb-2">
+              1. Bối Cảnh &amp; Mục Tiêu Hệ Thống (Context)
+            </h4>
+            <p class="text-gray-300 leading-relaxed bg-[#0c0e14] p-4 rounded-lg border border-[#1d202b]">
+              {project.context}
+            </p>
+          </div>
+
+          <!-- 2. Missions -->
+          <div>
+            <h4 class="text-xs font-mono uppercase tracking-widest text-[#ffbd39] font-bold mb-2">
+              2. Thiết Kế Kiến Trúc &amp; Phân Vùng Hệ Thống (Missions)
+            </h4>
+            <ul class="space-y-2 list-none pl-0">
+              {project.missions.map(mission => (
+                <li class="flex items-start gap-2 text-gray-300">
+                  <span class="text-[#ffbd39] font-bold mt-0.5">•</span>
+                  <span>{mission}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Real Troubleshooting Challenges -->
+          {project.challenges && project.challenges.length > 0 && (
+            <div>
+              <h4 class="text-xs font-mono uppercase tracking-widest text-emerald-400 font-bold mb-2">
+                3. Xử Lý Sự Cố Thực Tế Tận Gốc (Real-World Root Cause Fixes)
+              </h4>
+              <div class="space-y-2.5">
+                {project.challenges.map(c => (
+                  <div class="p-3.5 rounded-lg bg-[#0e1017] border border-[#1f2330]">
+                    <p class="text-xs font-mono font-semibold text-rose-400 mb-1">
+                      [LỖI THỰC TẾ]: {c.problem}
+                    </p>
+                    <p class="text-xs text-gray-300">
+                      <strong class="text-emerald-400">[NGUYÊN NHÂN &amp; KHẮC PHỤC]:</strong> {c.solution}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- 4. Results -->
+          <div>
+            <h4 class="text-xs font-mono uppercase tracking-widest text-[#ffbd39] font-bold mb-2">
+              4. Kết Quả Đo Kiểm &amp; Đảm Bảo Độ Sẵn Sàng (Results)
+            </h4>
+            <ul class="space-y-2 list-none pl-0">
+              {project.results.map(result => (
+                <li class="flex items-start gap-2 text-gray-300">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>{result}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- 5. Technical Environment -->
+          <div>
+            <h4 class="text-xs font-mono uppercase tracking-widest text-[#ffbd39] font-bold mb-2">
+              5. Môi Trường Công Nghệ (Technical Environment)
+            </h4>
+            <div class="p-4 rounded-lg bg-[#07080c] border border-[#1a1c24] font-mono text-xs text-gray-300 leading-relaxed">
+              {project.techEnv.join(" • ")}
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="border-t border-[#222222] pt-6 mt-8 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-5 py-2.5 rounded-full bg-[#ffbd39] text-black font-bold text-xs uppercase tracking-wider hover:bg-white transition"
+              >
+                Mã Nguồn GitHub ↗
+              </a>
+            )}
+            {project.youtubeUrl && (
+              <a
+                href={project.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-5 py-2.5 rounded-full border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white font-bold text-xs uppercase tracking-wider transition"
+              >
+                Video Thực Nghiệm ↗
+              </a>
+            )}
+          </div>
+          <button
+            type="button"
+            data-close-id={`modal-${project.id}`}
+            class="close-modal-btn px-6 py-2.5 rounded-full border border-gray-700 text-gray-300 hover:border-white hover:text-white text-xs uppercase tracking-wider font-bold transition cursor-pointer"
+          >
+            Đóng Cửa Sổ
+          </button>
+        </div>
+      </div>
+    </div>
+  ))}
+</section>
+
+<script>
+  // Open modal on project click
+  document.querySelectorAll(".project-card").forEach(item => {
+    item.addEventListener("click", () => {
+      const pId = item.getAttribute("data-project-id");
+      const modal = document.getElementById(`modal-${pId}`);
+      if (modal) {
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+    });
+  });
+
+  // Close modal buttons
+  document.querySelectorAll(".close-modal-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetModalId = btn.getAttribute("data-close-id");
+      const modal = document.getElementById(targetModalId || "");
+      if (modal) {
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+    });
+  });
+
+  // Click outside to close
+  window.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement)?.classList.contains("project-modal")) {
+      (e.target as HTMLElement).classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  });
+
+  // Escape key to close
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      document.querySelectorAll(".project-modal.active").forEach(m => {
+        m.classList.remove("active");
+      });
+      document.body.style.overflow = "";
+    }
+  });
+</script>

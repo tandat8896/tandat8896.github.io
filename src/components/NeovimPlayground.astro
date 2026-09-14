@@ -1,0 +1,70 @@
+<details class="vim-playground">
+  <summary>❯ nvim portfolio.py <span>Mở editor chơi thử ↗</span></summary>
+  <div class="vim-toolbar"><span>Catppuccin Mocha · keymap của Đạt</span><button type="button" data-vim-insert>i · sửa</button><button type="button" data-vim-save>Ctrl+s · lưu</button><button type="button" data-vim-files>Space ff</button></div>
+  <div class="vim-picker" hidden><span>Find files / demo buffers</span><button type="button" data-vim-file="portfolio.py">portfolio.py</button><button type="button" data-vim-file="solar.py">solar.py</button></div>
+  <div class="vim-buffer"><pre class="vim-lines" aria-hidden="true"></pre><textarea aria-label="Editor mô phỏng Vim. i để sửa, Escape về Normal, Tab để rời editor." spellcheck="false" autocapitalize="off" wrap="off" rows="7" readonly maxlength="5000"></textarea></div>
+  <form class="vim-command" hidden><label for="vim-command">:</label><input id="vim-command" aria-label="Lệnh Vim: w, q hoặc wq" autocomplete="off" maxlength="20" /><button type="submit">↵</button></form>
+  <div class="vim-status"><span data-vim-mode>NORMAL</span><span data-vim-name>portfolio.py</span><span data-vim-position>1:1</span></div>
+  <p class="vim-hint" aria-live="polite">i / Esc · h j k l · Space n · ;; → :w / :q · Tab rời editor</p>
+  <p class="vim-note">Mô phỏng một phần keymap. Chỉ sửa buffer demo trong tab này; không chạy Python, shell hay lưu lên server.</p>
+</details>
+
+<style>
+  .vim-playground{border-top:1px solid #45475a;background:#1e1e2e;color:#cdd6f4;font:10px/1.7 'IBM Plex Mono',monospace}.vim-playground summary{padding:9px 12px;cursor:pointer;color:#a6e3a1;list-style:none}.vim-playground summary span{float:right;font-size:9px;color:#bac2de}.vim-toolbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:7px 10px;background:#181825}.vim-toolbar>span{flex:1;min-width:180px;font-size:8px;color:#a6adc8}.vim-playground button{background:#313244;border:1px solid #585b70;color:#cdd6f4;font:9px/1.7 monospace;padding:2px 6px;cursor:pointer}.vim-playground button:focus-visible,.vim-playground summary:focus-visible{outline:2px solid #f5c2e7;outline-offset:-2px}
+  .vim-buffer{display:flex;padding:10px 0}.vim-lines{margin:0;padding:0 10px;color:#ec4899;font:inherit;line-height:20px;text-align:right;overflow:hidden;max-height:140px;user-select:none}textarea{flex:1;min-width:0;width:100%;resize:vertical;background:transparent;color:#cdd6f4;border:0;outline:none;font:11px/20px monospace;caret-color:#ec4899;padding:0 10px;tab-size:2}textarea:focus{box-shadow:inset 2px 0 #ec4899}textarea[readonly]::selection{background:#f5c2e7;color:#11111b}.vim-status{display:flex;gap:12px;background:#313244;padding-right:10px;font-size:9px}.vim-status>span:first-child{background:#cba6f7;color:#11111b;padding:2px 9px;font-weight:700}.vim-status>span:last-child{margin-left:auto}.vim-hint,.vim-note{margin:0;padding:7px 12px;font-size:9px;color:#bac2de}.vim-note{padding-top:0;color:#a6adc8;font-size:8px}.vim-picker{padding:10px;border-bottom:1px solid #585b70}.vim-picker>span{display:block;color:#89b4fa;margin-bottom:5px}.vim-picker button{margin-right:8px}.vim-command{display:flex;padding:5px 10px;gap:6px}.vim-command input{background:transparent;border:0;outline:none;color:#f5c2e7;font:inherit;min-width:0;flex:1}.vim-command[hidden],.vim-picker[hidden],.vim-lines[hidden]{display:none}
+</style>
+
+<script>
+  const root = document.querySelector<HTMLDetailsElement>('.vim-playground');
+  if (root) {
+    const editor = root.querySelector('textarea')!;
+    const gutter = root.querySelector<HTMLElement>('.vim-lines')!;
+    const hint = root.querySelector<HTMLElement>('.vim-hint')!;
+    const picker = root.querySelector<HTMLElement>('.vim-picker')!;
+    const command = root.querySelector<HTMLFormElement>('.vim-command')!;
+    const commandInput = command.querySelector('input')!;
+    const buffers: Record<string, string> = { 'portfolio.py': '# Ngô Tấn Đạt / Data & AI Lead\n# This buffer is yours to explore.\n\nstack = ["Oracle", "Python", "Neovim"]\nproject = "Solar PV"\nfocus = ["GMM–IF", "Optuna", "SHAP"]\n', 'solar.py': '# Solar PV / The Outliers\n# Architecture notes, not executable code.\n\n# ETL → PostgreSQL → BI / ML marts\n# GMM–IF: anomaly flags + physical guards\n# Optuna: separate tuning + manual review\n# LightGBM → SHAP → Streamlit\n' };
+    let file = 'portfolio.py', sequence = '', lastKey = 0;
+    editor.value = buffers[file];
+    const normal = () => { editor.readOnly = true; root.querySelector('[data-vim-mode]')!.textContent = 'NORMAL'; sequence = ''; };
+    const insert = () => { editor.readOnly = false; root.querySelector('[data-vim-mode]')!.textContent = 'INSERT'; editor.focus(); };
+    const refresh = () => { gutter.textContent = editor.value.split('\n').map((_, i) => String(i + 1)).join('\n'); const before = editor.value.slice(0, editor.selectionStart); root.querySelector('[data-vim-position]')!.textContent = `${before.split('\n').length}:${before.length - before.lastIndexOf('\n')}`; };
+    const save = () => { buffers[file] = editor.value; hint.textContent = 'Đã lưu trong bộ nhớ tab — tải lại trang sẽ đặt lại buffer.'; };
+    const files = () => { picker.hidden = !picker.hidden; if (!picker.hidden) picker.querySelector('button')?.focus(); else editor.focus(); };
+    const close = () => { normal(); command.hidden = true; picker.hidden = true; root.open = false; root.querySelector('summary')?.focus(); };
+    const move = (direction: string) => {
+      const value = editor.value, at = editor.selectionStart, start = value.lastIndexOf('\n', at - 1) + 1, end = value.indexOf('\n', at);
+      const column = at - start; let next = at;
+      if (direction === 'h') next = Math.max(start, at - 1);
+      if (direction === 'l') next = Math.min(end < 0 ? value.length : end, at + 1);
+      if (direction === 'j' && end >= 0) { const after = value.indexOf('\n', end + 1); next = Math.min(end + 1 + column, after < 0 ? value.length : after); }
+      if (direction === 'k' && start > 0) next = Math.min(value.lastIndexOf('\n', start - 2) + 1 + column, start - 1);
+      editor.setSelectionRange(next, next); refresh();
+    };
+    root.querySelector('[data-vim-insert]')?.addEventListener('click', insert);
+    root.querySelector('[data-vim-save]')?.addEventListener('click', save);
+    root.querySelector('[data-vim-files]')?.addEventListener('click', files);
+    root.querySelectorAll<HTMLButtonElement>('[data-vim-file]').forEach(button => button.addEventListener('click', () => { buffers[file] = editor.value; file = button.dataset.vimFile!; editor.value = buffers[file]; root.querySelector('[data-vim-name]')!.textContent = file; picker.hidden = true; normal(); refresh(); editor.focus(); }));
+    editor.addEventListener('input', refresh); editor.addEventListener('click', refresh); editor.addEventListener('keyup', refresh);
+    editor.addEventListener('scroll', () => { gutter.scrollTop = editor.scrollTop; });
+    editor.addEventListener('keydown', event => {
+      if (event.key === 'Tab' || event.metaKey || event.altKey || event.isComposing) return;
+      if (event.key === 'Escape') { event.preventDefault(); normal(); return; }
+      if (event.ctrlKey && event.key.toLowerCase() === 's') { event.preventDefault(); save(); return; }
+      if (!editor.readOnly || event.ctrlKey) return;
+      if (event.key.length !== 1) return;
+      event.preventDefault();
+      if (Date.now() - lastKey > 1500) sequence = '';
+      lastKey = Date.now(); sequence += event.key;
+      if (sequence === ' ff') { files(); sequence = ''; }
+      else if (sequence === ' n') { gutter.hidden = !gutter.hidden; sequence = ''; }
+      else if (sequence === ';;' || sequence === ':') { command.hidden = false; commandInput.focus(); sequence = ''; }
+      else if ([' ', ' f', ';'].includes(sequence)) { hint.textContent = `Keymap: ${sequence.replace(' ', 'Space ')}…`; }
+      else { if (event.key === 'i' || event.key === 'a') { if (event.key === 'a') move('l'); insert(); } else if ('hjkl'.includes(event.key)) move(event.key); sequence = ''; }
+    });
+    command.addEventListener('submit', event => { event.preventDefault(); const value = commandInput.value.trim(); commandInput.value = ''; command.hidden = true; if (value === 'w' || value === 'wq') save(); if (value === 'q' || value === 'q!' || value === 'wq') close(); else { if (value !== 'w') hint.textContent = 'Bản mô phỏng hỗ trợ :w, :q, :wq.'; editor.focus(); } });
+    commandInput.addEventListener('keydown', event => { if (event.key === 'Escape') { command.hidden = true; commandInput.value = ''; editor.focus(); } });
+    root.addEventListener('toggle', () => { if (root.open) { normal(); refresh(); editor.focus(); } });
+    refresh();
+  }
+</script>

@@ -1,20 +1,31 @@
 ---
-import Hr from "./Hr.astro";
-import Socials from "./Socials.astro";
-
-const currentYear = new Date().getFullYear();
 ---
 
-<footer class="static w-full mt-12">
-  <Hr noPadding />
-  <div
-    class="mx-auto flex w-full max-w-6xl flex-col items-center justify-between px-6 py-6 sm:flex-row-reverse sm:py-4"
-  >
-    <Socials centered />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>Copyright &#169; {currentYear}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <span>All rights reserved.</span>
+<footer class="py-12 bg-[#000000] border-t border-[#1a1a1a] text-gray-500 text-xs text-center font-light">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+    <div class="flex items-center justify-center space-x-6 text-sm">
+      <a href="#home-section" class="text-gray-400 hover:text-[#ffbd39] transition">Home</a>
+      <a href="#about-section" class="text-gray-400 hover:text-[#ffbd39] transition">About</a>
+      <a href="#resume-section" class="text-gray-400 hover:text-[#ffbd39] transition">Resume</a>
+      <a href="#skills-section" class="text-gray-400 hover:text-[#ffbd39] transition">Skills</a>
+      <a href="#projects-section" class="text-gray-400 hover:text-[#ffbd39] transition">Projects</a>
+      <a href="#contact-section" class="text-gray-400 hover:text-[#ffbd39] transition">Contact</a>
+    </div>
+
+    <p class="font-mono text-xs text-gray-500">
+      Ngô Tấn Đạt © {new Date().getFullYear()} All rights reserved | Oracle Database Administrator &amp; Big Data Platform Engineer
+    </p>
+
+    <div>
+      <a
+        href="#home-section"
+        class="inline-block p-2 rounded-full border border-gray-800 hover:border-[#ffbd39] text-gray-400 hover:text-[#ffbd39] transition"
+        aria-label="Back to top"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+      </a>
     </div>
   </div>
 </footer>

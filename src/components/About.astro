@@ -1,0 +1,97 @@
+---
+---
+
+<section class="py-24 bg-[#000000] border-t border-[#141414] relative overflow-hidden" id="about-section">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <!-- Left: Big Vertical Photo -->
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="relative w-full max-w-md h-[460px] sm:h-[540px] rounded-lg overflow-hidden border border-[#222222] shadow-2xl group">
+          <img
+            src="/assets/profile.jpg"
+            alt="Ngô Tấn Đạt"
+            class="w-full h-full object-cover object-center filter grayscale contrast-125 group-hover:grayscale-0 transition duration-500"
+            onerror="this.src='/assets/forrest-gump-quote.webp'"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6">
+            <span class="text-xs uppercase font-mono tracking-widest text-[#ffbd39] block font-bold">
+              Oracle DBA &amp; Big Data Engineer
+            </span>
+            <span class="text-xl font-bold text-white block mt-1">
+              Ngô Tấn Đạt
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Narrative, Details & Counter -->
+      <div class="lg:col-span-7">
+        <!-- Watermark Header Section -->
+        <div class="heading-section text-left mb-8">
+          <h1 class="big !left-0 !text-left">About</h1>
+          <span class="subheading">GIỚI THIỆU BẢN THÂN</span>
+          <h2 class="mb-4">About Me</h2>
+          <p class="text-gray-300 text-sm sm:text-base leading-relaxed font-light mt-4">
+            Kỹ sư chuyên sâu về <strong>Quản trị Cơ sở dữ liệu Oracle Enterprise</strong> và <strong>Nền tảng Dữ liệu phân tán</strong>. Tự tay thiết kế, dựng và tối ưu cụm <strong>Oracle RAC 19c hai node Active-Active</strong> kết hợp <strong>Data Guard Physical Standby</strong> với cơ chế <strong>Fast-Start Failover (FSFO)</strong> trên nền tảng Oracle ASM (3 disk groups độc lập) và mạng Private Interconnect MTU 9000. Trực tiếp xử lý hàng chục sự cố thực tế từ mã lỗi ORA-, rà soát AWR/ASH reports đến tối ưu hóa Execution Plans và khóa dòng contention.
+          </p>
+          <p class="text-gray-400 text-sm leading-relaxed font-light mt-3">
+            Song song đó, tôi xây dựng các hệ sinh thái Lakehouse phân tán (Flink, Spark, Kafka, Iceberg) và tự viết <strong>Storage Engine quan hệ TinyDB bằng Rust</strong> theo chuẩn CMU 15-445 (Slotted-page 8KB, B+Tree, WAL ARIES). Toàn bộ lab, cấu hình và video thực nghiệm được công khai minh bạch trên GitHub.
+          </p>
+        </div>
+
+        <!-- Info List (Jijun Tang style) -->
+        <ul class="space-y-3 border-t border-[#1f1f1f] pt-6 text-sm">
+          <li class="flex flex-col sm:flex-row sm:items-center">
+            <span class="w-32 font-bold text-white uppercase text-xs tracking-wider">Họ &amp; Tên:</span>
+            <span class="text-gray-300 font-medium">Ngô Tấn Đạt</span>
+          </li>
+          <li class="flex flex-col sm:flex-row sm:items-center">
+            <span class="w-32 font-bold text-white uppercase text-xs tracking-wider">Khu vực:</span>
+            <span class="text-gray-300">TP. Hồ Chí Minh, Việt Nam</span>
+          </li>
+          <li class="flex flex-col sm:flex-row sm:items-center">
+            <span class="w-32 font-bold text-white uppercase text-xs tracking-wider">Email:</span>
+            <a href="mailto:tandat88963820@gmail.com" class="text-[#ffbd39] hover:underline">tandat88963820@gmail.com</a>
+          </li>
+          <li class="flex flex-col sm:flex-row sm:items-center">
+            <span class="w-32 font-bold text-white uppercase text-xs tracking-wider">Điện thoại:</span>
+            <a href="tel:0984555752" class="text-gray-300 font-mono hover:text-[#ffbd39]">0984 555 752</a>
+          </li>
+          <li class="flex flex-col sm:flex-row sm:items-center">
+            <span class="w-32 font-bold text-white uppercase text-xs tracking-wider">LinkedIn:</span>
+            <a href="https://www.linkedin.com/in/dat-tan-858549387/" target="_blank" rel="noopener noreferrer" class="text-[#ffbd39] hover:underline">
+              linkedin.com/in/dat-tan-858549387 ↗
+            </a>
+          </li>
+          <li class="flex flex-col sm:flex-row sm:items-center">
+            <span class="w-32 font-bold text-white uppercase text-xs tracking-wider">GitHub:</span>
+            <a href="https://github.com/tandat8896" target="_blank" rel="noopener noreferrer" class="text-[#ffbd39] hover:underline font-mono">
+              github.com/tandat8896 ↗
+            </a>
+          </li>
+        </ul>
+
+        <!-- Counter & CV Button -->
+        <div class="mt-8 pt-6 border-t border-[#1f1f1f] flex flex-wrap items-center gap-8">
+          <div>
+            <span class="text-4xl sm:text-5xl font-extrabold text-[#ffbd39] font-mono block">4</span>
+            <span class="text-xs uppercase tracking-wider text-gray-400 font-medium">Production-Grade Core Projects</span>
+          </div>
+          <div>
+            <span class="text-4xl sm:text-5xl font-extrabold text-[#ffbd39] font-mono block">57+</span>
+            <span class="text-xs uppercase tracking-wider text-gray-400 font-medium">Technical Guides &amp; Real Labs</span>
+          </div>
+          <div class="pt-2 sm:pt-0">
+            <a
+              href="#resume-section"
+              class="px-7 py-3 rounded-full bg-[#ffbd39] text-black font-bold text-xs uppercase tracking-widest hover:bg-white transition duration-300 inline-block shadow-md shadow-[#ffbd39]/10"
+            >
+              Xem Học Vấn &amp; CV
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

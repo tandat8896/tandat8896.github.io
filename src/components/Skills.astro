@@ -1,0 +1,130 @@
+---
+interface SkillCategory {
+  title: string;
+  categoryTag: string;
+  description: string;
+  items: { name: string; highlight?: boolean }[];
+}
+
+const SKILL_CATEGORIES: SkillCategory[] = [
+  {
+    title: "Quản Trị Cơ Sở Dữ Liệu & High Availability",
+    categoryTag: "MISSION-CRITICAL DATABASE",
+    description: "Quản trị, vận hành và bảo vệ tính sẵn sàng liên tục của các hệ thống cơ sở dữ liệu cốt lõi doanh nghiệp.",
+    items: [
+      { name: "Oracle RAC 19c (Active-Active)", highlight: true },
+      { name: "Oracle ASM (+OCRVOTE, +DATA, +FRA)", highlight: true },
+      { name: "Oracle Data Guard & Fast-Start Failover", highlight: true },
+      { name: "Flashback Database & Point-in-Time Recovery", highlight: true },
+      { name: "RMAN Online Backup, Validation & Restore", highlight: true },
+      { name: "AWR / ASH Report Analysis & Wait Events", highlight: true },
+      { name: "SQL Plan Management & Optimizer Stats", highlight: true },
+      { name: "PostgreSQL 17.6 (Galaxy Schema, Data Mart)", highlight: false },
+      { name: "MySQL Administration & InnoDB Storage", highlight: false },
+      { name: "Root Cause Debugging (ORA-1017, ORA-1033, INS-*)", highlight: true }
+    ]
+  },
+  {
+    title: "Nền Tảng Dữ Liệu Phân Tán & Streaming",
+    categoryTag: "DATA LAKEHOUSE & STREAMING",
+    description: "Xây dựng các pipeline xử lý dữ liệu streaming thời gian thực và batch quy mô lớn.",
+    items: [
+      { name: "Apache Spark 3.5.5 (PySpark, Windowing)", highlight: true },
+      { name: "Apache Flink 1.19.1 (Streaming & DLQ)", highlight: true },
+      { name: "Apache Kafka (Multi-broker Cluster)", highlight: true },
+      { name: "Apache Iceberg & Snappy Parquet", highlight: true },
+      { name: "Debezium Server 2.5.4 (pgoutput CDC)", highlight: true },
+      { name: "Confluent Schema Registry & Avro Wire Format", highlight: true },
+      { name: "SCD Type 2 (Slowly Changing Dimensions)", highlight: false },
+      { name: "Medallion Architecture (Bronze/Silver/Gold)", highlight: true },
+      { name: "Parallel JDBC Fetching & Partition Splitting", highlight: false },
+      { name: "Hadoop HDFS 3.x Distributed Storage", highlight: false }
+    ]
+  },
+  {
+    title: "Hệ Thống, Ảo Hóa & An Toàn Hạ Tầng",
+    categoryTag: "INFRASTRUCTURE & SYSTEMS",
+    description: "Nền tảng ảo hóa máy chủ, điều khiển kernel, quản trị lưu trữ và phân vùng mạng an toàn.",
+    items: [
+      { name: "Oracle Linux (UEK) & Rocky Linux Enterprise", highlight: true },
+      { name: "QEMU / KVM Bare-Metal Virtualization & Libvirt", highlight: true },
+      { name: "Nix Flakes (Reproducible Environment)", highlight: true },
+      { name: "Zero-Trust Network Segregation (L4 Conntrack)", highlight: true },
+      { name: "Private Interconnect & Jumbo Frames MTU 9000", highlight: true },
+      { name: "udev rules (Persistent Block Device Mapping)", highlight: true },
+      { name: "Linux Systemd, Sysctl Kernel Tuning, SSH Hardening", highlight: false },
+      { name: "Ariga Atlas Schema Migration", highlight: false },
+      { name: "Docker & Container Isolation", highlight: false }
+    ]
+  },
+  {
+    title: "Ngôn Ngữ Kỹ Thuật & Công Cụ Phát Triển",
+    categoryTag: "LANGUAGES & TOOLING",
+    description: "Ngôn ngữ hệ thống, kịch bản tự động hóa và công cụ kiểm thử liên tục.",
+    items: [
+      { name: "Rust (Slotted-Page, B+Tree, WAL, Parser)", highlight: true },
+      { name: "Python 3.11+ (Data Pipelines, Analytics)", highlight: true },
+      { name: "SQL & Oracle PL/SQL Nâng Cao", highlight: true },
+      { name: "Bash / Shell Scripting (DevOps & DBA Automation)", highlight: true },
+      { name: "C / C++ (Nền tảng hệ thống)", highlight: false },
+      { name: "GitHub Actions CI/CD Workflows", highlight: false },
+      { name: "Cachix Binary Cache (Tối ưu build 15p -> 2p)", highlight: true },
+      { name: "Git CLI, Branching & Version Control", highlight: false }
+    ]
+  }
+];
+---
+
+<section id="skills" class="py-20 border-b border-slate-800/60 bg-slate-950/40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="mb-12">
+      <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400 font-bold mb-1">
+        // KỸ NĂNG CHUYÊN MÔN
+      </h2>
+      <p class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        Công nghệ &amp; Nền tảng kỹ thuật
+      </p>
+      <p class="text-sm text-slate-400 mt-2 max-w-2xl">
+        Các bộ công cụ và hệ thống đã được ứng dụng trực tiếp trong việc dựng cluster thực nghiệm, giải quyết các sự cố ORA-, viết storage engine và xử lý dữ liệu thực tế.
+      </p>
+    </div>
+
+    <!-- Skills Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {SKILL_CATEGORIES.map(category => (
+        <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-slate-700/80 transition shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
+                {category.categoryTag}
+              </span>
+            </div>
+
+            <h3 class="text-lg font-bold text-white mb-2">
+              {category.title}
+            </h3>
+
+            <p class="text-xs text-slate-400 leading-relaxed mb-5">
+              {category.description}
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-800/60">
+            {category.items.map(item => (
+              <span
+                class={`text-xs font-mono px-2.5 py-1 rounded-md transition ${
+                  item.highlight
+                    ? "bg-amber-500/10 text-amber-300 border border-amber-500/30 font-medium"
+                    : "bg-slate-800/60 text-slate-300 border border-slate-700/50 hover:border-slate-600"
+                }`}
+              >
+                {item.name}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

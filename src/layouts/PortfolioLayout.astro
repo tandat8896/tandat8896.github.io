@@ -1,0 +1,31 @@
+---
+const title = "Ngô Tấn Đạt — Oracle DBA & Data Engineering";
+const description = "Các project của Ngô Tấn Đạt: Oracle RAC, Hadoop/Spark HA, Medallion Platform on Nix và đồ án điện mặt trời với vai trò Data & AI Lead. Architecture, source code, video và dashboard.";
+---
+<!doctype html>
+<html lang="vi" data-portfolio="main">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f5f0" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://tandat8896.github.io/assets/profile.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=dat-1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body><slot /></body>
+</html>
+<style is:global>
+  html[data-portfolio="main"], html[data-portfolio="main"] body { background: #f6f5f0; color: #23332f; font-family: 'Manrope', 'DejaVu Sans', sans-serif; font-size: 15px; line-height: 1.7; margin: 0; min-height: 100%; scroll-behavior: smooth; }
+  html[data-portfolio="main"] * { box-sizing: border-box; }
+  html[data-portfolio="main"] ::selection { background: #d8e2d6; color: #172c25; }
+  html[data-portfolio="main"] :focus-visible { outline: 3px solid #a65021; outline-offset: 5px; }
+  html[data-portfolio="main"] section { scroll-margin-top: 95px; }
+  @media (prefers-reduced-motion: reduce) { html[data-portfolio="main"] { scroll-behavior: auto; } html[data-portfolio="main"] *, html[data-portfolio="main"] *::before, html[data-portfolio="main"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+</style>

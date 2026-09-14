@@ -1,0 +1,56 @@
+---
+import NeovimPlayground from './NeovimPlayground.astro';
+---
+<section class="terminal" aria-label="Terminal điều hướng portfolio">
+  <div class="terminal-bar"><span aria-hidden="true">❯_</span><span>dat@homelab: ~</span><span>NEOVIM USER</span></div>
+  <div class="terminal-output" role="log" aria-live="polite" aria-relevant="additions"><p>Welcome to my workspace. Gõ help để khám phá.</p></div>
+  <form autocomplete="off">
+    <label for="terminal-command">dat@homelab <span>~ ❯</span></label>
+    <input id="terminal-command" name="command" aria-label="Lệnh điều hướng, gõ help để xem các lệnh" placeholder="help" spellcheck="false" autocapitalize="off" maxlength="80" />
+    <button type="submit" aria-label="Chạy lệnh điều hướng">↵</button>
+  </form>
+  <NeovimPlayground />
+  <div class="terminal-status"><span>SHELL</span><span>portfolio · browser only</span><span>UTF-8</span></div>
+</section>
+
+<style>
+  .terminal{margin-top:24px;background:#202b27;color:#d7e2d4;border:1px solid #405348;font:11px/1.7 'IBM Plex Mono',monospace;text-align:left;max-width:535px;box-shadow:5px 5px 0 #cbd3c366}
+  .terminal-bar{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#293830;border-bottom:1px solid #405348;font-size:9px;color:#b1c4ac}.terminal-bar>span:last-child{margin-left:auto;font-size:8px;letter-spacing:1px}
+  .terminal-output{padding:12px 14px 4px;max-height:150px;overflow:auto;overflow-wrap:anywhere}.terminal-output :global(p){margin:0 0 5px;white-space:pre-wrap;font:inherit;color:inherit}
+  form{display:flex;align-items:center;gap:9px;padding:5px 14px 13px}label{color:#b9d89c;white-space:nowrap}label span{color:#e2bf83}input{min-width:0;flex:1;width:100%;font:inherit;color:#f0f4e9;background:transparent;border:0;outline:none;caret-color:#c2dc9e}input::placeholder{color:#8b9f90}form:focus-within{box-shadow:inset 2px 0 #b9d89c}button{font:inherit;background:transparent;border:1px solid #536657;color:#c4d5bc;padding:0 7px;cursor:pointer}button:focus-visible{outline:2px solid #c2dc9e;outline-offset:3px}
+  .terminal-status{display:flex;gap:12px;background:#2d3c32;color:#b3c1ad;font-size:8px;padding-right:10px}.terminal-status>span:first-child{padding:2px 10px;background:#a7be8e;color:#202b27;font-weight:700}.terminal-status>span:not(:first-child){padding-block:2px}.terminal-status>span:last-child{margin-left:auto}
+</style>
+
+<script>
+  const terminal = document.querySelector<HTMLElement>('.terminal');
+  const form = terminal?.querySelector('form');
+  const input = terminal?.querySelector<HTMLInputElement>('input');
+  const output = terminal?.querySelector<HTMLElement>('[role="log"]');
+  const destinations: Record<string, string> = { projects: 'projects-section', solar: 'project-solar-pv', architecture: 'arch-architecture-section', about: 'about-section', contact: 'contact-section' };
+  form?.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!input || !output) return;
+    const command = input.value.trim().toLowerCase();
+    input.value = '';
+    if (!command) return;
+    if (command === 'clear') { output.replaceChildren(); return; }
+    const line = document.createElement('p');
+    const target = document.getElementById(destinations[command] || '');
+    const messages: Record<string, string> = {
+      help: 'projects · solar · architecture · about · contact\nnvim — editor chơi thử   clear — dọn màn hình   :q — rời terminal',
+      ':help': 'Không phải shell thật, nhưng :q vẫn dùng được :)\nGõ help để xem lệnh điều hướng.',
+      nvim: 'Mở Vim playground · Space ff / Space n / Ctrl+s / ;;',
+      ':q': 'Đã rời chế độ nhập. Hẹn gặp lại ở project tiếp theo.',
+    };
+    line.textContent = `❯ ${command}\n${target ? '→ ' + command : messages[command] || 'Lệnh chưa hỗ trợ. Gõ help để xem danh sách.'}`;
+    output.append(line);
+    while (output.children.length > 8) output.firstElementChild?.remove();
+    output.scrollTop = output.scrollHeight;
+    if (command === 'nvim') { const editor = terminal?.querySelector<HTMLDetailsElement>('.vim-playground'); if (editor) editor.open = true; }
+    if (command === ':q') input.blur();
+    if (target) {
+      if (command === 'architecture') document.querySelector<HTMLButtonElement>('[data-arch-tab="solar-pv"]')?.click();
+      target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    }
+  });
+</script>

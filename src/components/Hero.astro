@@ -1,0 +1,95 @@
+---
+---
+
+<section class="relative min-h-screen flex items-center justify-center pt-20 pb-16 bg-[#000000] overflow-hidden" id="home-section">
+  <!-- Subtle ambient glow -->
+  <div class="absolute inset-0 bg-radial from-[#ffbd39]/10 via-transparent to-transparent opacity-30 pointer-events-none"></div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center z-10 space-y-4">
+    <span class="text-sm sm:text-base font-semibold tracking-[4px] uppercase text-[#ffbd39] block font-mono">
+      Hi! I am
+    </span>
+
+    <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-none uppercase">
+      Ngô Tấn Đạt
+    </h1>
+
+    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-200 pt-2 flex items-center justify-center gap-2">
+      <span>A</span>
+      <span class="text-[#ffbd39] border-b-2 border-[#ffbd39] pb-0.5" id="hero-rotate">
+        Oracle Database Administrator
+      </span>
+      <span class="animate-pulse text-[#ffbd39] font-light">|</span>
+    </h2>
+
+    <p class="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto pt-4 leading-relaxed font-light">
+      Specialized in mission-critical <strong>Oracle RAC 19c Active-Active</strong> &amp; <strong>Data Guard Fast-Start Failover</strong>, deep <strong>AWR/ASH Query Tuning</strong>, distributed <strong>Lakehouse Pipelines</strong> (Flink, Kafka, Spark, Iceberg) and low-level <strong>Rust Storage Engine</strong> design.
+    </p>
+
+    <!-- CTAs -->
+    <div class="pt-8 flex flex-wrap justify-center gap-4">
+      <a
+        href="#projects-section"
+        class="px-8 py-3.5 rounded-full bg-[#ffbd39] text-black font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-black transition duration-300 shadow-lg shadow-[#ffbd39]/20"
+      >
+        View Projects
+      </a>
+      <a
+        href="#contact-section"
+        class="px-8 py-3.5 rounded-full border border-gray-700 hover:border-[#ffbd39] text-white hover:text-[#ffbd39] font-bold text-xs uppercase tracking-widest transition duration-300"
+      >
+        Contact Me
+      </a>
+    </div>
+  </div>
+
+  <!-- Mouse Scroll Wheel -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
+    <a href="#about-section" class="inline-block" aria-label="Cuộn xuống">
+      <div class="w-6 h-10 rounded-full border-2 border-gray-600 hover:border-[#ffbd39] flex items-start justify-center p-1.5 transition">
+        <div class="w-1.5 h-2.5 rounded-full bg-[#ffbd39] animate-bounce"></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<script>
+  const titles = [
+    "Oracle Database Administrator",
+    "Big Data Platform Engineer",
+    "Storage Engine Builder (Rust)",
+    "High Availability Architect"
+  ];
+  let currentIdx = 0;
+  let charIdx = 0;
+  let isBackspacing = false;
+  const target = document.getElementById("hero-rotate");
+
+  function loopTyping() {
+    if (!target) return;
+    const text = titles[currentIdx];
+
+    if (isBackspacing) {
+      charIdx--;
+      target.textContent = text.substring(0, charIdx);
+    } else {
+      charIdx++;
+      target.textContent = text.substring(0, charIdx);
+    }
+
+    let delay = isBackspacing ? 40 : 80;
+
+    if (!isBackspacing && charIdx === text.length) {
+      delay = 2000;
+      isBackspacing = true;
+    } else if (isBackspacing && charIdx === 0) {
+      isBackspacing = false;
+      currentIdx = (currentIdx + 1) % titles.length;
+      delay = 400;
+    }
+
+    setTimeout(loopTyping, delay);
+  }
+
+  loopTyping();
+</script>
