@@ -59,6 +59,59 @@ const PROJECTS: ProjectItem[] = [
     ]
   },
   {
+    id: "powerha-db2-hadr",
+    title: "IBM PowerHA SystemMirror 6.1 & Db2 12.1 HADR High Availability on AIX 7.2",
+    category: "Enterprise Unix HA & Mission-Critical Clustering",
+    timeline: "2026",
+    summary: "Cụm 2-node Active-Standby (tandat_lab1 trên IBM AIX 7.2) với Service IP Aliasing (VIP 10.10.90.15), tự động failover và takeover cơ sở dữ liệu IBM Db2 12.1 HADR qua Application Controller. Xử lý triệt để lỗi ODM handle mismatch (RC 4) và spin-lock latch freeze của db2pd dưới QEMU TCG.",
+    githubUrl: "https://github.com/tandat8896/tandat_homelab",
+    youtubeUrl: "https://www.youtube.com/watch?v=wmrz-5zr6bk",
+    context: "Hạ tầng lõi ngân hàng và doanh nghiệp chạy Unix AIX đòi hỏi tính sẵn sàng liên tục cho cơ sở dữ liệu giao dịch IBM Db2. Hệ thống phải đảm bảo tự động chuyển giao Service IP và quyền Primary (Db2 HADR Takeover) khi node chính gặp sự cố, loại bỏ hoàn toàn split-brain và kiểm soát toàn bộ chu trình sống của daemon cluster.",
+    missions: [
+      "Triển khai cụm 2 node IBM AIX 7.2 (aix1: 10.10.90.11, aix2: 10.10.90.12) chạy PowerHA SystemMirror 6.1 (Cluster tandat_lab1).",
+      "Cấu hình Resource Group db2_rg với Service IP Aliasing (VIP 10.10.90.15) trên interface en0, tự động bind/unbind mà không làm gián đoạn routing mạng.",
+      "Cài đặt IBM Db2 v12.1 Enterprise, khởi tạo cơ sở dữ liệu HADRDB, cấu hình HADR replication đồng bộ (NEARSYNC) giữa Primary (aix1) và Standby (aix2).",
+      "Phát triển bộ kịch bản Application Controller chuyên dụng: rc.hadr.start (takeover HADR sang Primary tự động), rc.hadr.stop (ngắt ứng dụng an toàn và thu hồi tài nguyên) và hadr_powerha_monitor.ksh (kernel process monitor thay thế db2pd).",
+      "Cấu hình chuẩn hóa lệnh khởi động cụm clstart -m -A -i kết hợp inject ODM HACMPdaemons (manage=auto), giải quyết triệt để lỗi treo ST_INIT để clstart một phát lên ngay ST_STABLE.",
+      "Kiểm chứng tự động hóa toàn bộ quy trình chuyển giao tài nguyên bằng lệnh clRGmove qua 4/4 chu kỳ switchover và failback đạt Exit Code 0."
+    ],
+    results: [
+      "100% pass cả 4 chu trình failover và switchover (aix1 -> aix2 -> aix1) với Exit Code 0.",
+      "Thời gian chuyển giao VIP và cơ sở dữ liệu HADR Primary diễn ra ổn định, client kết nối lại ngay lập tức.",
+      "Xử lý dứt điểm lỗi ODM handle = 0 (clstrmgr exit 4), lỗi kẹt ST_INIT và freeze db2pd trong môi trường ảo hóa QEMU TCG PPC64.",
+      "Ghi hình video demo thực nghiệm trọn vẹn 17 phút xác thực chi tiết từng bước chuyển giao tài nguyên công khai trên YouTube."
+    ],
+    techEnv: [
+      "IBM AIX 7.2 Enterprise",
+      "IBM PowerHA SystemMirror 6.1",
+      "IBM Db2 v12.1 Enterprise Server",
+      "Db2 HADR (NEARSYNC Mode)",
+      "Object Data Manager (ODM / odmget / odmchange / odmadd)",
+      "Service IP Aliasing (VIP 10.10.90.15)",
+      "Application Controller Scripts (KornShell ksh)",
+      "QEMU PPC64 TCG Emulation",
+      "clRGmove / clstat / cldump / clstart -m -A -i"
+    ],
+    challenges: [
+      {
+        problem: "Lỗi clstrmgr die exit code 4 ('handle = 0') trên node aix2 khiến Cluster Manager không thể khởi động vào ST_STABLE.",
+        solution: "Phát hiện sự không đồng bộ giữa /etc/es/objrepos và /usr/es/sbin/cluster/etc/objrepos/active trong ODM của AIX. Thực hiện resynchronize ODM definitions từ file nguồn, khôi phục handle = 2 và đồng bộ trạng thái cluster."
+      },
+      {
+        problem: "Lỗi clstart kẹt ở trạng thái ST_INIT do thiếu định nghĩa quản lý daemon trong ODM và thiếu cờ khởi tạo hệ thống con.",
+        solution: "Bổ sung bản ghi HACMPdaemons cho node 2 trong ODM (/etc/es/objrepos) với manage = auto và chuẩn hóa lệnh khởi động đầy đủ: /usr/es/sbin/cluster/utilities/clstart -m -A -i (-m: quản lý, -A: tự động khởi động các subsystem SRC, -i: bỏ qua active check). Cụm lập tức chuyển thẳng sang ST_STABLE."
+      },
+      {
+        problem: "Tiện ích db2pd bị treo vĩnh viễn (freeze/spin lock) do xung đột latch bộ nhớ trong môi trường mô phỏng QEMU TCG PPC64, khiến monitor script của PowerHA bị timeout.",
+        solution: "Thay thế lệnh db2pd bằng truy vấn trạng thái kernel trực tiếp qua 'ps -u db2inst1 -o comm | grep db2sysc', phản hồi dưới 10ms, triệt tiêu 100% hiện tượng tranh chấp latch mà vẫn bảo đảm độ tin cậy giám sát instance."
+      },
+      {
+        problem: "Lỗi SQL1768N Reason Code 7 khi khởi động Primary HADR do cơ sở dữ liệu Standby chưa sẵn sàng tiếp nhận kết nối.",
+        solution: "Hoàn thiện script rc.hadr.start với cơ chế idempotent: ưu tiên thực hiện 'takeover hadr' nếu node đang ở trạng thái Standby, và chỉ fallback 'start hadr as primary' khi khởi tạo lần đầu, bảo đảm chu trình chuyển dịch vai trò trơn tru."
+      }
+    ]
+  },
+  {
     id: "hadoop-spark-ha",
     title: "Apache Hadoop HA & Spark Cluster (Zero-Trust L4 Segregation)",
     category: "Distributed Big Data HA & Enterprise Network Hardening",
@@ -405,6 +458,164 @@ const PROJECTS: ProjectItem[] = [
                 <path d="M 690 195 H 732" stroke="#c084fc" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#aws-arrow-purple)"/>
                 <circle cx="711" cy="185" r="8" fill="#9333ea"/>
                 <text x="711" y="188" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">6</text>
+              </svg>
+            )}
+
+            {project.id === "powerha-db2-hadr" && (
+              <svg class="w-full h-auto max-h-[340px]" viewBox="0 0 920 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="aws-grid-powerha" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <circle cx="12" cy="12" r="0.75" fill="#334155" opacity="0.3"/>
+                  </pattern>
+                  <marker id="powerha-arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+                  </marker>
+                  <marker id="powerha-arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+                  </marker>
+                  <marker id="powerha-arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f59e0b"/>
+                  </marker>
+                </defs>
+
+                <!-- Background -->
+                <rect width="920" height="400" fill="#070a12"/>
+                <rect width="920" height="400" fill="url(#aws-grid-powerha)"/>
+
+                <!-- Header Bar -->
+                <rect x="16" y="10" width="888" height="24" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+                <text x="28" y="26" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="bold">IBM POWERHA SYSTEMMIRROR 6.1 &amp; DB2 12.1 HADR ARCHITECTURE</text>
+                <text x="590" y="26" fill="#94a3b8" font-family="monospace" font-size="8.5">AIX 7.2 • Cluster: tandat_lab1 • Active-Standby • Service IP Aliasing (10.10.90.15)</text>
+                <text x="892" y="26" text-anchor="end" fill="#10b981" font-family="monospace" font-size="8.5" font-weight="bold">PASS 4/4 CYCLES (RC 0)</text>
+
+                <!-- ================= SUBNET 1: CLIENT SUBNET ================= -->
+                <rect x="20" y="45" width="165" height="340" rx="6" fill="#0284c7" fill-opacity="0.04" stroke="#0284c7" stroke-width="1"/>
+                <rect x="28" y="38" width="145" height="16" rx="3" fill="#0369a1"/>
+                <text x="100" y="49" text-anchor="middle" fill="#e0f2fe" font-family="monospace" font-size="7.5" font-weight="bold">Client Subnet: 10.10.90.0/24</text>
+
+                <!-- Client Box -->
+                <rect x="30" y="70" width="145" height="85" rx="6" fill="#0c1626" stroke="#38bdf8" stroke-width="1.2"/>
+                <circle cx="60" cy="98" r="14" fill="#0369a1"/>
+                <path d="M 54 103 v -2 a 6 6 0 0 1 12 0 v 2 M 60 94 a 3 3 0 1 0 0 -6 a 3 3 0 0 0 0 6 z" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+                <text x="85" y="93" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="bold">App Client</text>
+                <text x="85" y="105" fill="#38bdf8" font-family="monospace" font-size="7.5">Db2 JDBC / CLI</text>
+                <text x="85" y="117" fill="#94a3b8" font-family="monospace" font-size="6.8">10.10.90.10</text>
+                <line x1="38" y1="126" x2="167" y2="126" stroke="#1e293b"/>
+                <text x="102" y="142" text-anchor="middle" fill="#34d399" font-family="monospace" font-size="7.5" font-weight="bold">Connects to VIP:50000</text>
+
+                <!-- Floating Service IP Box -->
+                <rect x="30" y="175" width="145" height="95" rx="6" fill="#062e24" stroke="#10b981" stroke-width="1.5"/>
+                <text x="102" y="195" text-anchor="middle" fill="#34d399" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="bold">SERVICE IP ALIASING</text>
+                <line x1="38" y1="201" x2="167" y2="201" stroke="#134e4a"/>
+                <text x="102" y="217" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold">10.10.90.15</text>
+                <text x="102" y="231" text-anchor="middle" fill="#a7f3d0" font-family="monospace" font-size="7">Interface: en0 (alias4)</text>
+                <text x="102" y="245" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="6.8">Floating VIP Failover</text>
+                <rect x="42" y="253" width="120" height="12" rx="2" fill="#047857"/>
+                <text x="102" y="262" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="6.5" font-weight="bold">ZERO CLIENT DOWNTIME</text>
+
+                <!-- Monitoring Box -->
+                <rect x="30" y="285" width="145" height="88" rx="4" fill="#091322" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="102" y="302" text-anchor="middle" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="7.5" font-weight="bold">HA MONITORING</text>
+                <line x1="38" y1="308" x2="167" y2="308" stroke="#1e293b"/>
+                <text x="102" y="323" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="7">ps -u db2inst1 (10ms)</text>
+                <text x="102" y="337" text-anchor="middle" fill="#f87171" font-family="monospace" font-size="6.5">db2pd replaced (no lock)</text>
+                <text x="102" y="351" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="6.5">Cluster Poll: 10s interval</text>
+                <text x="102" y="365" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="6.5">Return Code: 0 (Stable)</text>
+
+                <!-- ================= SUBNET 2: AIX POWERHA CLUSTER ================= -->
+                <rect x="205" y="45" width="700" height="340" rx="6" fill="#0f172a" fill-opacity="0.3" stroke="#334155" stroke-width="1"/>
+                <rect x="215" y="38" width="220" height="16" rx="3" fill="#1e293b"/>
+                <text x="325" y="49" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="7.5" font-weight="bold">PowerHA Cluster: tandat_lab1 (AIX 7.2)</text>
+
+                <!-- NODE 1: aix1 (PRIMARY) -->
+                <rect x="220" y="65" width="315" height="305" rx="6" fill="#0b1728" stroke="#0284c7" stroke-width="1.5"/>
+                <rect x="228" y="73" width="20" height="20" rx="3" fill="#0284c7"/>
+                <text x="238" y="87" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold">1</text>
+                <text x="255" y="83" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="bold">Node 1: aix1 (Active Primary)</text>
+                <text x="255" y="93" fill="#38bdf8" font-family="monospace" font-size="7">IP: 10.10.90.11 • Hostname: aix1</text>
+                <rect x="465" y="73" width="60" height="16" rx="3" fill="#064e3b"/>
+                <text x="495" y="84" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="6.5" font-weight="bold">ONLINE</text>
+                <line x1="228" y1="100" x2="527" y2="100" stroke="#1e293b"/>
+
+                <!-- aix1 PowerHA Components -->
+                <rect x="228" y="108" width="299" height="75" rx="4" fill="#071320" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="236" y="123" fill="#93c5fd" font-family="monospace" font-size="7.5" font-weight="bold">POWERHA DAEMONS &amp; ODM</text>
+                <text x="236" y="137" fill="#cbd5e1" font-family="monospace" font-size="6.8">• clstrmgrES: ST_STABLE (handle = 1)</text>
+                <text x="236" y="150" fill="#cbd5e1" font-family="monospace" font-size="6.8">• Resource Group: db2_rg [ONLINE]</text>
+                <text x="236" y="163" fill="#4ade80" font-family="monospace" font-size="6.8">• Service IP Aliased: 10.10.90.15 on en0</text>
+                <text x="236" y="176" fill="#94a3b8" font-family="monospace" font-size="6.5">• ODM: /usr/es/sbin/cluster/etc/objrepos/active</text>
+
+                <!-- aix1 App Controller -->
+                <rect x="228" y="190" width="299" height="65" rx="4" fill="#131006" stroke="#78350f" stroke-width="0.8"/>
+                <text x="236" y="205" fill="#fef3c7" font-family="monospace" font-size="7.5" font-weight="bold">APPLICATION CONTROLLER SCRIPTS</text>
+                <text x="236" y="219" fill="#cbd5e1" font-family="monospace" font-size="6.8">• rc.hadr.start: db2 takeover || start hadr</text>
+                <text x="236" y="232" fill="#cbd5e1" font-family="monospace" font-size="6.8">• rc.hadr.stop: force apps, db2stop force</text>
+                <text x="236" y="245" fill="#4ade80" font-family="monospace" font-size="6.8">• hadr_powerha_monitor.ksh: ps-check return 0</text>
+
+                <!-- aix1 Db2 Instance -->
+                <rect x="228" y="262" width="299" height="98" rx="4" fill="#051a14" stroke="#065f46" stroke-width="1"/>
+                <text x="236" y="278" fill="#34d399" font-family="monospace" font-size="8" font-weight="bold">IBM DB2 12.1 — PRIMARY DATABASE</text>
+                <text x="236" y="293" fill="#ffffff" font-family="monospace" font-size="7.5">DB: HADRDB • Instance: db2inst1</text>
+                <text x="236" y="307" fill="#93c5fd" font-family="monospace" font-size="7">HADR_ROLE: PRIMARY • Mode: NEARSYNC</text>
+                <text x="236" y="321" fill="#4ade80" font-family="monospace" font-size="7">State: PEER / CONNECTED</text>
+                <text x="236" y="335" fill="#cbd5e1" font-family="monospace" font-size="6.5">Local Port: 55000 • Remote Port: 55001</text>
+                <text x="236" y="349" fill="#f59e0b" font-family="monospace" font-size="6.5">SQL Listen Port: 50000</text>
+
+
+                <!-- NODE 2: aix2 (STANDBY) -->
+                <rect x="575" y="65" width="315" height="305" rx="6" fill="#0b1320" stroke="#475569" stroke-width="1.5"/>
+                <rect x="583" y="73" width="20" height="20" rx="3" fill="#475569"/>
+                <text x="593" y="87" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold">2</text>
+                <text x="610" y="83" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="bold">Node 2: aix2 (Standby Backup)</text>
+                <text x="610" y="93" fill="#94a3b8" font-family="monospace" font-size="7">IP: 10.10.90.12 • Hostname: aix2</text>
+                <rect x="820" y="73" width="60" height="16" rx="3" fill="#334155"/>
+                <text x="850" y="84" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="6.5" font-weight="bold">STANDBY</text>
+                <line x1="583" y1="100" x2="882" y2="100" stroke="#1e293b"/>
+
+                <!-- aix2 PowerHA Components -->
+                <rect x="583" y="108" width="299" height="75" rx="4" fill="#071018" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="591" y="123" fill="#93c5fd" font-family="monospace" font-size="7.5" font-weight="bold">POWERHA DAEMONS &amp; ODM</text>
+                <text x="591" y="137" fill="#cbd5e1" font-family="monospace" font-size="6.8">• clstrmgrES: ST_STABLE (handle = 2)</text>
+                <text x="591" y="150" fill="#cbd5e1" font-family="monospace" font-size="6.8">• Resource Group: db2_rg [OFFLINE/STANDBY]</text>
+                <text x="591" y="163" fill="#38bdf8" font-family="monospace" font-size="6.8">• [FIXED]: ODM Resynced (handle 0 -> 2)</text>
+                <text x="591" y="176" fill="#94a3b8" font-family="monospace" font-size="6.5">• HACMPdaemons: auto entry configured</text>
+
+                <!-- aix2 App Controller -->
+                <rect x="583" y="190" width="299" height="65" rx="4" fill="#090d16" stroke="#1e293b" stroke-width="0.8"/>
+                <text x="591" y="205" fill="#cbd5e1" font-family="monospace" font-size="7.5" font-weight="bold">TAKEOVER SCRIPTS READY</text>
+                <text x="591" y="219" fill="#cbd5e1" font-family="monospace" font-size="6.8">• Standby takeover trigger on clRGmove</text>
+                <text x="591" y="232" fill="#34d399" font-family="monospace" font-size="6.8">• Zero-Loss promotion to Primary</text>
+                <text x="591" y="245" fill="#4ade80" font-family="monospace" font-size="6.8">• Tested: 4/4 cycles Exit Code 0</text>
+
+                <!-- aix2 Db2 Instance -->
+                <rect x="583" y="262" width="299" height="98" rx="4" fill="#090e18" stroke="#1e293b" stroke-width="1"/>
+                <text x="591" y="278" fill="#cbd5e1" font-family="monospace" font-size="8" font-weight="bold">IBM DB2 12.1 — STANDBY DATABASE</text>
+                <text x="591" y="293" fill="#ffffff" font-family="monospace" font-size="7.5">DB: HADRDB • Instance: db2inst1</text>
+                <text x="591" y="307" fill="#93c5fd" font-family="monospace" font-size="7">HADR_ROLE: STANDBY • Mode: NEARSYNC</text>
+                <text x="591" y="321" fill="#4ade80" font-family="monospace" font-size="7">State: PEER / CONNECTED (Replay in Memory)</text>
+                <text x="591" y="335" fill="#cbd5e1" font-family="monospace" font-size="6.5">Local Port: 55001 • Remote Port: 55000</text>
+                <text x="591" y="349" fill="#38bdf8" font-family="monospace" font-size="6.5">Replication Lag: 0 Bytes</text>
+
+                <!-- ================= CALLOUT PATHS & ARROWS ================= -->
+                <!-- ① Client to VIP -->
+                <path d="M 175 110 H 200 V 225 H 175" stroke="#38bdf8" stroke-width="1.8"/>
+                <circle cx="190" cy="165" r="7" fill="#0284c7"/>
+                <text x="190" y="168" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="8" font-weight="bold">1</text>
+
+                <!-- ② VIP to Node 1 Active Bind -->
+                <path d="M 102 270 V 310 H 220" stroke="#10b981" stroke-width="2" marker-end="url(#powerha-arrow-green)"/>
+                <circle cx="160" cy="310" r="7" fill="#10b981"/>
+                <text x="160" y="313" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="8" font-weight="bold">2</text>
+
+                <!-- ③ Inter-node HADR Replication -->
+                <path d="M 535 310 H 575" stroke="#10b981" stroke-width="2.5" marker-end="url(#powerha-arrow-green)"/>
+                <circle cx="555" cy="300" r="7" fill="#10b981"/>
+                <text x="555" y="303" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="8" font-weight="bold">3</text>
+
+                <!-- ④ Heartbeat between daemons -->
+                <path d="M 535 145 H 575" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="3 2"/>
+                <circle cx="555" cy="135" r="7" fill="#0284c7"/>
+                <text x="555" y="138" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="8" font-weight="bold">4</text>
               </svg>
             )}
 

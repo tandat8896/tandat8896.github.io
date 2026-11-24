@@ -1,0 +1,258 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1080" width="1600" height="1080" fill="none">
+  <defs>
+    <pattern id="grid-pattern" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1" fill="#334155" opacity="0.3"/>
+    </pattern>
+    <linearGradient id="primary-glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="standby-glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#475569" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="vip-glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f87171"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1080" fill="#060911"/>
+  <rect width="1600" height="1080" fill="url(#grid-pattern)"/>
+
+  <!-- Top Header Bar -->
+  <rect x="30" y="24" width="1540" height="56" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+  <text x="56" y="58" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="bold" letter-spacing="1">IBM POWERHA SYSTEMMIRROR 6.1 &amp; DB2 12.1 HADR ENTERPRISE CLUSTER</text>
+  <text x="890" y="58" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="14">AIX 7.2 • Cluster: tandat_lab1 • Active-Standby • Service IP Aliasing • HADR NEARSYNC</text>
+  <rect x="1390" y="38" width="160" height="28" rx="5" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+  <text x="1470" y="56" text-anchor="middle" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">ST_STABLE (RC: 0)</text>
+
+  <!-- ================= TOP LAYER: CLIENT SUBNET & SERVICE VIP ================= -->
+  <rect x="30" y="100" width="1540" height="150" rx="10" fill="#0a101d" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="50" y="88" width="280" height="24" rx="4" fill="#1e293b"/>
+  <text x="190" y="104" text-anchor="middle" fill="#93c5fd" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold">CLIENT &amp; APPLICATION SUBNET (10.10.90.0/24)</text>
+
+  <!-- App Client Node -->
+  <rect x="70" y="130" width="280" height="95" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
+  <circle cx="115" cy="165" r="20" fill="#0284c7"/>
+  <text x="115" y="171" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="bold">APP</text>
+  <text x="155" y="158" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="bold">Enterprise Applications</text>
+  <text x="155" y="178" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="12">IBM Db2 JDBC / CLI Client</text>
+  <text x="155" y="198" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11">Connect: 10.10.90.15:50000</text>
+
+  <!-- Floating Service VIP Box -->
+  <rect x="490" y="125" width="460" height="105" rx="8" fill="url(#vip-glow)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="720" y="155" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="bold">POWERHA SERVICE IP (FLOATING VIP)</text>
+  <rect x="520" y="168" width="400" height="42" rx="6" fill="#062e24"/>
+  <text x="720" y="186" text-anchor="middle" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="bold">VIP: 10.10.90.15 • Port 50000 (HADRDB)</text>
+  <text x="720" y="202" text-anchor="middle" fill="#a7f3d0" font-family="'JetBrains Mono', monospace" font-size="11">Service IP Aliasing on en0 • Zero Client Reconfiguration</text>
+
+  <!-- Failover Arrow Indicator -->
+  <path d="M 970 177 H 1220" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-amber)"/>
+  <rect x="1030" y="158" width="130" height="22" rx="3" fill="#451a03" stroke="#f59e0b" stroke-width="1"/>
+  <text x="1095" y="173" text-anchor="middle" fill="#fde68a" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold">clRGmove FAILOVER</text>
+
+  <!-- Target Node Tag -->
+  <rect x="1240" y="135" width="300" height="85" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.2"/>
+  <text x="1390" y="163" text-anchor="middle" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="bold">STANDBY TARGET BACKUP</text>
+  <text x="1390" y="183" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="11">Auto-Takeover in &lt; 30s</text>
+  <text x="1390" y="201" text-anchor="middle" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="11">Exit Code 0 Verified</text>
+
+  <!-- Client to VIP Flow Arrow -->
+  <path d="M 350 177 H 490" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <circle cx="420" cy="165" r="10" fill="#0284c7"/>
+  <text x="420" y="169" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="10" font-weight="bold">1</text>
+
+  <!-- ================= CLUSTER CONTAINER: 2 NODES ================= -->
+
+  <!-- NODE 1: aix1 (PRIMARY) -->
+  <rect x="30" y="280" width="740" height="630" rx="12" fill="url(#primary-glow)" stroke="#0284c7" stroke-width="2"/>
+  <!-- Node Header -->
+  <rect x="30" y="280" width="740" height="50" rx="12" fill="#0c2340"/>
+  <rect x="50" y="292" width="28" height="28" rx="4" fill="#0284c7"/>
+  <text x="64" y="311" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="bold">1</text>
+  <text x="90" y="312" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="17" font-weight="bold">NODE 1: aix1 (Active Primary Node)</text>
+  <rect x="580" y="291" width="170" height="28" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+  <text x="665" y="309" text-anchor="middle" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">STATE: ONLINE (PRIMARY)</text>
+
+  <!-- Node 1 Specs -->
+  <rect x="50" y="345" width="700" height="50" rx="6" fill="#091322" stroke="#1e293b" stroke-width="1"/>
+  <text x="70" y="375" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="12">OS: IBM AIX 7.2 (7200-05) • IP: 10.10.90.11 • Interface: en0 • Hostname: aix1.localdomain</text>
+
+  <!-- Layer A: PowerHA Cluster Layer -->
+  <rect x="50" y="410" width="700" height="150" rx="8" fill="#0b1728" stroke="#38bdf8" stroke-width="1.2"/>
+  <text x="70" y="435" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="bold">IBM PowerHA SystemMirror 6.1 — Cluster Engine</text>
+  
+  <rect x="70" y="450" width="200" height="95" rx="6" fill="#071320" stroke="#1e293b" stroke-width="1"/>
+  <text x="85" y="475" fill="#f8fafc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">Cluster Daemons</text>
+  <text x="85" y="497" fill="#4ade80" font-family="'JetBrains Mono', monospace" font-size="11">• clstrmgrES: ST_STABLE</text>
+  <text x="85" y="515" fill="#4ade80" font-family="'JetBrains Mono', monospace" font-size="11">• clinfoES / clconfd: OK</text>
+  <text x="85" y="533" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="11">• HACMPdaemons: Auto</text>
+
+  <rect x="290" y="450" width="220" height="95" rx="6" fill="#071320" stroke="#1e293b" stroke-width="1"/>
+  <text x="305" y="475" fill="#f8fafc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">Resource Group: db2_rg</text>
+  <text x="305" y="497" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="11">• State: ONLINE on aix1</text>
+  <text x="305" y="515" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11">• Service IP: 10.10.90.15</text>
+  <text x="305" y="533" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="11">• App: db2_hadr_app</text>
+
+  <rect x="530" y="450" width="200" height="95" rx="6" fill="#071320" stroke="#1e293b" stroke-width="1"/>
+  <text x="545" y="475" fill="#f8fafc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">ODM Subsystem</text>
+  <text x="545" y="497" fill="#93c5fd" font-family="'JetBrains Mono', monospace" font-size="11">• HACMPcluster: handle = 1</text>
+  <text x="545" y="515" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="11">• /etc/es/objrepos</text>
+  <text x="545" y="533" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="11">• Active ODM Synced</text>
+
+  <!-- Layer B: Application Controller & Scripts -->
+  <rect x="50" y="575" width="700" height="135" rx="8" fill="#0b1728" stroke="#f59e0b" stroke-width="1.2"/>
+  <text x="70" y="600" fill="#fbbf24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="bold">Application Controller &amp; Custom Automation Scripts</text>
+  
+  <rect x="70" y="615" width="205" height="80" rx="6" fill="#181308" stroke="#78350f" stroke-width="1"/>
+  <text x="85" y="635" fill="#fef3c7" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">rc.hadr.start</text>
+  <text x="85" y="655" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10.5">• db2start instance</text>
+  <text x="85" y="672" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5">• takeover hadr on db</text>
+  <text x="85" y="688" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="10.5">• idempotent fallback</text>
+
+  <rect x="295" y="615" width="205" height="80" rx="6" fill="#181308" stroke="#78350f" stroke-width="1"/>
+  <text x="310" y="635" fill="#fef3c7" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">rc.hadr.stop</text>
+  <text x="310" y="655" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10.5">• force application all</text>
+  <text x="310" y="672" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10.5">• db2stop force</text>
+  <text x="310" y="688" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="10.5">• clean ipc semaphores</text>
+
+  <rect x="520" y="615" width="210" height="80" rx="6" fill="#181308" stroke="#78350f" stroke-width="1"/>
+  <text x="535" y="635" fill="#fef3c7" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">hadr_powerha_monitor</text>
+  <text x="535" y="655" fill="#4ade80" font-family="'JetBrains Mono', monospace" font-size="10.5">• ps kernel check</text>
+  <text x="535" y="672" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="10.5">• grep -q db2sysc</text>
+  <text x="535" y="688" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="10.5">• 10ms (Zero Latch Freeze)</text>
+
+  <!-- Layer C: Database Instance (Db2) -->
+  <rect x="50" y="725" width="700" height="165" rx="8" fill="#0b1728" stroke="#10b981" stroke-width="1.5"/>
+  <text x="70" y="750" fill="#34d399" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="bold">IBM Db2 v12.1 Enterprise — HADR Primary Instance</text>
+
+  <rect x="70" y="765" width="660" height="110" rx="6" fill="#051a14" stroke="#065f46" stroke-width="1"/>
+  <text x="90" y="790" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="bold">Database: HADRDB • Instance: db2inst1 • HADR_ROLE = PRIMARY</text>
+  <text x="90" y="812" fill="#93c5fd" font-family="'JetBrains Mono', monospace" font-size="11.5">HADR_SYNCMODE = NEARSYNC • HADR_CONNECT_STATUS = CONNECTED • HADR_STATE = PEER</text>
+  <text x="90" y="832" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="11.5">Local Port: 55000 (HADR Service) • Remote Port: 55001 • SQL Connection Port: 50000</text>
+  <text x="90" y="855" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="11.5">Active Transactions Committed • Synchronous Redo Buffer Shipping over TCP</text>
+
+  <!-- VIP Attachment to Node 1 Indicator -->
+  <path d="M 600 230 V 410" stroke="#34d399" stroke-width="3" marker-end="url(#arrow-green)"/>
+  <rect x="550" y="250" width="100" height="22" rx="3" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+  <text x="600" y="265" text-anchor="middle" fill="#a7f3d0" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold">ACTIVE BIND</text>
+
+
+  <!-- NODE 2: aix2 (STANDBY) -->
+  <rect x="830" y="280" width="740" height="630" rx="12" fill="url(#standby-glow)" stroke="#475569" stroke-width="1.8"/>
+  <!-- Node Header -->
+  <rect x="830" y="280" width="740" height="50" rx="12" fill="#1e293b"/>
+  <rect x="850" y="292" width="28" height="28" rx="4" fill="#64748b"/>
+  <text x="864" y="311" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="bold">2</text>
+  <text x="890" y="312" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="17" font-weight="bold">NODE 2: aix2 (Standby Hot Backup Node)</text>
+  <rect x="1380" y="291" width="170" height="28" rx="4" fill="#334155" stroke="#94a3b8" stroke-width="1"/>
+  <text x="1465" y="309" text-anchor="middle" fill="#e2e8f0" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">STATE: STANDBY READY</text>
+
+  <!-- Node 2 Specs -->
+  <rect x="850" y="345" width="700" height="50" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="870" y="375" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="12">OS: IBM AIX 7.2 (7200-05) • IP: 10.10.90.12 • Interface: en0 • Hostname: aix2.localdomain</text>
+
+  <!-- Layer A: PowerHA Cluster Layer Node 2 -->
+  <rect x="850" y="410" width="700" height="150" rx="8" fill="#0f172a" stroke="#64748b" stroke-width="1.2"/>
+  <text x="870" y="435" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="bold">IBM PowerHA SystemMirror 6.1 — Cluster Engine (Standby)</text>
+  
+  <rect x="870" y="450" width="200" height="95" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+  <text x="885" y="475" fill="#f8fafc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">Cluster Daemons</text>
+  <text x="885" y="497" fill="#4ade80" font-family="'JetBrains Mono', monospace" font-size="11">• clstrmgrES: ST_STABLE</text>
+  <text x="885" y="515" fill="#4ade80" font-family="'JetBrains Mono', monospace" font-size="11">• clinfoES / clconfd: OK</text>
+  <text x="885" y="533" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="11">• HACMPdaemons: Auto</text>
+
+  <rect x="1090" y="450" width="220" height="95" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+  <text x="1105" y="475" fill="#f8fafc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">Resource Group: db2_rg</text>
+  <text x="1105" y="497" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="11">• State: OFFLINE (Standby)</text>
+  <text x="1105" y="515" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="11">• Ready for VIP takeover</text>
+  <text x="1105" y="533" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="11">• Node Priority: 2</text>
+
+  <rect x="1330" y="450" width="200" height="95" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+  <text x="1345" y="475" fill="#f8fafc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">ODM Subsystem</text>
+  <text x="1345" y="497" fill="#4ade80" font-family="'JetBrains Mono', monospace" font-size="11">• HACMPcluster: handle = 2</text>
+  <text x="1345" y="515" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11">• [FIXED]: ODM Resynced</text>
+  <text x="1345" y="533" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="11">• Exit Code 4 Eradicated</text>
+
+  <!-- Layer B: Application Controller & Scripts Node 2 -->
+  <rect x="850" y="575" width="700" height="135" rx="8" fill="#0f172a" stroke="#64748b" stroke-width="1.2"/>
+  <text x="870" y="600" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="bold">Application Controller (Standby Takeover Mode)</text>
+  
+  <rect x="870" y="615" width="205" height="80" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+  <text x="885" y="635" fill="#fef3c7" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">rc.hadr.start</text>
+  <text x="885" y="655" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5">• db2 takeover hadr</text>
+  <text x="885" y="672" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10.5">• promote standby -> prim</text>
+  <text x="885" y="688" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="10.5">• zero data loss switch</text>
+
+  <rect x="1095" y="615" width="205" height="80" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+  <text x="1110" y="635" fill="#fef3c7" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">rc.hadr.stop</text>
+  <text x="1110" y="655" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10.5">• quiesce database</text>
+  <text x="1110" y="672" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10.5">• db2stop force</text>
+  <text x="1110" y="688" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="10.5">• release lock resource</text>
+
+  <rect x="1320" y="615" width="210" height="80" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+  <text x="1335" y="635" fill="#fef3c7" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">hadr_powerha_monitor</text>
+  <text x="1335" y="655" fill="#4ade80" font-family="'JetBrains Mono', monospace" font-size="10.5">• ps kernel check</text>
+  <text x="1335" y="672" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="10.5">• standby process watch</text>
+  <text x="1335" y="688" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="10.5">• return 0 immediately</text>
+
+  <!-- Layer C: Database Instance (Db2 Standby) -->
+  <rect x="850" y="725" width="700" height="165" rx="8" fill="#0f172a" stroke="#64748b" stroke-width="1.5"/>
+  <text x="870" y="750" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="bold">IBM Db2 v12.1 Enterprise — HADR Standby Instance</text>
+
+  <rect x="870" y="765" width="660" height="110" rx="6" fill="#090e18" stroke="#1e293b" stroke-width="1"/>
+  <text x="890" y="790" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="bold">Database: HADRDB • Instance: db2inst1 • HADR_ROLE = STANDBY</text>
+  <text x="890" y="812" fill="#93c5fd" font-family="'JetBrains Mono', monospace" font-size="11.5">HADR_SYNCMODE = NEARSYNC • HADR_CONNECT_STATUS = CONNECTED • HADR_STATE = PEER</text>
+  <text x="890" y="832" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="11.5">Local Port: 55001 (HADR Service) • Remote Port: 55000 • SQL Connection Port: 50000</text>
+  <text x="890" y="855" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11.5">Real-Time Redo Log Replay (Roll-Forward in Memory) • Log Lag: 0 Bytes</text>
+
+  <!-- ================= INTER-NODE REPLICATION & HEARTBEAT BUS ================= -->
+  <!-- Cluster Heartbeat Line (Top) -->
+  <line x1="770" y1="485" x2="830" y2="485" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4 2"/>
+  <rect x="760" y="465" width="80" height="22" rx="3" fill="#082f49" stroke="#0284c7" stroke-width="1"/>
+  <text x="800" y="480" text-anchor="middle" fill="#bae6fd" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">HEARTBEAT</text>
+
+  <!-- HADR Log Shipping Line (Bottom) -->
+  <line x1="750" y1="810" x2="870" y2="810" stroke="#10b981" stroke-width="3.5" marker-end="url(#arrow-green)"/>
+  <rect x="740" y="790" width="120" height="24" rx="4" fill="#064e3b" stroke="#34d399" stroke-width="1"/>
+  <text x="800" y="806" text-anchor="middle" fill="#d1fae5" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold">HADR REDO STREAM</text>
+
+  <!-- ================= BOTTOM KEY ROOT CAUSE FIXES BAR ================= -->
+  <rect x="30" y="930" width="1540" height="120" rx="10" fill="#090d16" stroke="#1e293b" stroke-width="1.5"/>
+  <text x="50" y="960" fill="#fbbf24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="bold" letter-spacing="1">ROOT CAUSE TROUBLESHOOTING &amp; REAL-WORLD ENGINEERING HIGHLIGHTS</text>
+
+  <!-- Callout 1 -->
+  <rect x="50" y="975" width="470" height="60" rx="6" fill="#131006" stroke="#854d0e" stroke-width="1"/>
+  <circle cx="75" cy="1005" r="14" fill="#d97706"/>
+  <text x="75" y="1010" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">1</text>
+  <text x="100" y="998" fill="#fef08a" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">ODM Handle Mismatch (RC: 4) Fix</text>
+  <text x="100" y="1018" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Khắc phục handle = 0 trong active ODM node 2, khôi phục handle = 2</text>
+
+  <!-- Callout 2 -->
+  <rect x="545" y="975" width="480" height="60" rx="6" fill="#041818" stroke="#0e7490" stroke-width="1"/>
+  <circle cx="570" cy="1005" r="14" fill="#0284c7"/>
+  <text x="570" y="1010" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">2</text>
+  <text x="595" y="998" fill="#a5f3fc" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">db2pd Latch Freeze on QEMU TCG PPC64</text>
+  <text x="595" y="1018" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Chuyển sang kernel ps command, triệt tiêu 100% spinlock contention</text>
+
+  <!-- Callout 3 -->
+  <rect x="1050" y="975" width="500" height="60" rx="6" fill="#041a0e" stroke="#15803d" stroke-width="1"/>
+  <circle cx="1075" cy="1005" r="14" fill="#16a34a"/>
+  <text x="1075" y="1010" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">3</text>
+  <text x="1100" y="998" fill="#bbf7d0" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="bold">4/4 Switchover Verification Passed</text>
+  <text x="1100" y="1018" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">clRGmove kiểm chứng 4 chu kỳ đảo vai trò (aix1 &lt;-> aix2) Exit Code 0</text>
+</svg>
